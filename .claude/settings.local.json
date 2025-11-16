@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git config:*)",
+      "Bash(echo:*)",
+      "WebSearch"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

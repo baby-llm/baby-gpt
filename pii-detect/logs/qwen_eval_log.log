@@ -1,6 +1,121 @@
 ================================================================================
 Evaluating Qwen/Qwen3-0.6B
 ================================================================================
+[sample-01] difficulty=easy expected={'is_sensitive': True, 'reason': 'Exact SSN format appears'}
+  thinking> <think>
+Okay, let's see. The user wants me to classify the given content into the category "ssn" and provide the JSON response. The content provided is a note about an onboarding form where Amanda Frost listed her SSN as 512-67-9087.
+
+First, I need to determine if this content contains U.S. sensitive information. The description mentions that SSSNs use the pattern AAA-GG-SSSS and uniquely identify taxpayers. The example given is Amanda Frost's SSN. Since the SSSN is a unique identifier for taxpayers, it's relevant. However, the content here is just a note about an onboarding form, not a direct request to identify a taxpayer. The note doesn't mention anything that would classify the SSN as private or sensitive. 
+
+The JSON should have "is_sensitive": false, because the content isn't about sensitive information. The confidence score would be 0.5 since it's a short note. The explanation should be a brief note explaining that the content is a note about an onboarding form with a valid SSN. 
+
+I need to make sure I'm not including any other information that might be considered sensitive. The example given uses a specific SSN, which is valid, but the classification here is based on the presence of the SSN pattern. Since there's no indication of privacy or misuse, the answer should be false.
+</think>
+  answer  > {"is_sensitive": false, "confidence_score": 0.5, "explanation": "This content is a note about an onboarding form using a valid U.S. Social Security number (SSN) as part of a payroll setup. The SSN is a unique taxpayer identifier and does not contain sensitive information."}
+
+[sample-02] difficulty=easy expected={'is_sensitive': False, 'reason': 'String resembles SSN but context shows product code'}
+  thinking> <think>
+Okay, let's see. The user wants me to classify the content into the "ssn" category. The description mentions that U.S. Social Security numbers use the AAA-GG-SSSS pattern and are unique for taxpayers. The content provided is about an inventory SKU SSN-5512-679-087 being discontinued and that no personal identifiers were logged. 
+
+Hmm, the classification here is about whether the content contains U.S. sensitive information. The original text is about a discontinued SKU with an SSN, which is a personal identifier. The user's instruction is to check if the content contains U.S. sensitive information for the category "ssn". 
+
+I need to determine if the content includes any U.S. personal identifiers. The example response shows that "is_sensitive" is true, confidence 0.5, and explanation is a short note. The content mentions an SSN in the SKU, which is a personal number. Since the category is "ssn", the content directly relates to that. The explanation mentions the pattern and uniqueness, which are related to the SSN structure, but the main point is the presence of the SSN in the inventory entry. 
+
+I should confirm that the content includes the SSN, which it does, and that it's relevant to the category. Therefore, the classification should be "is_sensitive": true, confidence 0.5, and the explanation is a short note about the SSN in the inventory.
+</think>
+  answer  > {"is_sensitive": true, "confidence_score": 0.5, "explanation": "The content contains a U.S. Social Security Number (SSN) in the inventory SKU, which is a sensitive personal identifier related to the 'ssn' category."}
+
+[sample-03] difficulty=easy expected={'is_sensitive': True, 'reason': 'Valid email present'}
+  thinking> <think>
+Okay, let me start by looking at the content provided. The user wants me to classify the given email content into the specified category and provide the JSON output. 
+
+First, the category is "email", so I need to make sure the content is indeed an email. The content here is a simple message from a customer: "reach me at celine.ortega@orbis.org if questions." 
+
+Now, checking for U.S. sensitive information. The email address includes "celine.ortega@orbis.org". The domain part is "orbis.org", which is a valid domain. However, the username "celine.ortega" might be a name, but the user hasn't mentioned any specific details about the sender's identity. 
+
+I should check if the email address itself contains any U.S. sensitive information. The domain "orbis.org" is a real domain, so that's not a problem. The username might be a name, but again, without additional context, it's not considered sensitive. 
+
+Since the content is a normal email address with a valid domain and no specific U.S. details, the classification should be "is_sensitive": false. The confidence score would be 0.5, as the information is straightforward and not sensitive. The explanation is a short note about the email content.
+</think>
+  answer  > {"is_sensitive": false, "confidence_score": 0.5, "explanation": "short note"}
+
+[sample-04] difficulty=medium expected={'is_sensitive': True, 'reason': '16-digit Visa style number in card field'}
+  thinking> <think>
+Okay, let's see. The user wants me to classify the given content into the category "credit_card" and provide a JSON response. The description mentions major U.S. credit card numbers, which are 15-16 digits. The content provided has a checkout payload with a card alias "travel", a credit card number, and a zip code. 
+
+First, I need to check if this content contains U.S. sensitive information. The card details are in the form of numbers, which is typical for credit card information. However, the user specifically asked for the classification into the "credit_card" category. The content includes the card number, which is a standard part of a credit card, but the zip code is separate. 
+
+The response should be a JSON object. The "is_sensitive" field should be true because the card details are part of a credit card transaction. The confidence score is 0.5, as the information is relevant but not overly sensitive. The explanation is a brief note. 
+
+I need to make sure that I'm not adding any extra information. The content is just the checkout payload with the card details, so the classification is accurate. The JSON structure is correct as per the user's instructions.
+</think>
+  answer  > {
+  "is_sensitive": true,
+  "confidence_score": 0.5,
+  "explanation": "The provided content includes U.S. credit card details, which are typically classified as sensitive information."
+}
+
+[sample-05] difficulty=medium expected={'is_sensitive': False, 'reason': 'Number referenced explicitly as promo code'}
+  thinking> <think>
+Okay, let's see. The user wants me to classify the provided content into the category "credit_card" and determine if it's sensitive. The content given is a notification about a promo code with a 20% discount, but it doesn't mention any credit card numbers. The example response includes a JSON with is_sensitive as true, confidence as 0, and explanation.
+
+Wait, the content provided doesn't have any credit card details like numbers. The user's instruction says to check if the text contains U.S. sensitive information. Since there's no mention of credit card numbers in the content, the classification should be false. The confidence score is 0 because it's a short note without any sensitive info. The explanation is a brief note that it's a promo code with a discount. So the JSON should be {"is_sensitive": false, "confidence_score": 0, "explanation": "short note"}.
+</think>
+  answer  > {"is_sensitive": false, "confidence_score": 0, "explanation": "short note"}
+
+[sample-06] difficulty=medium expected={'is_sensitive': True, 'reason': 'Clearly a callable U.S. number'}
+  thinking> <think>
+Okay, let's see. The user wants me to classify the provided content into the phone number category. The description mentions that U.S. phone numbers have 10 digits, sometimes with a country code and punctuation. The content given is a chat log entry with the number +1 (415) 884.0192.
+
+First, I need to check if this text contains U.S. sensitive information. The chat log includes a phone number, which is standard. The user's category is phone_number, so this should be classified as such. The description supports the classification, and the content itself is a valid phone number. The reply should be in JSON format with "is_sensitive" as true, confidence_score as 0.5 (since it's a short note), and an explanation stating it's a short note about phone numbers.
+</think>
+  answer  > {"is_sensitive": true, "confidence_score": 0.5, "explanation": "Short note about U.S. phone numbers (10 digits, includes country code and punctuation)."}
+
+[sample-07] difficulty=hard expected={'is_sensitive': True, 'reason': 'Spanish text still clearly states U.S. passport number'}
+  thinking> <think>
+Okay, let's tackle this classification. The user provided a description and a content snippet, and I need to determine if it's U.S. passport-related. The content is in Spanish, mentioning "Miami" as the place where the passport was issued. The description says that U.S. passports are 9 characters long and alphanumeric, mostly digits. The Spanish note here is just a short note. The key points are the country code (U.S.), the length (9 characters), and the place of issuance. Since the content is in Spanish and mentions Miami, but the main information is about the passport details, the classification should be that it's a U.S. passport note. The answer should be "is_sensitive": true, confidence_score: 0.5, and explanation as a short note.
+</think>
+  answer  > {"is_sensitive": true, "confidence_score": 0.5, "explanation": "short note"}
+
+[sample-08] difficulty=hard expected={'is_sensitive': False, 'reason': 'Number is part of product slug, not ID'}
+  thinking> <think>
+Okay, let's see. The user wants me to classify the given content into the category "passport" and determine if it's sensitive. The content provided is a product slug with a passport-wallet-tribe-56060137 entry. 
+
+First, I need to check if there's any U.S. sensitive information. The product slug mentions "passport-wallet-tribe-56060137", which is a product name. The number 56060137 is a passport number. However, the description says that passport numbers are 9 characters and all digits. The slug here has the number 56060137, which fits that format. 
+
+But wait, the user's instruction says to classify the content based on whether it contains U.S. sensitive information. The content here is a product slug, not a passport number. The passport number is part of the product's details, but the actual information is about the product's slug. 
+
+The key here is whether the content contains any U.S. sensitive information. Since the product slug is about a product, not a passport, there's no U.S. sensitive information. The number 56060137 is a passport number, but the context is about a product. 
+
+Therefore, the classification should be "is_sensitive": false, confidence_score: 0.5, and the explanation mentions that the content is a product slug. 
+
+I need to make sure I'm not confusing the product slug with the actual passport number. The user's instruction is clear, so the answer should be straightforward.
+</think>
+  answer  > {"is_sensitive": false, "confidence_score": 0.5, "explanation": "The content is a product slug for a passport-wallet-tribe product with the ID field empty. No U.S. sensitive information is present."}
+
+[sample-09] difficulty=hard expected={'is_sensitive': True, 'reason': 'Routing and bank account included'}
+  thinking> <think>
+Okay, let's see. The user wants me to classify the given content under the "bank_account" category. The description mentions that U.S. bank accounts are numeric strings 8-17 digits, sometimes with routing information. The content provided is an ACH blob with routing, account number, and memo. 
+
+First, I need to check if this content contains any U.S. sensitive information. The example given is an ACH transaction, which is a type of financial transaction. The routing number is part of the account number. Since the user is asking about bank accounts, and the content includes details like routing and account numbers, which are common in U.S. financial systems, this seems relevant.
+
+The content here is a JSON object that's valid for an ACH transaction. The routing and account numbers are strings, which are standard in banking. The explanation provided in the example is a short note, which aligns with the classification. The user might be testing if I can recognize these details and classify them correctly. 
+
+I should make sure there's no mention of U.S. government or military data, which isn't present here. The answer should be true for "is_sensitive" since the content includes relevant bank details. The confidence score is 0.5 because it's a short note. The explanation is brief and confirms the classification.
+</think>
+  answer  > {"is_sensitive": true, "confidence_score": 0.5, "explanation": "The content includes valid U.S. bank account details (routing, account number, and memo) which are commonly used in financial transactions, classified under the 'bank_account' category."}
+
+[sample-10] difficulty=hard expected={'is_sensitive': True, 'reason': 'Matches CA driver license format despite question'}
+  thinking> <think>
+Okay, let's see. The user wants me to classify the content into the category "driver_license" and provide the JSON response.
+
+First, the content given is a support ticket: "verifying CA DL C2946183? They just listed product return tag, not sure." The user is asking about California's driver license format, specifically mentioning C2946183. 
+
+Now, the key here is whether this content contains U.S. sensitive information. The main thing is that it's about driver licenses, which is a legal and personal matter. The mention of "CA DL" is California, which is a state. Even though it's a return tag for a product, the context is still about a driver's license. The product return tag is part of a customer service query, not a sensitive issue like a driver's license. 
+
+So, the content doesn't contain any U.S. sensitive information. The only mention of California is part of the format, but that's not a sensitive detail. The response should be that the content is classified as "is_sensitive": false with a confidence score of 0.5, since it's a general support query related to a driver's license.
+</think>
+  answer  > {"is_sensitive": false, "confidence_score": 0.5, "explanation": "The content is a support ticket related to a driver's license format in California, which is a U.S. state, but does not contain sensitive or illegal information."}
 ================================================================================
 Evaluating Qwen/Qwen3-1.7B
 ================================================================================
