@@ -18,6 +18,7 @@ DEFAULT_MODELS: List[str] = [
     "Qwen/Qwen3-4B-Instruct-2507",
     "Qwen/Qwen3-8B",
 ]
+DEFAULT_SAMPLE_PATH = Path(__file__).resolve().parents[1] / "data" / "qwen_eval_samples.jsonl"
 
 SYSTEM_PROMPT = (
     "You are a privacy filter that decides if a text contains U.S. sensitive "
@@ -29,7 +30,7 @@ Category: {name}
 Description: {desc}
 Content: {content}
 
-Reply with JSON: {"is_sensitive": <true|false>, "confidence_score": <0-1>, "explanation": "short note"}
+Reply with JSON: {{"is_sensitive": <true|false>, "confidence_score": <0-1>, "explanation": "short note"}}
 """
 
 
@@ -38,8 +39,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--samples",
         type=Path,
-        default=Path("pii-detect/data/qwen_eval_samples.jsonl"),
-        help="Path to the JSONL file containing evaluation samples.",
+        default=DEFAULT_SAMPLE_PATH,
+        help=f"Path to the JSONL file containing evaluation samples (default: {DEFAULT_SAMPLE_PATH}).",
     )
     parser.add_argument(
         "--models",
@@ -118,11 +119,16 @@ def run_model(model_name: str, samples: Iterable[dict], args: argparse.Namespace
     print(f"Evaluating {model_name}")
     print("=" * 80)
     try:
-        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        tokenizer = AutoTokenizer.from_pretrained(
+            model_name,
+            trust_remote_code=True,
+            use_fast=False,
+        )
         model = AutoModelForCausalLM.from_pretrained(
             model_name,
-            torch_dtype="auto",
+            dtype="auto",
             device_map="auto",
+            trust_remote_code=True,
         )
     except Exception as exc:  # pragma: no cover - best-effort load guard
         print(f"Failed to load {model_name}: {exc}", file=sys.stderr)
@@ -147,12 +153,21 @@ def run_model(model_name: str, samples: Iterable[dict], args: argparse.Namespace
             return_tensors="pt",
             padding=True,
         ).to(model.device)
+
+        gen_kwargs = {
+            "max_new_tokens": args.max_new_tokens,
+            "pad_token_id": tokenizer.eos_token_id,
+        }
+        if args.temperature <= 0:
+            gen_kwargs["do_sample"] = False
+        else:
+            gen_kwargs["temperature"] = args.temperature
+            gen_kwargs["do_sample"] = True
+
         try:
             generated_ids = model.generate(
                 **model_inputs,
-                max_new_tokens=args.max_new_tokens,
-                temperature=args.temperature,
-                pad_token_id=tokenizer.eos_token_id,
+                **gen_kwargs,
             )
         except torch.cuda.OutOfMemoryError:
             print(f"OOM while processing {sample['id']} on {model_name}.", file=sys.stderr)
