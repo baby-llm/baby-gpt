@@ -1,0 +1,442 @@
+[
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-01",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Exact SSN format appears"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 1, \"explanation\": \"The description provides a brief explanation of how U.S. Social Security numbers (SSNs) work, including their unique format and purpose.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-02",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "String resembles SSN but context shows product code"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.9, \"explanation\": \"The description does not contain any personally identifiable information (PII) or Sensitive Information (SI). It simply states that inventory SKUs are discontinued.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-03",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email present"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"The content does not contain any sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-04",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "16-digit Visa style number in card field"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.7, \"explanation\": \"The description does not contain any sensitive information related to credit card details.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-05",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number referenced explicitly as promo code"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.73, \"explanation\": \"The content does not contain any sensitive information related to credit card details.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-06",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Clearly a callable U.S. number"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.97, \"explanation\": \"The content does not contain any U.S. sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-07",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Spanish text still clearly states U.S. passport number"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.9999999999999999, \"explanation\": \"The description does not contain any U.S. sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-08",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number is part of product slug, not ID"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.8, \"explanation\": \"The content does not contain any sensitive information related to a U.S. passport or its contents.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-09",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Routing and bank account included"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.9999999999999999, \"explanation\": \"The description does not contain any sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-10",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Matches CA driver license format despite question"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.5, \"explanation\": \"The content does not contain any sensitive information related to a driver's license or personal identification number.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-01",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Exact SSN format appears"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": true, \"confidence_score\": 1, \"explanation\": \"The content explicitly mentions an SSN (Social Security Number) in the onboarding form.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-02",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "String resembles SSN but context shows product code"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.9, \"explanation\": \"long note\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-03",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email present"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"The email address is not marked as sensitive due to its short length and common format.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-04",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "16-digit Visa style number in card field"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.9, \"explanation\": \"The provided content does not contain any major U.S. credit card numbers as defined in the given category.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-05",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number referenced explicitly as promo code"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.9, \"explanation\": \"The content does not contain any major U.S. credit card numbers as described in the provided description.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-06",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Clearly a callable U.S. number"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": true, \"confidence_score\": 0.9, \"explanation\": \"The provided content includes a U.S. phone number (+1 (415) 884.0192).\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-07",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Spanish text still clearly states U.S. passport number"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.9, \"explanation\": \"The content does not contain any U.S. sensitive information related to passports.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-08",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number is part of product slug, not ID"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.8, \"explanation\": \"The content does not contain any U.S. sensitive information related to passports.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-09",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Routing and bank account included"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": true, \"confidence_score\": 1, \"explanation\": \"The content contains a full U.S. bank account number which is considered sensitive information.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-10",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Matches CA driver license format despite question"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.5, \"explanation\": \"The content is a support ticket asking about a California driver's license number and does not contain any sensitive information related to driver licenses.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-01",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Exact SSN format appears"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 1.0, \"explanation\": \"The SSN 512-67-9087 is clearly present in the onboarding form and matches the standard format of an SSN.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-02",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "String resembles SSN but context shows product code"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.8, \"explanation\": \"short note\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-03",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email present"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.8, \"explanation\": \"short note\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-04",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "16-digit Visa style number in card field"
+    },
+    "thinking": "",
+    "answer": "{\n  \"is_sensitive\": true,\n  \"confidence_score\": 1.0,\n  \"explanation\": \"The payload contains a major U.S. credit card number (16 digits) which matches the description provided.\"\n}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-05",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number referenced explicitly as promo code"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.9, \"explanation\": \"short note\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-06",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Clearly a callable U.S. number"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 1.0, \"explanation\": \"The phone number +1 (415) 884.0192 is clearly present in the text.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-07",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Spanish text still clearly states U.S. passport number"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"short note\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-08",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number is part of product slug, not ID"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.8, \"explanation\": \"short note\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-09",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Routing and bank account included"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 1.0, \"explanation\": \"The content includes a U.S. bank account number (008764531987) which is within the specified length of 8-17 digits and is prefixed with routing info.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-10",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Matches CA driver license format despite question"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.5, \"explanation\": \"The content is a support ticket query about a product return and does not contain specific driver license details or numbers.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-01",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Exact SSN format appears"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 1, \"explanation\": \"The content explicitly mentions a specific U.S. Social Security number.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-02",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "String resembles SSN but context shows product code"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.3, \"explanation\": \"The content does not contain a valid U.S. Social Security number.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-03",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email present"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": true, \"confidence_score\": 0.9, \"explanation\": \"The content contains an email address which is considered sensitive information in the context of email.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-04",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "16-digit Visa style number in card field"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"The content contains a 16-digit credit card number which is a clear indicator of sensitive information.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-05",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number referenced explicitly as promo code"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.7, \"explanation\": \"The content does not contain any credit card numbers or payment data, only a promo code is mentioned.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-06",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Clearly a callable U.S. number"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"The content contains a U.S. phone number in the format +1 (415) 884.0192, which matches the specified criteria for a U.S. phone number.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-07",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Spanish text still clearly states U.S. passport number"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"The content includes a full U.S. passport number, which is sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-08",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number is part of product slug, not ID"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.2, \"explanation\": \"The content does not contain any U.S. passport numbers or other sensitive information related to passports.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-09",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Routing and bank account included"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"The content contains a routing number and an account number, both of which are within the specified range and format for U.S. bank accounts.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-10",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Matches CA driver license format despite question"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.1, \"explanation\": \"The content does not contain any sensitive driver license information, although it mentions a CA DL number, which is not present.\"}"
+  }
+]

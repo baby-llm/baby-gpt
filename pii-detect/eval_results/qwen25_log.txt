@@ -1,0 +1,411 @@
+root@642e717a1190:~/baby-gpt/pii-detect# python scripts/run_qwen_eval.py --samples data/qwen_eval_samples.jsonl
+================================================================================
+Evaluating Qwen/Qwen2.5-0.5B-Instruct
+================================================================================
+`torch_dtype` is deprecated! Use `dtype` instead!
+The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k'
+]. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+[sample-01
+] difficulty=easy expected={'is_sensitive': True, 'reason': 'Exact SSN format appears'
+}
+  answer  > {
+  "is_sensitive": true,
+  "confidence_score": 1,
+  "explanation": "The description provides a brief explanation of how U.S. Social Security numbers (SSNs) work, including their unique format and purpose."
+}
+
+[sample-02
+] difficulty=easy expected={'is_sensitive': False, 'reason': 'String resembles SSN but context shows product code'
+}
+  answer  > {
+  "is_sensitive": false,
+  "confidence_score": 0.9,
+  "explanation": "The description does not contain any personally identifiable information (PII) or Sensitive Information (SI). It simply states that inventory SKUs are discontinued."
+}
+
+[sample-03
+] difficulty=easy expected={'is_sensitive': True, 'reason': 'Valid email present'
+}
+  answer  > {
+  "is_sensitive": false,
+  "confidence_score": 0.95,
+  "explanation": "The content does not contain any sensitive information."
+}
+
+[sample-04
+] difficulty=medium expected={'is_sensitive': True, 'reason': '16-digit Visa style number in card field'
+}
+  answer  > {
+  "is_sensitive": false,
+  "confidence_score": 0.7,
+  "explanation": "The description does not contain any sensitive information related to credit card details."
+}
+
+[sample-05
+] difficulty=medium expected={'is_sensitive': False, 'reason': 'Number referenced explicitly as promo code'
+}
+  answer  > {
+  "is_sensitive": false,
+  "confidence_score": 0.73,
+  "explanation": "The content does not contain any sensitive information related to credit card details."
+}
+
+[sample-06
+] difficulty=medium expected={'is_sensitive': True, 'reason': 'Clearly a callable U.S. number'
+}
+  answer  > {
+  "is_sensitive": false,
+  "confidence_score": 0.97,
+  "explanation": "The content does not contain any U.S. sensitive information."
+}
+
+[sample-07
+] difficulty=hard expected={'is_sensitive': True, 'reason': 'Spanish text still clearly states U.S. passport number'
+}
+  answer  > {
+  "is_sensitive": false,
+  "confidence_score": 0.9999999999999999,
+  "explanation": "The description does not contain any U.S. sensitive information."
+}
+
+[sample-08
+] difficulty=hard expected={'is_sensitive': False, 'reason': 'Number is part of product slug, not ID'
+}
+  answer  > {
+  "is_sensitive": false,
+  "confidence_score": 0.8,
+  "explanation": "The content does not contain any sensitive information related to a U.S. passport or its contents."
+}
+
+[sample-09
+] difficulty=hard expected={'is_sensitive': True, 'reason': 'Routing and bank account included'
+}
+  answer  > {
+  "is_sensitive": false,
+  "confidence_score": 0.9999999999999999,
+  "explanation": "The description does not contain any sensitive information."
+}
+
+[sample-10
+] difficulty=hard expected={'is_sensitive': True, 'reason': 'Matches CA driver license format despite question'
+}
+  answer  > {
+  "is_sensitive": false,
+  "confidence_score": 0.5,
+  "explanation": "The content does not contain any sensitive information related to a driver's license or personal identification number."
+}
+
+================================================================================
+Evaluating Qwen/Qwen2.5-1.5B-Instruct
+================================================================================
+[sample-01
+] difficulty=easy expected={'is_sensitive': True, 'reason': 'Exact SSN format appears'
+}
+  answer  > ```json
+{
+  "is_sensitive": true,
+  "confidence_score": 1,
+  "explanation": "The content explicitly mentions an SSN (Social Security Number) in the onboarding form."
+}
+```
+
+[sample-02
+] difficulty=easy expected={'is_sensitive': False, 'reason': 'String resembles SSN but context shows product code'
+}
+  answer  > {
+  "is_sensitive": false,
+  "confidence_score": 0.9,
+  "explanation": "long note"
+}
+
+[sample-03
+] difficulty=easy expected={'is_sensitive': True, 'reason': 'Valid email present'
+}
+  answer  > ```json
+{
+  "is_sensitive": false,
+  "confidence_score": 0.95,
+  "explanation": "The email address is not marked as sensitive due to its short length and common format."
+}
+```
+
+[sample-04
+] difficulty=medium expected={'is_sensitive': True, 'reason': '16-digit Visa style number in card field'
+}
+  answer  > {
+  "is_sensitive": false,
+  "confidence_score": 0.9,
+  "explanation": "The provided content does not contain any major U.S. credit card numbers as defined in the given category."
+}
+
+[sample-05
+] difficulty=medium expected={'is_sensitive': False, 'reason': 'Number referenced explicitly as promo code'
+}
+  answer  > ```json
+{
+  "is_sensitive": false,
+  "confidence_score": 0.9,
+  "explanation": "The content does not contain any major U.S. credit card numbers as described in the provided description."
+}
+```
+
+[sample-06
+] difficulty=medium expected={'is_sensitive': True, 'reason': 'Clearly a callable U.S. number'
+}
+  answer  > ```json
+{
+  "is_sensitive": true,
+  "confidence_score": 0.9,
+  "explanation": "The provided content includes a U.S. phone number (+1 (415) 884.0192)."
+}
+```
+
+[sample-07
+] difficulty=hard expected={'is_sensitive': True, 'reason': 'Spanish text still clearly states U.S. passport number'
+}
+  answer  > ```json
+{
+  "is_sensitive": false,
+  "confidence_score": 0.9,
+  "explanation": "The content does not contain any U.S. sensitive information related to passports."
+}
+```
+
+[sample-08
+] difficulty=hard expected={'is_sensitive': False, 'reason': 'Number is part of product slug, not ID'
+}
+  answer  > ```json
+{
+  "is_sensitive": false,
+  "confidence_score": 0.8,
+  "explanation": "The content does not contain any U.S. sensitive information related to passports."
+}
+```
+
+[sample-09
+] difficulty=hard expected={'is_sensitive': True, 'reason': 'Routing and bank account included'
+}
+  answer  > ```json
+{
+  "is_sensitive": true,
+  "confidence_score": 1,
+  "explanation": "The content contains a full U.S. bank account number which is considered sensitive information."
+}
+```
+
+[sample-10
+] difficulty=hard expected={'is_sensitive': True, 'reason': 'Matches CA driver license format despite question'
+}
+  answer  > ```json
+{
+  "is_sensitive": false,
+  "confidence_score": 0.5,
+  "explanation": "The content is a support ticket asking about a California driver's license number and does not contain any sensitive information related to driver licenses."
+}
+```
+
+================================================================================
+Evaluating Qwen/Qwen2.5-3B-Instruct
+================================================================================
+Loading checkpoint shards: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [
+  00: 09<00: 00,
+  4.57s/it
+]
+[sample-01
+] difficulty=easy expected={'is_sensitive': True, 'reason': 'Exact SSN format appears'
+}
+  answer  > {
+  "is_sensitive": true,
+  "confidence_score": 1.0,
+  "explanation": "The SSN 512-67-9087 is clearly present in the onboarding form and matches the standard format of an SSN."
+}
+
+[sample-02
+] difficulty=easy expected={'is_sensitive': False, 'reason': 'String resembles SSN but context shows product code'
+}
+  answer  > {
+  "is_sensitive": false,
+  "confidence_score": 0.8,
+  "explanation": "short note"
+}
+
+[sample-03
+] difficulty=easy expected={'is_sensitive': True, 'reason': 'Valid email present'
+}
+  answer  > {
+  "is_sensitive": false,
+  "confidence_score": 0.8,
+  "explanation": "short note"
+}
+
+[sample-04
+] difficulty=medium expected={'is_sensitive': True, 'reason': '16-digit Visa style number in card field'
+}
+  answer  > {
+  "is_sensitive": true,
+  "confidence_score": 1.0,
+  "explanation": "The payload contains a major U.S. credit card number (16 digits) which matches the description provided."
+}
+
+[sample-05
+] difficulty=medium expected={'is_sensitive': False, 'reason': 'Number referenced explicitly as promo code'
+}
+  answer  > {
+  "is_sensitive": false,
+  "confidence_score": 0.9,
+  "explanation": "short note"
+}
+
+[sample-06
+] difficulty=medium expected={'is_sensitive': True, 'reason': 'Clearly a callable U.S. number'
+}
+  answer  > {
+  "is_sensitive": true,
+  "confidence_score": 1.0,
+  "explanation": "The phone number +1 (415) 884.0192 is clearly present in the text."
+}
+
+[sample-07
+] difficulty=hard expected={'is_sensitive': True, 'reason': 'Spanish text still clearly states U.S. passport number'
+}
+  answer  > {
+  "is_sensitive": true,
+  "confidence_score": 0.95,
+  "explanation": "short note"
+}
+
+[sample-08
+] difficulty=hard expected={'is_sensitive': False, 'reason': 'Number is part of product slug, not ID'
+}
+  answer  > {
+  "is_sensitive": false,
+  "confidence_score": 0.8,
+  "explanation": "short note"
+}
+
+[sample-09
+] difficulty=hard expected={'is_sensitive': True, 'reason': 'Routing and bank account included'
+}
+  answer  > {
+  "is_sensitive": true,
+  "confidence_score": 1.0,
+  "explanation": "The content includes a U.S. bank account number (008764531987) which is within the specified length of 8-17 digits and is prefixed with routing info."
+}
+
+[sample-10
+] difficulty=hard expected={'is_sensitive': True, 'reason': 'Matches CA driver license format despite question'
+}
+  answer  > {
+  "is_sensitive": false,
+  "confidence_score": 0.5,
+  "explanation": "The content is a support ticket query about a product return and does not contain specific driver license details or numbers."
+}
+
+================================================================================
+Evaluating Qwen/Qwen2.5-7B-Instruct
+================================================================================
+Loading checkpoint shards: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 4/4 [
+  00: 20<00: 00,
+  5.18s/it
+]
+[sample-01
+] difficulty=easy expected={'is_sensitive': True, 'reason': 'Exact SSN format appears'
+}
+  answer  > {
+  "is_sensitive": true,
+  "confidence_score": 1,
+  "explanation": "The content explicitly mentions a specific U.S. Social Security number."
+}
+
+[sample-02
+] difficulty=easy expected={'is_sensitive': False, 'reason': 'String resembles SSN but context shows product code'
+}
+  answer  > {
+  "is_sensitive": false,
+  "confidence_score": 0.3,
+  "explanation": "The content does not contain a valid U.S. Social Security number."
+}
+
+[sample-03
+] difficulty=easy expected={'is_sensitive': True, 'reason': 'Valid email present'
+}
+  answer  > ```json
+{
+  "is_sensitive": true,
+  "confidence_score": 0.9,
+  "explanation": "The content contains an email address which is considered sensitive information in the context of email."
+}
+```
+
+[sample-04
+] difficulty=medium expected={'is_sensitive': True, 'reason': '16-digit Visa style number in card field'
+}
+  answer  > ```json
+{
+  "is_sensitive": true,
+  "confidence_score": 0.95,
+  "explanation": "The content contains a 16-digit credit card number which is a clear indicator of sensitive information."
+}
+```
+
+[sample-05
+] difficulty=medium expected={'is_sensitive': False, 'reason': 'Number referenced explicitly as promo code'
+}
+  answer  > ```json
+{
+  "is_sensitive": false,
+  "confidence_score": 0.7,
+  "explanation": "The content does not contain any credit card numbers or payment data, only a promo code is mentioned."
+}
+```
+
+[sample-06
+] difficulty=medium expected={'is_sensitive': True, 'reason': 'Clearly a callable U.S. number'
+}
+  answer  > ```json
+{
+  "is_sensitive": true,
+  "confidence_score": 0.95,
+  "explanation": "The content contains a U.S. phone number in the format +1 (415) 884.0192, which matches the specified criteria for a U.S. phone number."
+}
+```
+
+[sample-07
+] difficulty=hard expected={'is_sensitive': True, 'reason': 'Spanish text still clearly states U.S. passport number'
+}
+  answer  > {
+  "is_sensitive": true,
+  "confidence_score": 0.95,
+  "explanation": "The content includes a full U.S. passport number, which is sensitive information."
+}
+
+[sample-08
+] difficulty=hard expected={'is_sensitive': False, 'reason': 'Number is part of product slug, not ID'
+}
+  answer  > ```json
+{
+  "is_sensitive": false,
+  "confidence_score": 0.2,
+  "explanation": "The content does not contain any U.S. passport numbers or other sensitive information related to passports."
+}
+```
+
+[sample-09
+] difficulty=hard expected={'is_sensitive': True, 'reason': 'Routing and bank account included'
+}
+  answer  > ```json
+{
+  "is_sensitive": true,
+  "confidence_score": 0.95,
+  "explanation": "The content contains a routing number and an account number, both of which are within the specified range and format for U.S. bank accounts."
+}
+```
+
+[sample-10
+] difficulty=hard expected={'is_sensitive': True, 'reason': 'Matches CA driver license format despite question'
+}
+  answer  > {
+  "is_sensitive": false,
+  "confidence_score": 0.1,
+  "explanation": "The content does not contain any sensitive driver license information, although it mentions a CA DL number, which is not present."
+}

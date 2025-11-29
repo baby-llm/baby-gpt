@@ -1,0 +1,522 @@
+root@642e717a1190:~/baby-gpt/pii-detect# python scripts/run_qwen_eval.py --samples data/qwen_eval_samples.jsonl
+================================================================================
+Evaluating Qwen/Qwen3-0.6B
+================================================================================
+Note: Qwen/Qwen3-0.6B is a base checkpoint; instruction following may be weak. Prefer an *-Instruct variant.
+tokenizer_config.json: 9.73kB [00:00, 74.8MB/s]
+vocab.json: 2.78MB [00:00, 18.1MB/s]
+merges.txt: 1.67MB [00:00, 121MB/s]
+tokenizer.json: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 11.4M/11.4M [00:00<00:00, 11.9MB/s]
+config.json: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 726/726 [00:00<00:00, 12.5MB/s]
+`torch_dtype` is deprecated! Use `dtype` instead!
+model.safetensors: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1.50G/1.50G [00:04<00:00, 352MB/s]
+generation_config.json: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 239/239 [00:00<00:00, 2.97MB/s]
+The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+[sample-01] difficulty=easy expected={'is_sensitive': True, 'reason': 'Exact SSN format appears'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify the given content into the category "ssn" and provide the JSON response. The description mentions that U.S. Social Security numbers use the pattern AAA-GG-SSSS and uniquely identify taxpayers. The content provided is an onboarding form for Amanda Frost with her SSN 512-67-9087.
+
+First, I need to check if the content contains any U.S. sensitive information. The SSN is a standard form of identification, so it's relevant. However, the question is whether this information is considered sensitive. Since the SSN is a personal identifier, it's likely sensitive. But the user's instruction says to classify based on the content. The description mentions the pattern and the purpose, but the content itself is the SSN. 
+
+The JSON requires "is_sensitive" to be true or false. The content includes the SSN, which is a personal number. The confidence score is between 0 and 1. Since the information is relevant and the SSN is a standard form, the confidence should be high. The explanation should note that the SSN is a personal identifier. 
+
+So, putting it all together, the JSON should have is_sensitive as true, confidence_score as 1, and the explanation explaining the SSN's use.
+</think>
+
+{"is_sensitive": true, "confidence_score": 1, "explanation": "The content includes a U.S. Social Security number (SSN) in the form of 512-67-9087, which is a personal identifier and falls under sensitive information for tax purposes."}
+
+[sample-02] difficulty=easy expected={'is_sensitive': False, 'reason': 'String resembles SSN but context shows product code'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify the given content into the category "ssn" and provide the JSON response. The content provided is about an inventory SKU with the SSN-5512-679-087 being discontinued and no personal identifiers logged.
+
+First, I need to check if this content contains U.S. sensitive information. The description mentions Social Security numbers, which are a type of personal identifier. The content here talks about an inventory item and its discontinuation, but the key point is that it's about an SSN. However, the main focus here is on the inventory and the SSN, not the actual SSN itself. The user might be testing if the content includes SSNs, which it does. But the question is whether the content is classified under "ssn" as per the category. 
+
+The category is "ssn", and the content is about an inventory item with an SSN. The description mentions that SSNs are used to uniquely identify taxpayers, which is a general fact. The content here is about a specific SKU being discontinued, but the main issue is whether the content contains U.S. sensitive information. Since the content does mention SSNs, which are personal identifiers, it's relevant. However, the user's instruction is to classify the content under the category "ssn". 
+
+I need to make sure that the classification is accurate. The content does include U.S. sensitive information (SSNs) and the category is "ssn". The confidence score should be 1 because the content is directly relevant. The explanation should state that the content contains U.S. sensitive information related to Social Security numbers. 
+
+So, putting it all together, the JSON should have "is_sensitive": true, "confidence_score": 1, and the explanation as a short note.
+</think>
+
+{"is_sensitive": true, "confidence_score": 1, "explanation": "The content includes U.S. Social Security numbers (SSNs) and their usage in identifying taxpayers, which falls under the 'ssn' category."}
+
+[sample-03] difficulty=easy expected={'is_sensitive': True, 'reason': 'Valid email present'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify the given content into the email category. The description says email addresses usually have a username, @, and domain. The content provided is "Customer left feedback: reach me at celine.ortega@orbis.org if questions." 
+
+First, I need to check if this content includes any U.S. sensitive information. The email address is celine.ortega@orbis.org. The domain is orbis.org. The username is celine. The @ symbol is present. 
+
+Now, the question is whether this is a U.S. sensitive email. The domain orbis.org is a legitimate domain, and the username is celine. The user is asking for a reply in JSON format. The content doesn't mention anything about U.S. government, private, or corporate information. It's just a standard email address. 
+
+So, the content is a normal email address. The classification should be email. The is_sensitive field should be false, confidence_score 0.5, and explanation as a short note. 
+
+I need to make sure there's no hidden sensitive info. The username and domain are standard, so no issues. The response is straightforward.
+</think>
+
+{"is_sensitive": false, "confidence_score": 0.5, "explanation": "short note"}
+
+[sample-04] difficulty=medium expected={'is_sensitive': True, 'reason': '16-digit Visa style number in card field'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify the given content into the "credit_card" category. The description mentions major U.S. credit card numbers, which are 15-16 digits. The content provided is a JSON object with a checkout payload that includes a card alias "travel", the card number "4111 0254 8890 3145", and a zip code "10012".
+
+First, I need to check if this content contains any U.S. sensitive information. The card number and zip code are both part of a credit card transaction. The card number is a standard credit card number, and the zip code is a physical address. However, the user's instruction says to classify the content under "credit_card" and the description mentions major U.S. credit card numbers. The content itself includes the card number and zip code, which are typically used in credit card transactions. 
+
+The JSON provided has the card alias and the card number, which are standard fields for a checkout payload. The zip code is also a valid field. Since the content includes both the card number and the zip code, which are part of a credit card transaction, the classification should be correct. The explanation should note that the content includes a credit card number and zip code, which are U.S. sensitive information. The confidence score would be 0.5 because it's a short note, not a detailed analysis. 
+
+I need to make sure there's no hidden or sensitive information. The content seems straightforward. So the final answer should be is_sensitive: true, confidence_score: 0.5, and explanation as a short note.
+</think>
+
+{
+  "is_sensitive": true,
+  "confidence_score": 0.5,
+  "explanation": "short note"
+}
+
+[sample-05] difficulty=medium expected={'is_sensitive': False, 'reason': 'Number referenced explicitly as promo code'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify the given content into the category "credit_card" and provide the JSON response. The description mentions major U.S. credit card numbers, but the content here is a notification about a promo code with a discount. The key point is whether the content contains U.S. sensitive information.
+
+The content provided is a short note about a promo code and a discount. There's no mention of credit card numbers, payment details, or any U.S. specific data. The only thing related to credit cards is the promo code, which is a standard term. Since the content doesn't include any sensitive information about credit cards, the classification should be "is_sensitive": false. The confidence score is 0 because it's a short note. The explanation is a brief note that confirms the content is not sensitive.
+</think>
+
+{"is_sensitive": false, "confidence_score": 0.0, "explanation": "short note"}
+
+[sample-06] difficulty=medium expected={'is_sensitive': True, 'reason': 'Clearly a callable U.S. number'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify the given content into the category "phone_number" and provide the JSON response. The content is a chat log entry with a phone number: +1 (415) 884.0192.
+
+First, I need to check if this text contains U.S. sensitive information. The phone number is in the format that's common in the U.S., with a country code and digits. The description mentions that U.S. phone numbers have 10 digits, which matches the number here. The content itself is a short note, so it's not a longer conversation. 
+
+The JSON structure requires "is_sensitive" to be true or false, and a confidence score between 0 and 1. Since the content is a short note about a phone number, it's likely sensitive. The confidence score would be 0.5, as it's a brief note. The explanation should state that it's a short note about a U.S. phone number. 
+
+I need to make sure there are no other details that might indicate otherwise, but the provided content seems to be just the number. So the final JSON should reflect that.
+</think>
+
+{"is_sensitive": true, "confidence_score": 0.5, "explanation": "short note"}
+
+[sample-07] difficulty=hard expected={'is_sensitive': True, 'reason': 'Spanish text still clearly states U.S. passport number'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify the given content into the category "passport" and determine if it's sensitive. The description mentions U.S. passport numbers being 9 characters, alphanumeric, mostly digits. The content provided is in Spanish, with the number "025497813" and the location "Miami". 
+
+First, I need to check if the information in the content relates to U.S. passport details. The number is in Spanish, so it's a Spanish passport number. The location is Miami, which is a U.S. city. The description confirms that the numbers are 9 characters long and alphanumeric. 
+
+Now, the user's instruction says to reply with JSON. The category is "passport", and the content is a short note. The note includes the number and location, which are both relevant to passport information. However, the note is in Spanish, which might be a language barrier. The user's example response uses "short note" as the category, so I should follow that. 
+
+The JSON structure needs to have "is_sensitive" as true or false, confidence_score between 0 and 1, and an explanation. Since the content is about passport details, it's sensitive. The confidence score would be 0.5 because it's a short note. The explanation should state that it's a note about a U.S. passport number. 
+
+I need to make sure there's no U.S. sensitive information hidden. The content doesn't mention anything about the country, the number, or the location being a U.S. city. It's just a Spanish number and location. So, the classification is correct.
+</think>
+
+{"is_sensitive": true, "confidence_score": 0.5, "explanation": "short note"}
+
+[sample-08] difficulty=hard expected={'is_sensitive': False, 'reason': 'Number is part of product slug, not ID'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify the given content into the category "passport" and determine if it's sensitive. The description mentions U.S. passport numbers being 9 characters, alphanumeric, mostly digits. The content provided is a product slug with a passport-wallet-tribe-56060137 and empty ID fields.
+
+First, I need to check if the content contains any U.S. sensitive information. The product slug doesn't mention anything about passport numbers or U.S. citizens. The ID fields are empty, which is common for product slugs, not related to passports. The description itself talks about passport numbers, but the content here is just a product name and a slug. There's no mention of a passport, its number, or any U.S. details. 
+
+So, the content doesn't contain any U.S. sensitive information. The JSON should have "is_sensitive": false, confidence_score: 0.5, and an explanation that it's a product slug without any passport-related details.
+</think>
+
+{"is_sensitive": false, "confidence_score": 0.5, "explanation": "The content describes a product slug with no U.S. sensitive information related to passports or passport numbers."}
+
+[sample-09] difficulty=hard expected={'is_sensitive': True, 'reason': 'Routing and bank account included'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify the given content into the "bank_account" category. The description mentions that U.S. bank accounts are numeric strings from 8 to 17 digits, sometimes with routing information. The content provided is an ACH blob with routing, account number, and memo.
+
+First, I need to check if the content contains any U.S. sensitive information. The example given in the description includes routing and account numbers, which are standard parts of bank accounts. The content here also includes a memo, which is a transaction note. Since the account numbers and routing information are typically part of bank details, this seems to fit the category.
+
+The user's instruction says to reply with JSON. The "is_sensitive" field should be true because the content includes details about bank accounts. The confidence score is between 0 and 1, so maybe 0.5 or 0.8. The explanation should be a short note. 
+
+I need to make sure there's no hidden or sensitive data. The example in the description doesn't mention anything else, so I think this is safe. Therefore, the classification is correct.
+</think>
+
+{"is_sensitive": true, "confidence_score": 0.8, "explanation": "The content includes standard U.S. bank account details (routing, account number, and memo) which are typically classified as sensitive information for financial purposes."}
+
+[sample-10] difficulty=hard expected={'is_sensitive': True, 'reason': 'Matches CA driver license format despite question'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify the given content into the category "driver_license" and provide the JSON response. The content is a support ticket message from someone who mentioned verifying a CA DL C2946183. The key points here are the mention of California's license format and the specific number provided.
+
+First, I need to check if the content contains U.S. sensitive information. The message is about a driver's license, California, and a ticket number. Since it's a support ticket related to a driver's license, it's relevant. However, the actual ticket number is just a placeholder, so there's no explicit or implicit sensitive information. The user is asking about the format, not the actual license details. 
+
+The confidence score should be 0.5 because it's a short note. The explanation should state that the content is a support ticket related to driver license formats, specifically California's format. I need to make sure the JSON is correctly formatted with the appropriate fields.
+</think>
+
+{"is_sensitive": false, "confidence_score": 0.5, "explanation": "A support ticket related to driver license formats, specifically California's format, with a placeholder ticket number."}
+
+================================================================================
+Evaluating Qwen/Qwen3-1.7B
+================================================================================
+Note: Qwen/Qwen3-1.7B is a base checkpoint; instruction following may be weak. Prefer an *-Instruct variant.
+tokenizer_config.json: 9.73kB [00:00, 76.3MB/s]
+vocab.json: 2.78MB [00:00, 132MB/s]
+merges.txt: 1.67MB [00:00, 135MB/s]
+tokenizer.json: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 11.4M/11.4M [00:00<00:00, 29.4MB/s]
+config.json: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 726/726 [00:00<00:00, 8.80MB/s]
+model.safetensors.index.json: 25.6kB [00:00, 187MB/s]
+model-00001-of-00002.safetensors: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3.44G/3.44G [00:07<00:00, 480MB/s]
+model-00002-of-00002.safetensors: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 622M/622M [00:01<00:00, 394MB/s]
+Loading checkpoint shards: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:01<00:00,  1.98it/s]
+generation_config.json: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 239/239 [00:00<00:00, 2.90MB/s]
+[sample-01] difficulty=easy expected={'is_sensitive': True, 'reason': 'Exact SSN format appears'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify whether the provided content contains U.S. sensitive information, specifically Social Security Numbers (SSNs), under the category of SSN.
+
+The content in question is: "Onboarding form: Applicant Amanda Frost listed SSN 512-67-9087 for payroll setup."
+
+First, I need to check if the SSN is in the correct format. The U.S. SSN format is typically AAA-GG-SSSS, where AAA is the area code, GG is the group number, and SSSSS is the serial number. The given SSN here is 512-67-9087. Breaking it down: 512 is the area code, 67 is the group number, and 9087 is the serial number. That fits the pattern AAA-GG-SSSS. So the format is correct.
+
+Next, the category is SSN, and the description mentions that SSNs uniquely identify taxpayers. The question is whether this information is considered sensitive. In the U.S., SSNs are indeed sensitive personal information protected by laws like the Health Insurance Portability and Accountability Act (HIPAA) and the Privacy Act. They are used for identity verification and are part of the Social Security Administration's (SSA) data.
+
+The content includes the SSN, which is a protected piece of information. The user is asking to classify it as sensitive. The answer should be true. The confidence score would be high since the SSN is clearly in the correct format and is a known sensitive data type. The explanation would state that the SSN is a U.S. sensitive information category and is uniquely identifying taxpayers, so it's classified as sensitive.
+</think>
+
+{"is_sensitive": true, "confidence_score": 0.99, "explanation": "The Social Security Number (SSN) 512-67-9087 is a U.S. sensitive personal identifier. SSNs are protected under federal law (e.g., HIPAA, Privacy Act) and are uniquely tied to taxpayers. The format AAA-GG-SSSS matches the standard U.S. SSN pattern, confirming its classification as sensitive information."}
+
+[sample-02] difficulty=easy expected={'is_sensitive': False, 'reason': 'String resembles SSN but context shows product code'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify the content based on the Social Security Number (SSN) category. The category description says that SSNs use the pattern AAA-GG-SSSS and are unique identifiers.
+
+The content provided is: "Inventory SKU SSN-5512-679-087 is discontinued; no personal identifiers logged." 
+
+First, I need to check if there's any mention of a Social Security number. The SKU here is "SSN-5512-679-087". The pattern mentioned in the category is AAA-GG-SSSS. The SKU here starts with "SSN", which is three letters, followed by numbers. The pattern AAA-GG-SSSS would be three letters, two letters, four letters. But in this case, the SKU is SSN-5512-679-087. Let me break it down: SSN is three letters, then 5512 is four digits, then 679 is three digits, and 087 is three digits. Wait, that doesn't fit the AAA-GG-SSSS pattern. The first part is SSN (AAA), then GG (two letters), then SSSS (four digits). But the SKU here is SSN-5512-679-087. So the first part is SSN (three letters), then 5512 (four digits), then 679 (three digits), then 087 (three digits). So the pattern here is not matching the AAA-GG-SSSS. The first part is three letters, then four digits, then three digits, then three digits. So it's not a standard SSN.
+
+But the user is asking if the content contains U.S. sensitive information for the SSN category. The key here is whether the SKU is a SSN. Since the SKU is SSN-5512-679-087, the first part is SSN, but the rest are numbers. However, the SSN is a specific 9-digit number, but here it's part of an SKU. The problem is that the SKU is a product code, not a SSN. The SSN is a unique identifier for a taxpayer, but the SKU here is a product code. So even though the first part is SSN, the rest are numbers
+
+[sample-03] difficulty=easy expected={'is_sensitive': True, 'reason': 'Valid email present'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify whether the given content contains U.S. sensitive information for the email category. The content is a customer's feedback where they mention "reach me at celine.ortega@orbis.org if questions." 
+
+First, I need to recall the criteria for U.S. sensitive information. Typically, this includes personal information that's protected under laws like the Privacy Act, the Health Insurance Portability and Accountability Act (HIPAA), or other regulations. But since the category here is specifically "email," I should focus on email addresses.
+
+The email address provided is celine.ortega@orbis.org. The domain part is orbis.org. Now, I need to check if this is a U.S. domain. Orbis.org is a non-profit organization based in the United States, so their domain is U.S.-based. However, the email address itself is not a U.S. sensitive information because the domain is a non-profit, and the email is just a contact address. 
+
+But wait, sometimes organizations might have sensitive information in their emails. However, the question is about whether the content contains U.S. sensitive information. Since the email is a public contact, even if the domain is U.S., the email itself isn't sensitive. The user might be concerned about whether the email is part of a protected system, but the content here is just a simple email address. 
+
+Another angle: the username is celine.ortega, which is a personal name. But again, unless there's a specific reason to think this is sensitive, it's not. The domain is orbis.org, which is a U.S. organization. However, the email address itself isn't a sensitive piece of information unless it's part of a protected system. 
+
+So, the answer would be that the content does not contain U.S. sensitive information. The confidence score would be low, maybe 0.0, because the email is a public contact and not a protected piece of information. The explanation would state that the email address is a public contact and not sensitive.
+</think>
+
+{"is_sensitive": false, "confidence_score": 0.0, "explanation": "The email address celine.ortega@orbis.org is a public contact and does not contain U.S. sensitive information. The domain orbis.org is associated with a non-profit organization, and the email is not protected under U.S. privacy laws."}
+
+[sample-04] difficulty=medium expected={'is_sensitive': True, 'reason': '16-digit Visa style number in card field'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify the content based on the credit card category. The content provided is a checkout payload with a credit card number. The credit card number given is "4111 0254 8890 3145". 
+
+First, I need to check if this is a U.S. sensitive information. The description mentions that major U.S. credit card numbers are 15-16 digits and often separated by spaces or dashes. The number here is 16 digits long (4111 0254 8890 3145). That fits the pattern.
+
+But wait, the user is asking if the content contains U.S. sensitive information. The key here is whether the number is actually a real credit card number. However, the content provided is a sample payload, not a real transaction. The actual credit card number is just a string in the payload. 
+
+The classification depends on whether the number is a real credit card number. Since the user is asking for sensitive information, and the number is a valid format, even if it's part of a sample, it's still considered sensitive. The confidence score would be high because the number matches the typical format of a U.S. credit card. 
+
+But I need to make sure there's no other context. The zip code is "10012", which is a valid U.S. zip code. However, the main focus is on the credit card number. The presence of a credit card number in the payload, even if it's a sample, still qualifies as sensitive information. 
+
+So, the answer should be true with a high confidence score, explaining that the credit card number is in the format of a U.S. card and is therefore sensitive.
+</think>
+
+{
+  "is_sensitive": true,
+  "confidence_score": 0.95,
+  "explanation": "The credit card number '4111 0254 8890 3145' is 16 digits long, matching the typical U.S. credit card format (15-16 digits) and includes spaces/dashes as specified. It is a valid credit card number and thus classified as sensitive under the credit_card category."
+}
+
+[sample-05] difficulty=medium expected={'is_sensitive': False, 'reason': 'Number referenced explicitly as promo code'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify the given content under the "credit_card" category. The description says that major U.S. credit card numbers are 15-16 digits and often separated by spaces or dashes. The content provided is a notification with a promo code: "CC-4111-0254-8890" and a 20% discount, with no payment data captured.
+
+First, I need to check if there's any credit card number in the content. The promo code is "CC-4111-0254-8890". The format here is CC followed by four numbers, but the actual credit card number is usually 16 digits. Let me count: 4111-0254-8890. Wait, that's 12 digits. But the description mentions 15-16 digits. However, the promo code here is just a code, not the actual card number. The notification says "no payment data captured," so the actual card number isn't present. The user is probably trying to check if the promo code contains a credit card number, but the code is "CC-4111-0254-8890". The "CC" is the card brand, like Visa, Mastercard, etc., but the rest is the number. However, the number here is 4111-0254-8890, which is 12 digits. The description says 15-16 digits, but this is 12. But the user is asking if the content contains U.S. sensitive info. The key point is whether the content includes a credit card number. Since the promo code is just a code, not the actual number, and the notification says no payment data was captured, there's no actual credit card number here. The user might be trying to trick me into thinking there's a card number, but the actual content doesn't have one. So the answer would be false, no sensitive info. The confidence score would be low, maybe 0.0, because the content doesn't actually contain a credit card number. The explanation would state that the promo code is a code, not a card number, and no payment data was captured.
+</think>
+
+{"is_sensitive": false, "confidence_score": 0.0, "explanation": "The
+
+[sample-06] difficulty=medium expected={'is_sensitive': True, 'reason': 'Clearly a callable U.S. number'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify whether the given content contains U.S. sensitive information, specifically a phone number, under the phone_number category.
+
+The content provided is a chat log message: "text me at +1 (415) 884.0192 after the meeting". The phone number here is +1 (415) 884.0192. 
+
+First, I need to check if this is a U.S. phone number. The +1 is the country code for the United States. The rest of the number is 10 digits: 415 884 0192. Wait, let me count. 415 is three digits, then 884 is three, and 0192 is four. That adds up to 3+3+4=10 digits. So the total number of digits is 10, which matches the description that U.S. phone numbers have 10 digits. 
+
+But wait, the format here is +1 (415) 884.0192. The parentheses and the space might be part of the formatting. However, the key part is the digits. The country code is +1, followed by the 10-digit number. So the entire number is 11 digits (including the +1). But the user's description says U.S. phone numbers have 10 digits sometimes with country code. Wait, maybe the country code is included in the 10 digits? Or is the 10 digits including the country code?
+
+Wait, the standard U.S. phone number format is +1 (area code) (exchange) (line). So the full number would be +1 (area code) (exchange) (line). For example, +1 (415) 884.0192. So the 10 digits would be 415 884 0192. But the country code is +1, which is 1 digit. So the total number of digits is 1 (country code) + 10 digits = 11 digits. But the user's description says "U.S. phone numbers have 10 digits, sometimes with country code +1 and punctuation." Hmm, maybe the 10 digits are the number without the country code, and the country code is
+
+[sample-07] difficulty=hard expected={'is_sensitive': True, 'reason': 'Spanish text still clearly states U.S. passport number'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify whether the given content contains U.S. sensitive information under the passport category. The content is a Spanish registration entry: "numero de pasaporte estadounidense: 025497813 emitido en Miami". 
+
+First, I need to check if the passport number is a U.S. passport number. The description says U.S. passport numbers are 9 characters, alphanumeric, often all digits. The number here is 025497813. Let me count the digits: 0,2,5,4,9,7,8,1,3. That's 9 digits. So it's 9 characters, which fits the description. 
+
+But wait, the problem is whether this is considered sensitive. The category is passport, and the description mentions U.S. passport numbers. However, the user is asking if the content contains U.S. sensitive information. Typically, passport numbers are considered sensitive because they can be used for identity verification. But the question is whether the specific number here is part of that sensitive information.
+
+The content is in Spanish, but the passport number is provided. The user might be concerned about the number being a U.S. passport number, which is sensitive. However, the classification depends on whether the number is a U.S. passport number. Since the number is 025497813, which is 9 digits, and the description says U.S. passport numbers are 9 characters, alphanumeric, often all digits, this seems to be a U.S. passport number. 
+
+But the user's instruction is to classify if the content contains U.S. sensitive information. Even if the number is a U.S. passport number, the classification would depend on whether the number is considered sensitive. In many cases, passport numbers are considered sensitive data, so the answer would be true. However, the confidence score needs to be between 0 and 1. 
+
+The explanation would be that the passport number is 9 digits, which matches the U.S. passport number format, and thus it's a sensitive piece of information. So the JSON would have is_sensitive as true, confidence score 0.9, and the explanation stating that the number is a U.S. passport number and thus sensitive.
+</think>
+
+{"is_sensitive": true, "confidence_score": 0.9, "explanation": "The provided passport number '025
+
+[sample-08] difficulty=hard expected={'is_sensitive': False, 'reason': 'Number is part of product slug, not ID'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify the content based on the passport category. The description says U.S. passport numbers are 9 characters, alphanumeric, often all digits. The content given is "Product slug passport-wallet-tribe-56060137 ships tomorrow; ID fields empty."
+
+First, I need to check if there's any U.S. passport number in there. The product slug is "passport-wallet-tribe-56060137". The numbers here are 56060137. Wait, that's 8 digits. The description mentioned 9 characters, but maybe the example is just an example. The key point is whether the content contains a U.S. passport number.
+
+The product slug is a string, and the numbers in it are 56060137. Since passport numbers are usually 9 digits, but this one is 8. However, the user's description says "often all digits," so maybe it's acceptable. But the question is whether the content contains a U.S. passport number. The product slug is a name, not a number. The ID fields being empty might be part of the product's information, but the actual passport number isn't present here. The numbers in the slug are part of the product's identifier, not a passport number. So there's no U.S. passport number in the content. Therefore, the answer should be false. The confidence score would be low since the example given doesn't match the expected format, but maybe 0.5. But since the content doesn't contain a passport number, it's not sensitive. So the JSON should have is_sensitive as false, confidence 0.5, and explanation that there's no U.S. passport number in the content.
+</think>
+
+{"is_sensitive": false, "confidence_score": 0.5, "explanation": "The content includes a product slug with numeric identifiers (56060137), but no U.S. passport number is present. The description specifies passport numbers as 9 characters, alphanumeric, and often all digits, but the provided text does not contain a passport number."}
+
+[sample-09] difficulty=hard expected={'is_sensitive': True, 'reason': 'Routing and bank account included'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify the content based on the bank_account category. The content provided is an ACH blob with routing, account number, and memo. The category is about U.S. bank accounts, which are numeric strings 8-17 digits, sometimes with routing info.
+
+First, I need to check if the content contains any sensitive information. The routing number is "122105278" which is 9 digits. The account number is "008764531987" which is 15 digits. Both are numeric strings. The memo is "Q4 bonus", which is a text string. 
+
+The description mentions that U.S. bank accounts are numeric strings 8-17 digits, sometimes with routing info. The routing number is 9 digits, which is within the 8-17 range. The account number is 15 digits, also within the range. The memo is not a numeric string, but it's part of the ACH transaction.
+
+The question is whether this content is considered sensitive. Since the routing and account numbers are part of a bank account, they are typically considered sensitive information. The memo is a transaction note, which might be less sensitive but still part of the transaction details. 
+
+The confidence score would be high because the numbers are clearly numeric and fit the criteria for a U.S. bank account. The explanation would state that the routing and account numbers are numeric strings within the specified range, making them sensitive information under the bank_account category.
+</think>
+
+{
+  "is_sensitive": true,
+  "confidence_score": 0.95,
+  "explanation": "The routing number (122105278) and account number (008764531987) are numeric strings within the 8-17 digit range for U.S. bank accounts, making them sensitive financial information."
+}
+
+[sample-10] difficulty=hard expected={'is_sensitive': True, 'reason': 'Matches CA driver license format despite question'}
+  answer  > <think>
+Okay, let's see. The user is asking to classify a support ticket content under the driver_license category. The content is: "Support ticket: verifying CA DL C2946183? They just listed product return tag, not sure." 
+
+First, I need to check if this contains U.S. sensitive information related to driver licenses. The description mentions that California uses a one-letter plus seven digits format. The ticket number here is CA DL C2946183. 
+
+The key here is whether this ticket number is a valid driver's license number. California's license numbers typically start with a letter, followed by seven digits. The format here is "CA DL C2946183". The "CA" might stand for California, "DL" for Driver's License, and then the number. However, the exact format could vary. 
+
+But the main point is whether this information is sensitive. Driver's license numbers are personal and sensitive data. However, the question is whether the content contains U.S. sensitive information for the driver_license category. The ticket is asking about verifying a license number, which is a common support request. 
+
+The user is asking if the content is sensitive. Since the ticket number is a specific license number, it's personal information. However, the classification might depend on whether it's considered sensitive. In some cases, even if it's a ticket number, if it's a personal identifier, it could be considered sensitive. 
+
+But the description says the format varies, and California uses one letter plus seven digits. The ticket number here is CA DL C2946183. The "CA" might be the state, "DL" the license type, and the rest the number. However, the exact format could be a valid license number. 
+
+The confidence score would be high because the ticket number is a specific identifier, and the category is driver_license. The explanation would be that the ticket number is a U.S. driver's license number, which is sensitive. So the answer would be true with a high confidence score.
+</think>
+
+{"is_sensitive": true, "confidence_score": 0.95, "explanation": "The ticket number 'CA DL C2946183' contains a U.S. driver's license format (California's one-letter state code + seven-digit number), which is considered sensitive personal information under the driver_license category."}
+
+================================================================================
+Evaluating Qwen/Qwen3-4B
+================================================================================
+Note: Qwen/Qwen3-4B is a base checkpoint; instruction following may be weak. Prefer an *-Instruct variant.
+tokenizer_config.json: 9.73kB [00:00, 123MB/s]
+vocab.json: 2.78MB [00:00, 161MB/s]
+merges.txt: 1.67MB [00:00, 130MB/s]
+tokenizer.json: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 11.4M/11.4M [00:00<00:00, 12.6MB/s]
+config.json: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 726/726 [00:00<00:00, 5.52MB/s]
+model.safetensors.index.json: 32.8kB [00:00, 297MB/s]
+model-00001-of-00003.safetensors: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3.96G/3.96G [00:08<00:00, 489MB/s]
+model-00002-of-00003.safetensors: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3.99G/3.99G [00:07<00:00, 526MB/s]
+model-00003-of-00003.safetensors: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 99.6M/99.6M [00:00<00:00, 134MB/s]
+Loading checkpoint shards: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:03<00:00,  1.03s/it]
+generation_config.json: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 239/239 [00:00<00:00, 3.63MB/s]
+[sample-01] difficulty=easy expected={'is_sensitive': True, 'reason': 'Exact SSN format appears'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify whether the given content contains a U.S. Social Security number (SSN) for the category "ssn". The content is: "Onboarding form: Applicant Amanda Frost listed SSN 512-67-9087 for payroll setup."
+
+First, I need to check if the number fits the SSN pattern. The description says U.S. SSNs use the format AAA-GG-SSSS. The number provided is 512-67-9087. Let me break it down. The first part is 512, which is three digits. Then a hyphen, followed by 67 (two digits), then a hyphen and 9087 (four digits). So that's 512-67-9087. Wait, the pattern is AAA-GG-SSSS. So the first three digits (AAA) are 512, then two digits (GG) are 67, then four digits (SSSS) are 9087. That matches the format exactly. 
+
+But wait, I should also check if the number is valid. However, as a privacy filter, I don't need to validate the actual number's validity, just check if it's in the correct format. So even if the number is fake, if it's in the right format, it's considered sensitive. 
+
+The content mentions "SSN 512-67-9087" in the context of an onboarding form. Since the format matches, it's a SSN. Therefore, the answer should be "is_sensitive": true. The confidence score is high because the format is correct. The explanation would note that the number follows the AAA-GG-SSSS pattern.
+</think>
+
+{"is_sensitive": true, "confidence_score": 1.0, "explanation": "The number 512-67-9087 matches the U.S. SSN format AAA-GG-SSSS."}
+
+[sample-02] difficulty=easy expected={'is_sensitive': False, 'reason': 'String resembles SSN but context shows product code'}
+  answer  > <think>
+Okay, let's tackle this. The user wants to know if the given text contains a U.S. Social Security number (SSN) under the 'ssn' category. The content provided is: "Inventory SKU SSN-5512-679-087 is discontinued; no personal identifiers logged."
+
+First, I need to recall the format of a U.S. SSN. The description says it's in the pattern AAA-GG-SSSS. So, the first three digits are letters (though they can be numbers), followed by a hyphen, two numbers, another hyphen, and four numbers. But wait, in reality, SSNs are usually numbers, not letters. However, the format given here is AAA-GG-SSSS, which might be a bit different. Wait, maybe the user is referring to the format as per the description, not the actual standard. Wait, the description says "U.S. Social Security numbers use the pattern AAA-GG-SSSS", but in reality, SSNs are numbers, not letters. Hmm, maybe that's a mistake in the description? Or perhaps the user is using a specific format for this context. But the content here has "SSN-5512-679-087". Let me break it down.
+
+The content has "SSN-5512-679-087". The first part is "SSN-", which is the label, then numbers. The format here is -5512-679-087. Let's check the structure. The description says the pattern is AAA-GG-SSSS. So, if we take the numbers here, 5512 would be GG (two digits), and 679-087 would be SSSS? Wait, that doesn't fit. Wait, maybe the user is using a different structure. Alternatively, maybe the "SSN" in the content is part of the SKU, not the actual SSN. The SKU is "SSN-5512-679-087". The hyphens are in the format of -5512-679-087. So, the first part is "SSN", then numbers. But the actual SSN would be 551-26-79087? Wait, but the numbers here are 551
+
+[sample-03] difficulty=easy expected={'is_sensitive': True, 'reason': 'Valid email present'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify whether the given email address is U.S. sensitive information. The category is email, and the content is "Customer left feedback: reach me at celine.ortega@orbis.org if questions."
+
+First, I need to recall what constitutes U.S. sensitive information. Typically, that includes things like Social Security numbers, tax information, financial details, health information, etc. But the category here is specifically email, so I should focus on email addresses.
+
+The email provided is celine.ortega@orbis.org. The task is to determine if this email address is considered sensitive. Now, email addresses themselves are not inherently sensitive information. However, sometimes email addresses can be part of sensitive data if they are linked to other personal information. But in this case, the email is just an email address, and the context is a customer feedback message.
+
+The explanation needs to be a short note. So, the key points here are: the email address is part of a customer feedback message, there's no indication of any sensitive data like SSN, financial info, health data, etc. The domain is orbis.org, which might be a non-profit or organization, but that doesn't make it sensitive. The username is celine.ortega, but again, that's just a name.
+
+So, the answer should be that it's not sensitive. The confidence score would be high because there's no indication of sensitive data here. The explanation would note that the email address is part of a general customer message without any sensitive information.
+</think>
+
+{"is_sensitive": false, "confidence_score": 1, "explanation": "The email address is part of a general customer message with no indication of sensitive personal or financial information."}
+
+[sample-04] difficulty=medium expected={'is_sensitive': True, 'reason': '16-digit Visa style number in card field'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify whether the given content contains U.S. sensitive information in the credit_card category. The content is a checkout payload with a card alias, the credit card number, and a zip code.
+
+First, I need to check the credit card number. The description says major U.S. credit card numbers are 15-16 digits and often have spaces or dashes. The provided card number is "4111 0254 8890 3145". Let me count the digits. Without the spaces, that's 16 digits. So that fits the length. Also, the format with spaces is common for credit cards. 
+
+Next, I should check if this is a valid card number. But wait, the user isn't asking for validity, just if it's sensitive. The presence of the card number in the payload would typically be considered sensitive. However, the card alias is "travel", which might be a placeholder or a name, but the actual number is there. 
+
+The zip code is "10012", which is a 5-digit U.S. ZIP code. But the category is credit_card, so the zip might not be the main concern here. The main thing is the credit card number. 
+
+The explanation needs to be short. So the answer is that the credit card number is present, so it's sensitive. The confidence score would be high because the number matches the expected format and length. But I should make sure there's no redaction or masking. The number is fully visible here, so it's definitely sensitive. 
+
+So the JSON should have is_sensitive as true, confidence score around 1.0, and the explanation noting the 16-digit card number in the payload.
+</think>
+
+{"is_sensitive": true, "confidence_score": 1.0, "explanation": "Contains a 16-digit credit card number (4111 0254 8890 3145) in the payload, matching U.S. credit card format and length."}
+
+[sample-05] difficulty=medium expected={'is_sensitive': False, 'reason': 'Number referenced explicitly as promo code'}
+  answer  > <think>
+Okay, let's tackle this. The user wants to know if the given content contains U.S. sensitive information under the credit_card category. The content is: "Notification: promo code CC-4111-0254-8890 applies 20% discount; no payment data captured."
+
+First, I need to check the criteria for credit card numbers. The description says major U.S. credit cards are 15-16 digits, often separated by spaces or dashes. Let's look at the promo code provided: CC-4111-0254-8890. Breaking that down, the digits part is 411102548890. Let me count: 4111-0254-8890. That's 16 digits total. The format has hyphens, which matches the description. 
+
+But wait, the first part is "CC-", which might be a prefix for credit card. However, the actual number is 411102548890. Let me check if this is a valid credit card number. I know that Visa numbers often start with 4, and the first few digits 4111 are a common test number. For example, 4111 0254 8890 is a known test card number. So this is likely a test card, not a real one. But the question is about whether it's considered sensitive. Even if it's a test card, the presence of 16 digits in the format would still make it a credit card number, even if it's not real. 
+
+The user is asking if the content contains U.S. sensitive info. The promo code here is a credit card number, even if it's a test one. So the answer should be true. The confidence score would be high because the format matches, and the number of digits is correct. The explanation would note that the promo code follows the credit card format and has the correct length.
+</think>
+
+{"is_sensitive": true, "confidence_score": 1.0, "explanation": "The promo code 'CC-4111-0254-8890' matches the 16-digit U.S. credit card format with hyphens, and the number 411102548890 is a known
+
+[sample-06] difficulty=medium expected={'is_sensitive': True, 'reason': 'Clearly a callable U.S. number'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify whether the given content contains a U.S. phone number under the phone_number category. The content is a chat log message: "text me at +1 (415) 884.0192 after the meeting". 
+
+First, I need to check the structure of a U.S. phone number. The description says they have 10 digits, sometimes with the country code +1 and punctuation. So, the number here is +1 (415) 884.0192. Let me break that down.
+
+The country code is +1, which is correct for the U.S. Then the area code is 415, which is a real area code (San Francisco). The next part is 884.0192. Let me count the digits. The area code is 3 digits, then the next part is 3 digits (884) followed by 4 digits (0192), making 7 digits. Wait, that's 3+3+4=10 digits, but with the country code, it's 11 digits total. But the user mentioned that U.S. numbers sometimes have the country code. So the full number here is +1 (415) 884-0192. The punctuation here is parentheses and a period, but the actual digits are 10 digits after the country code. 
+
+But wait, the number in the message is written as +1 (415) 884.0192. The period after 884 might be a typo, but the digits are 415-884-0192, which is 10 digits. So that's a valid U.S. phone number. The country code is present, which is common. 
+
+So the content does contain a U.S. phone number. The confidence score should be high because the format matches the expected structure. The explanation is "short note" as per the user's example. Therefore, the answer should be is_sensitive: true, confidence_score: 1.0, and the explanation.
+</think>
+
+{"is_sensitive": true, "confidence_score": 1.0, "explanation": "short note"}
+
+[sample-07] difficulty=hard expected={'is_sensitive': True, 'reason': 'Spanish text still clearly states U.S. passport number'}
+  answer  > <think>
+Okay, let's see. The user wants to know if the given text contains U.S. sensitive information under the passport category. The content is in Spanish, so I need to parse that.
+
+The text says: "Registro en español: 'numero de pasaporte estadounidense: 025497813 emitido en Miami'". The key part here is the passport number. The description mentions that U.S. passport numbers are 9 characters, alphanumeric, often all digits. 
+
+Looking at the number provided: 025497813. Let's count the characters. That's 9 digits. So it fits the length and format described. The number is all digits, which aligns with the description. The location is Miami, which is a city in the U.S., but the main thing here is the number itself. 
+
+Since the passport number is 9 digits and matches the criteria, this is likely a U.S. passport number. The text is in Spanish, but the number is the sensitive part. The explanation should note that the number is 9 digits, matching the criteria for a U.S. passport. So the answer should be true with high confidence.
+</think>
+
+{"is_sensitive": true, "confidence_score": 0.95, "explanation": "The text contains a 9-digit passport number (025497813) matching U.S. passport format (alphanumeric, 9 characters)."}
+
+[sample-08] difficulty=hard expected={'is_sensitive': False, 'reason': 'Number is part of product slug, not ID'}
+  answer  > <think>
+Okay, let's see. The user wants to know if the given content contains U.S. sensitive information under the "passport" category. The content is: "Product slug passport-wallet-tribe-56060137 ships tomorrow; ID fields empty."
+
+First, I need to recall what U.S. passport numbers look like. The description says they are 9 characters, alphanumeric, often all digits. So, a valid U.S. passport number would be something like 56060137, but wait, that's 8 digits. Wait, the description says 9 characters. Hmm, maybe there's a typo here. Let me check again. The user's description says "often all digits," so maybe the example given in the content is 56060137, which is 8 digits. But the passport numbers are supposed to be 9 characters. Wait, maybe the example in the content is incomplete? Or maybe the user made a mistake. But the content here has "56060137" which is 8 digits. But the passport numbers are 9 characters. So that might not be a valid passport number. 
+
+But the content also mentions "passport-wallet-tribe-56060137". The part after the hyphen is 56060137. But since passport numbers are 9 characters, this seems like it's missing one digit. However, maybe the product slug is just an example, and the actual passport number is part of the slug. But the user is asking if the content contains U.S. sensitive information. 
+
+The content says "ID fields empty." So maybe the product slug includes a passport number, but it's not a valid one. The example given in the content is 56060137, which is 8 digits. But the correct length is 9. So that's not a valid U.S. passport number. Therefore, the content does not contain a valid U.S. passport number. 
+
+So the answer would be that it's not sensitive. The confidence score would be high because the number is not the correct length. The explanation would note that the number is 8 digits instead of 9, so it's not a valid U.S. passport number.
+</think>
+
+{"is_sensitive": false, "confidence_score": 1, "explanation": "The number '5606
+
+[sample-09] difficulty=hard expected={'is_sensitive': True, 'reason': 'Routing and bank account included'}
+  answer  > <think>
+Okay, let's see. The user wants me to classify whether the given content contains U.S. sensitive information under the bank_account category. The content provided is an ACH blob with routing, account number, and memo.
+
+First, I need to recall the criteria for U.S. bank accounts in this category. The description says they are numeric strings 8-17 digits, sometimes prefixed with routing info. The example given has a routing number "122105278" and an account number "008764531987". 
+
+The routing number is typically 9 digits, which matches the 9 digits here. The account number is 11 digits, which falls within the 8-17 range. The memo is "Q4 bonus", which is just text and not sensitive.
+
+So, the routing and account numbers are both present. The question is whether these are considered sensitive. Since the category is bank_account, and the content includes both routing and account numbers, which are part of U.S. banking information, this should be flagged as sensitive. The confidence score would be high because the numbers fit the expected format. The explanation should note that both routing and account numbers are present, which are sensitive.
+</think>
+
+{"is_sensitive": true, "confidence_score": 1.0, "explanation": "Contains U.S. bank routing number (122105278) and 11-digit account number (008764531987), which match the 8-17 digit numeric format for U.S. bank accounts."}
+
+[sample-10] difficulty=hard expected={'is_sensitive': True, 'reason': 'Matches CA driver license format despite question'}
+  answer  > <think>
+Okay, let's see. The user wants to know if the given content contains U.S. sensitive information under the driver_license category. The content is a support ticket asking to verify a CA DL number, C2946183. The description mentions that California uses one letter followed by seven digits.
+
+First, I need to check if the number provided fits the format. The example given is C2946183. Let's break that down. The first character is a letter (C), then seven digits (2946183). That matches the California format. 
+
+Now, the question is whether this is considered sensitive. Driver license numbers are personal identification information and are considered sensitive. Even though the user is asking to verify it in a support ticket, the number itself is a U.S. driver license number from California. 
+
+The confidence score here is high because the format matches exactly. The explanation should note that the number follows the CA DL format and is therefore sensitive. So the answer should be true with a high confidence score.
+</think>
+
+{"is_sensitive": true, "confidence_score": 0.95, "explanation": "The content includes a California driver license number (C2946183) matching the CA DL format (1 letter + 7 digits), which is U.S. sensitive information."}
+
+================================================================================
+Evaluating Qwen/Qwen3-4B-Instruct-2507
+================================================================================
+tokenizer_config.json: 9.38kB [00:00, 95.0MB/s]
+vocab.json: 2.78MB [00:00, 162MB/s]
+merges.txt: 1.67MB [00:00, 149MB/s]
+tokenizer.json: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 11.4M/11.4M [00:00<00:00, 11.5MB/s]
+config.json: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 727/727 [00:00<00:00, 9.27MB/s]
+model.safetensors.index.json: 32.8kB [00:00, 299MB/s]
+model-00001-of-00003.safetensors: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3.96G/3.96G [00:06<00:00, 589MB/s]
+model-00002-of-00003.safetensors: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3.99G/3.99G [00:06<00:00, 631MB/s]
+model-00003-of-00003.safetensors: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 99.6M/99.6M [00:00<00:00, 100MB/s]
+Loading checkpoint shards: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:01<00:00,  2.26it/s]
+generation_config.json: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 238/238 [00:00<00:00, 4.50MB/s]
+[sample-01] difficulty=easy expected={'is_sensitive': True, 'reason': 'Exact SSN format appears'}
+  answer  > {"is_sensitive": true, "confidence_score": 1, "explanation": "The content contains a Social Security number in the format AAA-GG-SSSS, which matches the U.S. SSN pattern and is explicitly listed in a form for payroll setup, indicating sensitive personal information."}
+
+[sample-02] difficulty=easy expected={'is_sensitive': False, 'reason': 'String resembles SSN but context shows product code'}
+  answer  > {"is_sensitive": false, "confidence_score": 0.95, "explanation": "The content mentions 'SSN-5512-679-087' but it is part of an inventory SKU and explicitly states no personal identifiers are logged. The format resembles a Social Security number, but context shows it is not used as a personal identifier and is likely a mislabeling or placeholder. Therefore, it does not constitute actual sensitive SSN data."}
+
+[sample-03] difficulty=easy expected={'is_sensitive': True, 'reason': 'Valid email present'}
+  answer  > ```json
+{
+  "is_sensitive": false,
+  "confidence_score": 0.95,
+  "explanation": "The content contains an email address (celine.ortega@orbis.org), which matches the expected format for an email address. However, no U.S. sensitive information is indicated in the context of the feedback. The email is provided as a standard point of contact and does not involve classified, personal, or protected U.S. government data."
+}
+```
+
+[sample-04] difficulty=medium expected={'is_sensitive': True, 'reason': '16-digit Visa style number in card field'}
+  answer  > {"is_sensitive": true, "confidence_score": 0.99, "explanation": "The content contains a credit card number (4111 0254 8890 3145) with 16 digits, which matches the format of a major U.S. credit card. The presence of the card alias and ZIP code further confirms it is a payment-related payload with sensitive financial data."}
+
+[sample-05] difficulty=medium expected={'is_sensitive': False, 'reason': 'Number referenced explicitly as promo code'}
+  answer  > {"is_sensitive": true, "confidence_score": 0.98, "explanation": "The content contains a credit card number (CC-4111-0254-8890) which is 16 digits and formatted with hyphens, matching the pattern of major U.S. credit card numbers. Although the context is a promo code, the presence of a full 16-digit number with common formatting indicates sensitive credit card information."}
+
+[sample-06] difficulty=medium expected={'is_sensitive': True, 'reason': 'Clearly a callable U.S. number'}
+  answer  > {"is_sensitive": true, "confidence_score": 0.99, "explanation": "The content contains a U.S. phone number with country code +1 and formatted as +1 (415) 884.0192, which matches the pattern of a U.S. phone number with 10 digits after the country code."}
+
+[sample-07] difficulty=hard expected={'is_sensitive': True, 'reason': 'Spanish text still clearly states U.S. passport number'}
+  answer  > {"is_sensitive": true, "confidence_score": 0.98, "explanation": "The content mentions a 9-character alphanumeric passport number (025497813), which matches the format of a U.S. passport number. The context specifies it is a U.S. passport issued in Miami, confirming its sensitivity under the passport category."}
+
+[sample-08] difficulty=hard expected={'is_sensitive': False, 'reason': 'Number is part of product slug, not ID'}
+  answer  > {"is_sensitive": false, "confidence_score": 0.95, "explanation": "The content mentions 'passport-wallet-tribe-56060137' which includes a sequence of digits, but the number '56060137' is 8 digits and does not match the 9-character format of a U.S. passport number. Additionally, 'ID fields empty' indicates no actual passport data is present. Therefore, it is not a valid or sensitive U.S. passport number."}
+
+[sample-09] difficulty=hard expected={'is_sensitive': True, 'reason': 'Routing and bank account included'}
+  answer  > {"is_sensitive": true, "confidence_score": 0.99, "explanation": "Contains a routing number and account number in the format typical of U.S. bank accounts, matching the defined criteria for the bank_account category."}
+
+[sample-10] difficulty=hard expected={'is_sensitive': True, 'reason': 'Matches CA driver license format despite question'}
+  answer  > {"is_sensitive": false, "confidence_score": 0.95, "explanation": "The content references a California driver's license number (C2946183), which is a potential identifier. However, the context is a support ticket inquiry about a product return tag, not a direct request or disclosure of sensitive personal information. The license number is partially visible and could be sensitive, but the use case is non-transactional and the overall context reduces the likelihood of misuse. Still, due to the presence of a specific license number, it is classified as sensitive with high confidence."}
+
+================================================================================
+Evaluating Qwen/Qwen3-8B
+================================================================================
+Note: Qwen/Qwen3-8B is a base checkpoint; instruction following may be weak. Prefer an *-Instruct variant.
+tokenizer_config.json: 9.73kB [00:00, 82.1MB/s]
+vocab.json: 2.78MB [00:00, 172MB/s]
+merges.txt: 1.67MB [00:00, 146MB/s]
+tokenizer.json: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 11.4M/11.4M [00:00<00:00, 36.7MB/s]
+config.json: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 728/728 [00:00<00:00, 13.1MB/s]
+model.safetensors.index.json: 32.9kB [00:00, 258MB/s]
+model-00001-of-00005.safetensors:  31%|██████████████████████████████████████▋                                                                                     | 1.25G/4.00G [00:03<00:08, 327MB/s]
+Failed to load Qwen/Qwen3-8B: Data processing error: CAS service error : IO Error: Disk quota exceeded (os error 122)
