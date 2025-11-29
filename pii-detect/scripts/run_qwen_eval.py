@@ -13,12 +13,22 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 DEFAULT_MODELS: List[str] = [
+    "Qwen/Qwen2.5-0.5B",
+    "Qwen/Qwen2.5-0.5B-Instruct",
+    "Qwen/Qwen2.5-1.5B",
+    "Qwen/Qwen2.5-1.5B-Instruct",
+    "Qwen/Qwen2.5-3B",
+    "Qwen/Qwen2.5-3B-Instruct",
+    "Qwen/Qwen2.5-7B",
+    "Qwen/Qwen2.5-7B-Instruct",
     "Qwen/Qwen3-0.6B",
     "Qwen/Qwen3-1.7B",
     "Qwen/Qwen3-4B-Instruct-2507",
     "Qwen/Qwen3-8B",
 ]
-DEFAULT_SAMPLE_PATH = Path(__file__).resolve().parents[1] / "data" / "qwen_eval_samples.jsonl"
+DEFAULT_SAMPLE_PATH = (
+    Path(__file__).resolve().parents[1] / "data" / "qwen_eval_samples.jsonl"
+)
 
 SYSTEM_PROMPT = (
     "You are a privacy filter that decides if a text contains U.S. sensitive "
@@ -35,7 +45,9 @@ Reply with JSON: {{"is_sensitive": <true|false>, "confidence_score": <0-1>, "exp
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Evaluate multiple Qwen3 checkpoints on curated samples.")
+    parser = argparse.ArgumentParser(
+        description="Evaluate multiple Qwen3 checkpoints on curated samples."
+    )
     parser.add_argument(
         "--samples",
         type=Path,
@@ -109,12 +121,16 @@ def decode_generation(tokenizer, generated_ids, model_inputs):
         index = len(output_ids) - output_ids[::-1].index(think_token_id)
     except ValueError:
         index = 0
-    thinking_content = tokenizer.decode(output_ids[:index], skip_special_tokens=True).strip()
+    thinking_content = tokenizer.decode(
+        output_ids[:index], skip_special_tokens=True
+    ).strip()
     content = tokenizer.decode(output_ids[index:], skip_special_tokens=True).strip()
     return thinking_content, content
 
 
-def run_model(model_name: str, samples: Iterable[dict], args: argparse.Namespace) -> None:
+def run_model(
+    model_name: str, samples: Iterable[dict], args: argparse.Namespace
+) -> None:
     print("=" * 80)
     print(f"Evaluating {model_name}")
     print("=" * 80)
@@ -170,7 +186,9 @@ def run_model(model_name: str, samples: Iterable[dict], args: argparse.Namespace
                 **gen_kwargs,
             )
         except torch.cuda.OutOfMemoryError:
-            print(f"OOM while processing {sample['id']} on {model_name}.", file=sys.stderr)
+            print(
+                f"OOM while processing {sample['id']} on {model_name}.", file=sys.stderr
+            )
             torch.cuda.empty_cache()
             break
         thinking, content = decode_generation(tokenizer, generated_ids, model_inputs)
