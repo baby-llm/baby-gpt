@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
-"""Run a quick sensitivity detection eval across several Qwen 2.5/3 checkpoints."""
+"""Evaluate multiple Qwen checkpoints on curated PII detection samples.
+
+The script is defensive against tokenizer API changes (e.g., conversation vs.
+messages argument) and can optionally log results to JSONL.
+"""
 
 from __future__ import annotations
 
 import argparse
 import json
 import sys
+from dataclasses import dataclass
 from inspect import signature
 from pathlib import Path
-from typing import Iterable, List
+from typing import Iterable, List, Optional
 
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -41,9 +46,18 @@ Reply with JSON: {{"is_sensitive": <true|false>, "confidence_score": <0-1>, "exp
 """
 
 
+@dataclass
+class Sample:
+    id: str
+    difficulty: str
+    category: dict
+    content: str
+    expected_label: Optional[dict]
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Evaluate multiple Qwen3 checkpoints on curated samples."
+        description="Evaluate multiple Qwen checkpoints on curated samples."
     )
     parser.add_argument(
         "--samples",
@@ -79,25 +93,62 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Force-disable thinking tokens even if tokenizer supports them.",
     )
+    parser.add_argument(
+        "--device-map",
+        default="auto",
+        help='device_map passed to HF model loading (default: "auto").',
+    )
+    parser.add_argument(
+        "--dtype",
+        default="auto",
+        choices=["auto", "float16", "bfloat16", "float32"],
+        help="torch dtype for model weights (default: auto).",
+    )
+    parser.add_argument(
+        "--save-jsonl",
+        type=Path,
+        help="Optional path to append JSONL results for later analysis.",
+    )
+    parser.add_argument(
+        "--stop-on-error",
+        action="store_true",
+        help="Stop evaluation if a sample/model raises an unexpected error.",
+    )
+    parser.add_argument(
+        "--no-trust-remote-code",
+        dest="trust_remote_code",
+        action="store_false",
+        help="Disable trust_remote_code when loading models/tokenizers.",
+    )
+    parser.set_defaults(trust_remote_code=True)
     return parser.parse_args()
 
 
-def load_samples(path: Path) -> List[dict]:
+def load_samples(path: Path) -> List[Sample]:
     if not path.exists():
         raise FileNotFoundError(f"Sample file not found: {path}")
-    samples = []
+    samples: List[Sample] = []
     with path.open("r", encoding="utf-8") as fh:
         for line in fh:
             line = line.strip()
             if not line:
                 continue
-            samples.append(json.loads(line))
+            raw = json.loads(line)
+            samples.append(
+                Sample(
+                    id=raw["id"],
+                    difficulty=raw.get("difficulty", "unknown"),
+                    category=raw["category"],
+                    content=raw["content"],
+                    expected_label=raw.get("expected_label"),
+                )
+            )
     if not samples:
         raise ValueError(f"No samples loaded from {path}")
     return samples
 
 
-def detect_thinking_support(tokenizer) -> tuple[bool, int | None]:
+def detect_thinking_support(tokenizer) -> tuple[bool, Optional[int]]:
     """Check whether the tokenizer supports thinking mode and return the token id."""
     try:
         sig = signature(tokenizer.apply_chat_template)
@@ -120,12 +171,11 @@ def detect_thinking_support(tokenizer) -> tuple[bool, int | None]:
     return has_param, think_token_id
 
 
-def build_messages(sample: dict) -> List[dict]:
-    category = sample["category"]
+def build_messages(sample: Sample) -> List[dict]:
     prompt = USER_PROMPT_TEMPLATE.format(
-        name=category["name"],
-        desc=category["desc"],
-        content=sample["content"],
+        name=sample.category["name"],
+        desc=sample.category["desc"],
+        content=sample.content,
     )
     return [
         {"role": "system", "content": SYSTEM_PROMPT},
@@ -133,7 +183,52 @@ def build_messages(sample: dict) -> List[dict]:
     ]
 
 
-def decode_generation(tokenizer, generated_ids, model_inputs, think_token_id=None):
+def apply_chat_template_safe(
+    tokenizer,
+    messages: List[dict],
+    enable_thinking: bool,
+    add_generation_prompt: bool = True,
+) -> str:
+    """Apply chat template across tokenizer versions."""
+    try:
+        sig = signature(tokenizer.apply_chat_template)
+        has_thinking_param = "enable_thinking" in sig.parameters
+    except (TypeError, ValueError):
+        has_thinking_param = False
+
+    kwargs = {"tokenize": False, "add_generation_prompt": add_generation_prompt}
+    if has_thinking_param:
+        kwargs["enable_thinking"] = enable_thinking
+    elif enable_thinking:
+        print(
+            "Tokenizer does not expose enable_thinking; continuing without it.",
+            file=sys.stderr,
+        )
+
+    # Try common call signatures in order of modern APIs.
+    attempts = [
+        {"args": (messages,), "kwargs": kwargs},
+        {"args": (), "kwargs": {"conversation": messages, **kwargs}},
+        {"args": (), "kwargs": {"messages": messages, **kwargs}},
+    ]
+    last_exc: Optional[Exception] = None
+    for attempt in attempts:
+        try:
+            return tokenizer.apply_chat_template(*attempt["args"], **attempt["kwargs"])
+        except TypeError as exc:
+            last_exc = exc
+            continue
+    raise RuntimeError(
+        f"tokenizer.apply_chat_template failed with known signatures: {last_exc}"
+    )
+
+
+def decode_generation(
+    tokenizer,
+    generated_ids,
+    model_inputs,
+    think_token_id: Optional[int] = None,
+) -> tuple[str, str]:
     output_ids = generated_ids[0][len(model_inputs.input_ids[0]) :].tolist()
     index = 0
     if think_token_id is not None:
@@ -151,9 +246,86 @@ def decode_generation(tokenizer, generated_ids, model_inputs, think_token_id=Non
     return thinking_content, content
 
 
+def resolve_dtype(dtype: str):
+    if dtype == "auto":
+        return "auto"
+    mapping = {
+        "float16": torch.float16,
+        "bfloat16": torch.bfloat16,
+        "float32": torch.float32,
+    }
+    return mapping[dtype]
+
+
+def load_model_and_tokenizer(model_name: str, args: argparse.Namespace):
+    tokenizer = AutoTokenizer.from_pretrained(
+        model_name,
+        trust_remote_code=args.trust_remote_code,
+        use_fast=False,
+    )
+    model = AutoModelForCausalLM.from_pretrained(
+        model_name,
+        torch_dtype=resolve_dtype(args.dtype),
+        device_map=args.device_map,
+        trust_remote_code=args.trust_remote_code,
+    )
+    if tokenizer.pad_token is None and tokenizer.eos_token is not None:
+        tokenizer.pad_token = tokenizer.eos_token
+    return model, tokenizer
+
+
+def generate_for_sample(
+    model,
+    tokenizer,
+    sample: Sample,
+    thinking_flag: bool,
+    think_token_id: Optional[int],
+    args: argparse.Namespace,
+) -> dict:
+    messages = build_messages(sample)
+    text = apply_chat_template_safe(
+        tokenizer, messages, enable_thinking=thinking_flag
+    )
+    model_inputs = tokenizer(
+        [text],
+        return_tensors="pt",
+        padding=True,
+    ).to(model.device)
+
+    gen_kwargs = {
+        "max_new_tokens": args.max_new_tokens,
+        "pad_token_id": tokenizer.pad_token_id or tokenizer.eos_token_id,
+    }
+    if args.temperature <= 0:
+        gen_kwargs["do_sample"] = False
+    else:
+        gen_kwargs["temperature"] = args.temperature
+        gen_kwargs["do_sample"] = True
+
+    with torch.inference_mode():
+        generated_ids = model.generate(
+            **model_inputs,
+            **gen_kwargs,
+        )
+
+    thinking, content = decode_generation(
+        tokenizer,
+        generated_ids,
+        model_inputs,
+        think_token_id if thinking_flag else None,
+    )
+    return {
+        "sample_id": sample.id,
+        "difficulty": sample.difficulty,
+        "expected": sample.expected_label,
+        "thinking": thinking,
+        "answer": content,
+    }
+
+
 def run_model(
-    model_name: str, samples: Iterable[dict], args: argparse.Namespace
-) -> None:
+    model_name: str, samples: Iterable[Sample], args: argparse.Namespace
+) -> List[dict]:
     print("=" * 80)
     print(f"Evaluating {model_name}")
     print("=" * 80)
@@ -163,20 +335,10 @@ def run_model(
             file=sys.stderr,
         )
     try:
-        tokenizer = AutoTokenizer.from_pretrained(
-            model_name,
-            trust_remote_code=True,
-            use_fast=False,
-        )
-        model = AutoModelForCausalLM.from_pretrained(
-            model_name,
-            dtype="auto",
-            device_map="auto",
-            trust_remote_code=True,
-        )
+        model, tokenizer = load_model_and_tokenizer(model_name, args)
     except Exception as exc:  # pragma: no cover - best-effort load guard
         print(f"Failed to load {model_name}: {exc}", file=sys.stderr)
-        return
+        return []
 
     supports_thinking, think_token_id = detect_thinking_support(tokenizer)
     thinking_flag = supports_thinking
@@ -190,66 +352,64 @@ def run_model(
             file=sys.stderr,
         )
 
+    results: List[dict] = []
     for sample in samples:
-        messages = build_messages(sample)
-        chat_kwargs = {
-            "messages": messages,
-            "tokenize": False,
-            "add_generation_prompt": True,
-        }
-        if supports_thinking:
-            chat_kwargs["enable_thinking"] = thinking_flag
-        text = tokenizer.apply_chat_template(**chat_kwargs)
-        model_inputs = tokenizer(
-            [text],
-            return_tensors="pt",
-            padding=True,
-        ).to(model.device)
-
-        gen_kwargs = {
-            "max_new_tokens": args.max_new_tokens,
-            "pad_token_id": tokenizer.eos_token_id,
-        }
-        if args.temperature <= 0:
-            gen_kwargs["do_sample"] = False
-        else:
-            gen_kwargs["temperature"] = args.temperature
-            gen_kwargs["do_sample"] = True
-
         try:
-            generated_ids = model.generate(
-                **model_inputs,
-                **gen_kwargs,
+            result = generate_for_sample(
+                model,
+                tokenizer,
+                sample,
+                thinking_flag,
+                think_token_id,
+                args,
             )
         except torch.cuda.OutOfMemoryError:
             print(
-                f"OOM while processing {sample['id']} on {model_name}.", file=sys.stderr
+                f"OOM while processing {sample.id} on {model_name}.", file=sys.stderr
             )
             torch.cuda.empty_cache()
             break
-        thinking, content = decode_generation(
-            tokenizer,
-            generated_ids,
-            model_inputs,
-            think_token_id if thinking_flag else None,
+        except Exception as exc:  # pragma: no cover - best-effort logging
+            print(
+                f"Error while processing {sample.id} on {model_name}: {exc}",
+                file=sys.stderr,
+            )
+            if args.stop_on_error:
+                raise
+            continue
+
+        expected = result["expected"] or {}
+        print(
+            f"[{sample.id}] difficulty={sample.difficulty} expected={expected}"
         )
-        expected = sample.get("expected_label", {})
-        print(f"[{sample['id']}] difficulty={sample['difficulty']} expected={expected}")
-        if thinking:
-            print(f"  thinking> {thinking}")
-        print(f"  answer  > {content}\n")
+        if result["thinking"]:
+            print(f"  thinking> {result['thinking']}")
+        print(f"  answer  > {result['answer']}\n")
+        results.append({"model": model_name, **result})
 
     # Free memory before loading next checkpoint.
     del model
     del tokenizer
     torch.cuda.empty_cache()
+    return results
+
+
+def append_results(path: Path, results: List[dict]) -> None:
+    if not results:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as fh:
+        for row in results:
+            fh.write(json.dumps(row, ensure_ascii=False) + "\n")
 
 
 def main() -> None:
     args = parse_args()
     samples = load_samples(args.samples)
     for model_name in args.models:
-        run_model(model_name, samples, args)
+        results = run_model(model_name, samples, args)
+        if args.save_jsonl:
+            append_results(args.save_jsonl, results)
 
 
 if __name__ == "__main__":
