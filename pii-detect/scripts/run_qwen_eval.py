@@ -32,6 +32,10 @@ DEFAULT_SAMPLE_PATH = (
     Path(__file__).resolve().parents[1] / "data" / "qwen_eval_samples.jsonl"
 )
 
+DEFAULT_OUTPUT_PATH = (
+    Path(__file__).resolve().parents[1] / "eval_results" / "result.json"
+)
+
 SYSTEM_PROMPT = (
     "You are a privacy filter that decides if a text contains U.S. sensitive "
     "information for a requested category."
@@ -105,9 +109,15 @@ def parse_args() -> argparse.Namespace:
         help="torch dtype for model weights (default: auto).",
     )
     parser.add_argument(
-        "--save-jsonl",
+        "--output",
         type=Path,
-        help="Optional path to append JSONL results for later analysis.",
+        default=DEFAULT_OUTPUT_PATH,
+        help=f"Path to write combined JSON results (default: {DEFAULT_OUTPUT_PATH}).",
+    )
+    parser.add_argument(
+        "--no-save",
+        action="store_true",
+        help="Disable writing results to disk; only print to stdout.",
     )
     parser.add_argument(
         "--stop-on-error",
@@ -406,10 +416,14 @@ def append_results(path: Path, results: List[dict]) -> None:
 def main() -> None:
     args = parse_args()
     samples = load_samples(args.samples)
+    all_results: List[dict] = []
     for model_name in args.models:
         results = run_model(model_name, samples, args)
-        if args.save_jsonl:
-            append_results(args.save_jsonl, results)
+        all_results.extend(results)
+    if not args.no_save and all_results:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        with args.output.open("w", encoding="utf-8") as fh:
+            json.dump(all_results, fh, ensure_ascii=False, indent=2)
 
 
 if __name__ == "__main__":
