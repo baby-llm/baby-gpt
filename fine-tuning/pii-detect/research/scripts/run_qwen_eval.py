@@ -30,7 +30,7 @@ DEFAULT_MODELS: List[str] = [
     # "Qwen/Qwen3-8B",
 ]
 DEFAULT_SAMPLE_PATH = (
-    Path(__file__).resolve().parents[1] / "data" / "qwen_eval_samples.jsonl"
+    Path(__file__).resolve().parents[1] / "data" / "eval_samples.jsonl"
 )
 
 DEFAULT_OUTPUT_PATH = (
@@ -470,9 +470,7 @@ def run_model(
     del model
     del tokenizer
     torch.cuda.empty_cache()
-    avg_latency = (
-        sum(durations) / len(durations) if durations else None  # seconds
-    )
+    avg_latency = sum(durations) / len(durations) if durations else None  # seconds
     return results, avg_latency
 
 
