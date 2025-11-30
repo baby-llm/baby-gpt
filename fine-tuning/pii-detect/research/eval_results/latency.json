@@ -1,37 +1,37 @@
 [
   {
     "model": "Qwen/Qwen2.5-0.5B-Instruct",
-    "avg_latency_ms": 830.66,
+    "avg_latency_ms": 594.47,
     "samples": 17
   },
   {
     "model": "Qwen/Qwen2.5-1.5B-Instruct",
-    "avg_latency_ms": 1025.07,
+    "avg_latency_ms": 830.5,
     "samples": 17
   },
   {
     "model": "Qwen/Qwen2.5-3B-Instruct",
-    "avg_latency_ms": 1582.76,
+    "avg_latency_ms": 1173.74,
     "samples": 17
   },
   {
     "model": "Qwen/Qwen2.5-7B-Instruct",
-    "avg_latency_ms": 1139.73,
+    "avg_latency_ms": 965.94,
     "samples": 17
   },
   {
     "model": "Qwen/Qwen3-0.6B",
-    "avg_latency_ms": 9163.53,
+    "avg_latency_ms": 7894.33,
     "samples": 17
   },
   {
     "model": "Qwen/Qwen3-1.7B",
-    "avg_latency_ms": 13599.45,
+    "avg_latency_ms": 11109.05,
     "samples": 17
   },
   {
     "model": "Qwen/Qwen3-4B-Instruct-2507",
-    "avg_latency_ms": 3600.39,
+    "avg_latency_ms": 3069.86,
     "samples": 17
   }
 ]
