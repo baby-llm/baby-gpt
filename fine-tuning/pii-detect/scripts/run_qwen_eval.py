@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import time
 from dataclasses import dataclass
 from inspect import signature
 from pathlib import Path
@@ -34,6 +35,9 @@ DEFAULT_SAMPLE_PATH = (
 
 DEFAULT_OUTPUT_PATH = (
     Path(__file__).resolve().parents[1] / "eval_results" / "result.json"
+)
+LATENCY_OUTPUT_PATH = (
+    Path(__file__).resolve().parents[1] / "eval_results" / "latency.json"
 )
 
 SYSTEM_PROMPT = (
@@ -139,6 +143,12 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=DEFAULT_OUTPUT_PATH,
         help=f"Path to write combined JSON results (default: {DEFAULT_OUTPUT_PATH}).",
+    )
+    parser.add_argument(
+        "--latency-output",
+        type=Path,
+        default=LATENCY_OUTPUT_PATH,
+        help=f"Path to write per-model latency stats (default: {LATENCY_OUTPUT_PATH}).",
     )
     parser.add_argument(
         "--no-save",
@@ -393,7 +403,7 @@ def generate_for_sample(
 
 def run_model(
     model_name: str, samples: Iterable[Sample], args: argparse.Namespace
-) -> List[dict]:
+) -> tuple[List[dict], Optional[float]]:
     print("=" * 80)
     print(f"Evaluating {model_name}")
     print("=" * 80)
@@ -423,8 +433,10 @@ def run_model(
     gen_kwargs = build_generation_kwargs(tokenizer, args)
 
     results: List[dict] = []
+    durations: List[float] = []
     for sample in samples:
         try:
+            start = time.perf_counter()
             result = generate_for_sample(
                 model,
                 tokenizer,
@@ -433,6 +445,7 @@ def run_model(
                 think_token_id,
                 gen_kwargs,
             )
+            durations.append(time.perf_counter() - start)
         except torch.cuda.OutOfMemoryError:
             print(f"OOM while processing {sample.id} on {model_name}.", file=sys.stderr)
             torch.cuda.empty_cache()
@@ -457,7 +470,10 @@ def run_model(
     del model
     del tokenizer
     torch.cuda.empty_cache()
-    return results
+    avg_latency = (
+        sum(durations) / len(durations) if durations else None  # seconds
+    )
+    return results, avg_latency
 
 
 def append_results(path: Path, results: List[dict]) -> None:
@@ -472,13 +488,26 @@ def main() -> None:
     args = parse_args()
     samples = load_samples(args.samples)
     all_results: List[dict] = []
+    latency_rows: List[dict] = []
     for model_name in args.models:
-        results = run_model(model_name, samples, args)
+        results, avg_latency = run_model(model_name, samples, args)
         all_results.extend(results)
+        if avg_latency is not None:
+            latency_rows.append(
+                {
+                    "model": model_name,
+                    "avg_latency_ms": round(avg_latency * 1000, 2),
+                    "samples": len(results),
+                }
+            )
     if not args.no_save and all_results:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         with args.output.open("w", encoding="utf-8") as fh:
             json.dump(all_results, fh, ensure_ascii=False, indent=2)
+    if latency_rows:
+        args.latency_output.parent.mkdir(parents=True, exist_ok=True)
+        with args.latency_output.open("w", encoding="utf-8") as fh:
+            json.dump(latency_rows, fh, ensure_ascii=False, indent=2)
 
 
 if __name__ == "__main__":
