@@ -23,11 +23,10 @@ DEFAULT_MODELS: List[str] = [
     "Qwen/Qwen2.5-1.5B-Instruct",
     "Qwen/Qwen2.5-3B-Instruct",
     "Qwen/Qwen2.5-7B-Instruct",
-    # "Qwen/Qwen3-0.6B",
-    # "Qwen/Qwen3-1.7B",
-    # "Qwen/Qwen3-4B",
-    # "Qwen/Qwen3-4B-Instruct-2507",
-    # "Qwen/Qwen3-8B",
+    "Qwen/Qwen3-0.6B",
+    "Qwen/Qwen3-1.7B",
+    "Qwen/Qwen3-4B-Instruct-2507",
+    "Qwen/Qwen3-8B",
 ]
 DEFAULT_SAMPLE_PATH = (
     Path(__file__).resolve().parents[1] / "data" / "qwen_eval_samples.jsonl"
@@ -85,8 +84,34 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--temperature",
         type=float,
-        default=0.0,
-        help="Sampling temperature (default 0 = greedy).",
+        default=0.7,
+        help="Sampling temperature (default: 0.7 per Qwen official settings).",
+    )
+    parser.add_argument(
+        "--top-p",
+        type=float,
+        dest="top_p",
+        default=0.8,
+        help="Top-p nucleus sampling (default: 0.8 per Qwen official settings).",
+    )
+    parser.add_argument(
+        "--top-k",
+        type=int,
+        dest="top_k",
+        default=20,
+        help="Top-k sampling (default: 20 per Qwen official settings).",
+    )
+    parser.add_argument(
+        "--repetition-penalty",
+        type=float,
+        dest="repetition_penalty",
+        default=1.1,
+        help="Repetition penalty (default: 1.1 per Qwen official settings).",
+    )
+    parser.add_argument(
+        "--greedy",
+        action="store_true",
+        help="Force deterministic decoding (do_sample=False) and ignore sampling overrides.",
     )
     parser.add_argument(
         "--enable-thinking",
@@ -274,15 +299,53 @@ def load_model_and_tokenizer(model_name: str, args: argparse.Namespace):
         trust_remote_code=args.trust_remote_code,
         use_fast=False,
     )
-    model = AutoModelForCausalLM.from_pretrained(
-        model_name,
-        torch_dtype=resolve_dtype(args.dtype),
-        device_map=args.device_map,
-        trust_remote_code=args.trust_remote_code,
-    )
+    dtype = resolve_dtype(args.dtype)
+    model_kwargs = {
+        "device_map": args.device_map,
+        "trust_remote_code": args.trust_remote_code,
+    }
+    try:
+        model = AutoModelForCausalLM.from_pretrained(
+            model_name,
+            dtype=dtype,
+            **model_kwargs,
+        )
+    except TypeError:
+        model = AutoModelForCausalLM.from_pretrained(
+            model_name,
+            torch_dtype=dtype,
+            **model_kwargs,
+        )
     if tokenizer.pad_token is None and tokenizer.eos_token is not None:
         tokenizer.pad_token = tokenizer.eos_token
     return model, tokenizer
+
+
+def build_generation_kwargs(tokenizer, args: argparse.Namespace) -> dict:
+    """Construct generation kwargs using Qwen recommended sampling defaults."""
+    kwargs = {
+        "max_new_tokens": args.max_new_tokens,
+        "pad_token_id": tokenizer.pad_token_id or tokenizer.eos_token_id,
+    }
+
+    sampling_overrides = {}
+    other_overrides = {}
+    sampling_overrides["temperature"] = args.temperature
+    sampling_overrides["top_p"] = args.top_p
+    sampling_overrides["top_k"] = args.top_k
+    other_overrides["repetition_penalty"] = args.repetition_penalty
+
+    if args.greedy:
+        print(
+            "Greedy decoding requested; ignoring sampling parameters.",
+            file=sys.stderr,
+        )
+        kwargs["do_sample"] = False
+    else:
+        kwargs["do_sample"] = True
+        kwargs.update(sampling_overrides)
+        kwargs.update(other_overrides)
+    return kwargs
 
 
 def generate_for_sample(
@@ -291,27 +354,15 @@ def generate_for_sample(
     sample: Sample,
     thinking_flag: bool,
     think_token_id: Optional[int],
-    args: argparse.Namespace,
+    gen_kwargs: dict,
 ) -> dict:
     messages = build_messages(sample)
-    text = apply_chat_template_safe(
-        tokenizer, messages, enable_thinking=thinking_flag
-    )
+    text = apply_chat_template_safe(tokenizer, messages, enable_thinking=thinking_flag)
     model_inputs = tokenizer(
         [text],
         return_tensors="pt",
         padding=True,
     ).to(model.device)
-
-    gen_kwargs = {
-        "max_new_tokens": args.max_new_tokens,
-        "pad_token_id": tokenizer.pad_token_id or tokenizer.eos_token_id,
-    }
-    if args.temperature <= 0:
-        gen_kwargs["do_sample"] = False
-    else:
-        gen_kwargs["temperature"] = args.temperature
-        gen_kwargs["do_sample"] = True
 
     with torch.inference_mode():
         generated_ids = model.generate(
@@ -363,6 +414,8 @@ def run_model(
             file=sys.stderr,
         )
 
+    gen_kwargs = build_generation_kwargs(tokenizer, args)
+
     results: List[dict] = []
     for sample in samples:
         try:
@@ -372,12 +425,10 @@ def run_model(
                 sample,
                 thinking_flag,
                 think_token_id,
-                args,
+                gen_kwargs,
             )
         except torch.cuda.OutOfMemoryError:
-            print(
-                f"OOM while processing {sample.id} on {model_name}.", file=sys.stderr
-            )
+            print(f"OOM while processing {sample.id} on {model_name}.", file=sys.stderr)
             torch.cuda.empty_cache()
             break
         except Exception as exc:  # pragma: no cover - best-effort logging
@@ -390,9 +441,7 @@ def run_model(
             continue
 
         expected = result["expected"] or {}
-        print(
-            f"[{sample.id}] difficulty={sample.difficulty} expected={expected}"
-        )
+        print(f"[{sample.id}] difficulty={sample.difficulty} expected={expected}")
         if result["thinking"]:
             print(f"  thinking> {result['thinking']}")
         print(f"  answer  > {result['answer']}\n")
@@ -409,9 +458,8 @@ def append_results(path: Path, results: List[dict]) -> None:
     if not results:
         return
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("a", encoding="utf-8") as fh:
-        for row in results:
-            fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+    with path.open("w", encoding="utf-8") as fh:
+        json.dump(results, fh, ensure_ascii=False, indent=2)
 
 
 def main() -> None:

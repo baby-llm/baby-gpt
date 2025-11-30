@@ -1,3 +1,5 @@
+# source: https://huggingface.co/Qwen/Qwen2.5-7B-Instruct
+
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 model_name = "Qwen/Qwen2.5-7B-Instruct"
