@@ -27,7 +27,7 @@ DEFAULT_MODELS: List[str] = [
     "Qwen/Qwen3-0.6B",
     "Qwen/Qwen3-1.7B",
     "Qwen/Qwen3-4B-Instruct-2507",
-    "Qwen/Qwen3-8B",
+    # "Qwen/Qwen3-8B",
 ]
 DEFAULT_SAMPLE_PATH = (
     Path(__file__).resolve().parents[1] / "data" / "qwen_eval_samples.jsonl"
