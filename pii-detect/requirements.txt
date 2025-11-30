@@ -1,5 +1,0 @@
-torch>=2.1.0
-transformers>=4.40.0
-accelerate>=0.29.3
-sentencepiece>=0.1.99
-tiktoken>=0.7.0
