@@ -1,0 +1,1927 @@
+[
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-01",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Exact SSN format appears"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.9, \"explanation\": \"\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-02",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "String resembles SSN but context shows product code"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.9, \"explanation\": \"The short note does not contain any personally identifiable information (PII) or Sensitive Information (SI). It simply provides inventory information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-03",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email present"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 1, \"explanation\": \"The content does not contain any U.S. sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-04",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "16-digit Visa style number in card field"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.75, \"explanation\": \"The content does not contain any U.S. sensitive information related to credit card details.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-05",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number referenced explicitly as promo code"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.75, \"explanation\": \"The content does not contain any U.S. sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-06",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Clearly a callable U.S. number"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.732, \"explanation\": \"The text does not contain any U.S. sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-07",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Spanish text still clearly states U.S. passport number"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.96, \"explanation\": \"The content does not contain any sensitive information about U.S. passport numbers.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-08",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number is part of product slug, not ID"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.8, \"explanation\": \"The content is brief and does not contain any sensitive information related to a passport or its contents.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-09",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Routing and bank account included"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.9999999999999999, \"explanation\": \"\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-10",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Matches CA driver license format despite question"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.5, \"explanation\": \"The description does not contain any U.S. sensitive information and is brief.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-11",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email present"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.5, \"explanation\": \"The content is brief but contains important information about escalation contacts.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-12",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "No concrete email value"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 1, \"explanation\": \"The explanation provided does not explain why this content might be considered sensitive or what to do about it.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-13",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Callable U.S. number present"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.6, \"explanation\": \"The content does not contain any sensitive information about phone numbers.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-14",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "15-digit AMEX card provided"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"No additional sensitive information is present in this description.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-15",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Only masked card, full PAN absent"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 1, \"explanation\": \"The content does not contain any sensitive information related to credit card details.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-16",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Routing and account numbers present"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.999999, \"explanation\": \"\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-17",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Placeholder zeros and pending routing"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"The description is brief and does not contain any sensitive or protected personal information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-18",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Looks like valid U.S. passport ID"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.62, \"explanation\": \"The content does not contain any U.S. sensitive information as it only mentions a short note and does not include any personal identification data.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-19",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Case slug, not an ID number"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.75, \"explanation\": \"The content is brief and does not contain any potentially sensitive information related to a passport or its details.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-20",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Numeric NY driver license provided"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.999999, \"explanation\": \"\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-21",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Placeholder format only"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 1, \"explanation\": \"The content does not contain any potentially sensitive information related to a driver's license or its format.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-22",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid-looking ITIN pattern"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.8, \"explanation\": \"The description does not contain any personally identifiable information (PII) or other sensitive data.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-23",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Explicitly an example placeholder"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.8, \"explanation\": \"The description does not contain any personally identifiable information (PII) or sensitive personal data.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-24",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email in non-English text"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 1, \"explanation\": \"\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "sample_id": "sample-25",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid U.S. phone number present"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.97, \"explanation\": \"This content does not contain any sensitive information about phone numbers.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-01",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Exact SSN format appears"
+    },
+    "thinking": "",
+    "answer": "{\n  \"is_sensitive\": true,\n  \"confidence_score\": 1,\n  \"explanation\": \"The content explicitly includes an actual U.S. Social Security number (SSN) in the format AAA-GG-SSSS, which is considered sensitive information under the given category.\"\n}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-02",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "String resembles SSN but context shows product code"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.9, \"explanation\": \"long note\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-03",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email present"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"The email address is not marked as sensitive because it does not contain any personal identifiable information (PII). The user has provided their full name and an email address without including anything like social security numbers or other identifying details.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-04",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "16-digit Visa style number in card field"
+    },
+    "thinking": "",
+    "answer": "{\n\"is_sensitive\": false,\n\"confidence_score\": 0.9,\n\"explanation\": \"The provided content does not contain any major U.S. credit card number format.\"\n}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-05",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number referenced explicitly as promo code"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.9, \"explanation\": \"The content does not contain any major U.S. credit card number format as described in the description.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-06",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Clearly a callable U.S. number"
+    },
+    "thinking": "",
+    "answer": "{\n  \"is_sensitive\": true,\n  \"confidence_score\": 0.9,\n  \"explanation\": \"The provided text contains a U.S. phone number (+1 (415) 884.0192).\"\n}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-07",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Spanish text still clearly states U.S. passport number"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"The content does not contain any U.S. sensitive information such as specific U.S. passport details or other personal identifiers like names or addresses.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-08",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number is part of product slug, not ID"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.8, \"explanation\": \"The content does not contain any U.S. sensitive information such as passport details.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-09",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Routing and bank account included"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"The provided content does not contain any sensitive information related to U.S. bank account details.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-10",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Matches CA driver license format despite question"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.5, \"explanation\": \"The content is a support ticket about verifying a California driver's license number and mentions a product return tag without any indication of sensitive personal information.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-11",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email present"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"The email address provided is not specifically flagged as containing sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-12",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "No concrete email value"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"long note\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-13",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Callable U.S. number present"
+    },
+    "thinking": "",
+    "answer": "{\n  \"is_sensitive\": true,\n  \"confidence_score\": 0.95,\n  \"explanation\": \"The provided number '415.884.0192 x55' is a U.S. phone number which has 10 digits.\"\n}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-14",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "15-digit AMEX card provided"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.9, \"explanation\": \"The content does not contain any major U.S. credit card numbers as described in the category.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-15",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Only masked card, full PAN absent"
+    },
+    "thinking": "",
+    "answer": "{\n  \"is_sensitive\": false,\n  \"confidence_score\": 0.9,\n  \"explanation\": \"The content does not contain any major U.S. credit card number.\"\n}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-16",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Routing and account numbers present"
+    },
+    "thinking": "",
+    "answer": "{\n  \"is_sensitive\": true,\n  \"confidence_score\": 0.95,\n  \"explanation\": \"The content includes a full U.S. bank account number (routing transit number and account number) which is considered sensitive information.\"\n}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-17",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Placeholder zeros and pending routing"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"The provided content does not contain any U.S. sensitive information as it only mentions template strings and placeholder values without revealing specific account details.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-18",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Looks like valid U.S. passport ID"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"U.S. passport numbers are required to be entered and typically consist of 9 alphanumeric characters, including digits. The provided number 'C03495718' is exactly 9 characters long and includes both letters (C) and digits ('0').\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-19",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Case slug, not an ID number"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"The content does not contain any U.S. sensitive information as it is just a ticket description and a unique identifier.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-20",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Numeric NY driver license provided"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.9, \"explanation\": \"short note\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-21",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Placeholder format only"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"The provided content is generic and does not contain any specific sensitive information related to U.S. driver licenses.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-22",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid-looking ITIN pattern"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.9, \"explanation\": \"The content does not contain any U.S. sensitive information related to tax identification numbers or other categories of interest.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-23",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Explicitly an example placeholder"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.9, \"explanation\": \"long note\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-24",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email in non-English text"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 1, \"explanation\": \"short note\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "sample_id": "sample-25",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid U.S. phone number present"
+    },
+    "thinking": "",
+    "answer": "{\n  \"is_sensitive\": false,\n  \"confidence_score\": 0.95,\n  \"explanation\": \"The provided content does not contain any U.S. phone number.\"\n}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-01",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Exact SSN format appears"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 1.0, \"explanation\": \"The provided SSN matches the standard format (AAA-GG-SSSS) and is associated with an individual's tax identification number.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-02",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "String resembles SSN but context shows product code"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.9, \"explanation\": \"The content does not contain any U.S. Social Security Numbers (SSNs) or similar personally identifiable information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-03",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email present"
+    },
+    "thinking": "",
+    "answer": "```json\n{\n  \"is_sensitive\": false,\n  \"confidence_score\": 0.85,\n  \"explanation\": \"The content is a typical customer communication without any identifiable personal data or other sensitive information.\"\n}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-04",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "16-digit Visa style number in card field"
+    },
+    "thinking": "",
+    "answer": "{\n  \"is_sensitive\": true,\n  \"confidence_score\": 1.0,\n  \"explanation\": \"The content includes a major U.S. credit card number (15 digits) which matches the description provided.\"\n}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-05",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number referenced explicitly as promo code"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.7, \"explanation\": \"short note\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-06",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Clearly a callable U.S. number"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 1.0, \"explanation\": \"The phone number +1 (415) 884.0192 is clearly visible in the chat log.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-07",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Spanish text still clearly states U.S. passport number"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.9, \"explanation\": \"short note\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-08",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number is part of product slug, not ID"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.8, \"explanation\": \"The content provided is just a product description and does not contain any specific or identifiable U.S. passport number.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-09",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Routing and bank account included"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 1.0, \"explanation\": \"Includes a complete U.S. bank account number (8 digits) and routing transit number (9 digits).\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-10",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Matches CA driver license format despite question"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.5, \"explanation\": \"The description provided is about a support ticket and does not contain explicit details of a specific driver license number or format.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-11",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email present"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.8, \"explanation\": \"The content is a valid email address used in a professional context.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-12",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "No concrete email value"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"non-disclosure of specific email addresses\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-13",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Callable U.S. number present"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"short note\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-14",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "15-digit AMEX card provided"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"short note\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-15",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Only masked card, full PAN absent"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.8, \"explanation\": \"short note\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-16",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Routing and account numbers present"
+    },
+    "thinking": "",
+    "answer": "{\n  \"is_sensitive\": true,\n  \"confidence_score\": 1,\n  \"explanation\": \"short note\"\n}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-17",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Placeholder zeros and pending routing"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.9, \"explanation\": \"The provided description is about the structure of bank account numbers and does not contain any specific account number or routing details.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-18",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Looks like valid U.S. passport ID"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 1.0, \"explanation\": \"The passport number is 9 characters long and includes letters and numbers.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-19",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Case slug, not an ID number"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"short note\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-20",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Numeric NY driver license provided"
+    },
+    "thinking": "",
+    "answer": "{\n  \"is_sensitive\": true,\n  \"confidence_score\": 0.95,\n  \"explanation\": \"The description provided indicates that California-specific license format is being discussed, while the input mentions a New York (NY) license number. This suggests the presence of a potentially sensitive U.S. driver license number.\"\n}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-21",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Placeholder format only"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.8, \"explanation\": \"The provided content is not specific or detailed enough to indicate any U.S. driver license data.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-22",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid-looking ITIN pattern"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 1.0, \"explanation\": \"The provided ITIN 912-70-1234 matches the description of an ITIN (U.S. Individual Taxpayer Identification Number) which is indeed 9 digits long and starts with 9.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-23",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Explicitly an example placeholder"
+    },
+    "thinking": "",
+    "answer": "{\n  \"is_sensitive\": true,\n  \"confidence_score\": 1,\n  \"explanation\": \"The description provided matches the definition of an ITIN, which is indeed considered sensitive information.\"\n}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-24",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email in non-English text"
+    },
+    "thinking": "",
+    "answer": "```json\n{\n  \"is_sensitive\": false,\n  \"confidence_score\": 1,\n  \"explanation\": \"The content is an email address in Chinese characters.\"\n}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "sample_id": "sample-25",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid U.S. phone number present"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 1.0, \"explanation\": \"The provided number 800-555-1212 is a valid U.S. toll-free phone number.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-01",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Exact SSN format appears"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 1, \"explanation\": \"The content directly mentions an individual's SSN in the format used by the U.S.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-02",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "String resembles SSN but context shows product code"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.3, \"explanation\": \"The content does not contain a valid U.S. Social Security number.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-03",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email present"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.5, \"explanation\": \"The content includes an email address which is typically not considered sensitive information unless it pertains to a specific individual or organization under protection orders.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-04",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "16-digit Visa style number in card field"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": true, \"confidence_score\": 0.9, \"explanation\": \"The content includes a 16-digit credit card number formatted with spaces, which matches the description of a major U.S. credit card.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-05",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number referenced explicitly as promo code"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.7, \"explanation\": \"The content mentions a promotional code format similar to a credit card number but explicitly states that no payment data was captured.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-06",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Clearly a callable U.S. number"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"The content contains a U.S. phone number in the format +1 (415) 884.0192, which matches the specified criteria.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-07",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Spanish text still clearly states U.S. passport number"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"The content includes a U.S. passport number which matches the specified format of 9 alphanumeric characters, likely all digits.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-08",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number is part of product slug, not ID"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.2, \"explanation\": \"The content does not contain any U.S. passport numbers or other sensitive information related to passports.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-09",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Routing and bank account included"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": true, \"confidence_score\": 0.9, \"explanation\": \"The content contains a routing number and an account number, both of which are within the specified range for U.S. bank accounts.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-10",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Matches CA driver license format despite question"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.25, \"explanation\": \"The content does not contain any sensitive information related to a U.S. driver's license. It only mentions a CA DL number but lacks other identifying details.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-11",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email present"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.5, \"explanation\": \"The content includes an email address which is typically not considered sensitive unless it contains personal or identifiable information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-12",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "No concrete email value"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.5, \"explanation\": \"The content does not contain any actual email addresses, only mentions an empty field.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-13",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Callable U.S. number present"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": true, \"confidence_score\": 0.9, \"explanation\": \"The content contains a U.S. phone number in the format 415.884.0192, which matches the specified criteria.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-14",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "15-digit AMEX card provided"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": true, \"confidence_score\": 0.9, \"explanation\": \"The content includes a major U.S. credit card number (AMEX) which is 15-16 digits long as specified in the description.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-15",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Only masked card, full PAN absent"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.2, \"explanation\": \"The content mentions a partially masked credit card number but does not contain a full 15-16 digit credit card number.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-16",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Routing and account numbers present"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": true, \"confidence_score\": 0.9, \"explanation\": \"The content includes an ACH record with both routing and account numbers, which are sensitive banking details.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-17",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Placeholder zeros and pending routing"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": true, \"confidence_score\": 0.85, \"explanation\": \"The content includes an account number which is within the specified range for U.S. bank accounts and thus can be considered sensitive.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-18",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Looks like valid U.S. passport ID"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"The content includes a full U.S. passport number which is sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-19",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Case slug, not an ID number"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": false, \"confidence_score\": 0.3, \"explanation\": \"The content does not contain a full U.S. passport number as it is described to be 9 characters long and alphanumeric, but here only part of a description (slug) is provided without an actual number.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-20",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Numeric NY driver license provided"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.3, \"explanation\": \"The content does not include a license number from a state that matches the specified format (California's format is one letter followed by seven digits).\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-21",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Placeholder format only"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.85, \"explanation\": \"The content mentions 'DL', which is an abbreviation commonly used for driver licenses in various states, including California.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-22",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid-looking ITIN pattern"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": true, \"confidence_score\": 0.9, \"explanation\": \"The content includes an ITIN (Individual Taxpayer Identification Number) which matches the specified criteria for being sensitive.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-23",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Explicitly an example placeholder"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.9, \"explanation\": \"The content describes the format of ITINs, which is considered sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-24",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email in non-English text"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.3, \"explanation\": \"The content includes an email address but it is in Chinese and for customer support, not related to U.S. sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "sample_id": "sample-25",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid U.S. phone number present"
+    },
+    "thinking": "",
+    "answer": "```json\n{\"is_sensitive\": true, \"confidence_score\": 0.9, \"explanation\": \"The content contains a U.S. toll-free phone number in the format 800-XXX-XXXX, which matches the specified category.\"}\n```"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-01",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Exact SSN format appears"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify the given content into the 'ssn' category. The description mentions that U.S. social security numbers follow the pattern AAA-GG-SSSS and uniquely identify taxpayers. Then there's a sample onboarding form where applicant Amanda Frost has an SSN of 512-67-9087.\n\nFirst, I need to check if this SSN is relevant to the request. The question is about classifying the content under the 'ssn' category. The provided example includes an actual SSN in the form, which would be a direct match. However, the classification here depends on whether the content itself is classified as such or if it's part of another category.\n\nThe user's instruction says to reply with JSON, so I have to make sure I'm not adding anything else. The response should be a simple yes/no for sensitivity, confidence score, and explanation. Since the content includes a valid SSN, the 'is_sensitive' field should be true. The confidence score could be 1 because it's a direct example. The explanation should mention that the content is about SSI (Social Security Number) and the example provided.\n\nWait, but does the content contain any U.S. sensitive information? The form details include a taxpayer's name and an SSN, which are typically used by individuals. So even though it's a form submission, the data itself is a valid SSN. Therefore, the classification should be correct. No other categories are involved here. So the final answer should reflect that.\n</think>",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 1, \"explanation\": \"The content includes a U.S. Social Security number (SSN) format and a valid applicant's SSN, indicating potential U.S. sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-02",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "String resembles SSN but context shows product code"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify the given content into the category \"ssn\" and determine if it's sensitive or not.\n\nFirst, I need to check the content provided. The description mentions that U.S. Social Security numbers use the pattern AAA-GG-SSSS and are unique for taxpayers. Then there's a part about an inventory SKU SSN-5512-679-087 being discontinued and no personal identifiers logged. \n\nNow, looking at the content, the key point here is whether it includes any U.S. Social Security number (SSN) details. The example in the description uses \"SSN,\" which is exactly what we're talking about. However, the actual content provided seems to focus on an inventory item being discontinued and logging of personal identifiers. \n\nThe question is whether this content contains SSSNs. The answer here would be yes because the SKU has an SSN format. But wait, does the content mention anything specific like the exact number or identity? The description only states the format. \n\nSo, since the content includes the SSN as part of the SKU identifier, even though it's just a formatting reference, it still falls under the category of SSSNs. Therefore, the classification should indicate that the content is sensitive because it relates to personal data. The confidence score would be 0.8 because it's a clear and direct reference to the category. \n\nI think that's all. Let me make sure there's no trick here. No, the content doesn't include any actual SSNs beyond the format mentioned. So the response should be true for sensitivity and a confidence score around 0.8.\n</think>",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.8, \"explanation\": \"The content references U.S. Social Security numbers (SSNs) in their format and context, indicating potential misuse of personal identification information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-03",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email present"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify this email content into the specified category and provide the required JSON output.\n\nFirst, I need to check if the content contains any U.S. sensitive information. The original email is about customer feedback, mentioning Celine O'Rourke at celine.ortega@orbis.org. There's no mention of specific U.S. government data or personal details related to someone in the U.S. So, the content doesn't seem to be sensitive.\n\nNext, the confidence score. Since there's no indication of anything wrong or sensitive, the confidence should be high. Maybe 0.9 or something like that. The explanation needs to be short, so just confirming it's a regular email address without any issues.\n\nPutting it all together, the JSON should have \"is_sensitive\" as false, confidence_score as 0.9, and an explanation stating the email is a normal one.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.9, \"explanation\": \"Short note indicating this is a valid email address.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-04",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "16-digit Visa style number in card field"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify the given content into the 'credit_card' category. The description mentions major U.S. credit card numbers being 15-16 digits and separated by spaces or dashes.\n\nNow looking at the provided content, there's a checkout payload with a card alias named 'travel', the credit card number as \"4111 0254 8890 3145\", and a zip code of '10012'. The key points here are the presence of a card number, which is 15 digits long, but the example doesn't include any U.S. specific details like states or regions. However, the mention of \"U.S.\" in the original description might imply some level of sensitivity. \n\nThe confidence score would be based on how much the information aligns with the criteria. Since the content includes a credit card number and possibly relevant details about a state (though not explicitly mentioned), the classification should reflect that. But since the explanation mentions \"major U.S. credit card numbers\" without more specifics, it's safe to say the content is classified as sensitive. \n\nSo putting it all together, the JSON response should have 'is_sensitive': true, confidence_score: 0.5, and an explanation stating it's a short note about a valid credit card entry.\n</think>",
+    "answer": "{\n  \"is_sensitive\": true,\n  \"confidence_score\": 0.5,\n  \"explanation\": \"A short note containing a valid U.S. credit card number and its associated details.\"\n}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-05",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number referenced explicitly as promo code"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify the given content into the 'credit_card' category. The description mentions major U.S. credit card numbers being 15-16 digits and separated by spaces or dashes. But then there's a content section that says a promo code applying 20% off and no payment data captured.\n\nWait, the classification here is about whether the content contains U.S. sensitive information related to credit cards. The original description talks about credit card numbers, but the content provided is just a promotional message. There's no mention of actual card details like numbers, expiration dates, CVV codes, etc., in the content. So even though it's about credit cards, the content doesn't include any sensitive info. \n\nThe reply should be a JSON object with is_sensitive as false because the content isn't about credit card numbers. The confidence score would be low since it's a short note. The explanation should state that it's a short note without any U.S. sensitive information. I need to make sure not to add anything else and follow the instructions exactly.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.3, \"explanation\": \"This content describes a promotional offer related to a credit card, but it does not contain any U.S. sensitive information about credit card numbers, terms, or personal data.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-06",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Clearly a callable U.S. number"
+    },
+    "thinking": "<think>\nOkay, let's see. The user provided a chat log entry in the format of a message from someone to another, including a phone number. The task is to classify this content into the category \"phone_number\" based on whether it contains U.S. sensitive information.\n\nFirst, I need to check if the given content includes any U.S. phone number details. The example message says \"+1 (415) 884.0192\". The structure here looks like a standard US phone number. In the description provided, it mentions that U.S. phone numbers have 10 digits, sometimes with a country code (+1) and punctuation. \n\nThe key points here are the presence of a phone number in the chat log. The number is clearly formatted as a 10-digit sequence with a country code. Since the content does include such a number, but the explanation states it's a short note, there's no indication of more sensitive data or national identity information. The user might be testing if the system can recognize and classify phone numbers correctly without overstepping the bounds.\n\nSo, the classification should be that the content does contain U.S. sensitive information, which would make \"is_sensitive\" true. The confidence score could be around 0.7 because the note is brief and relevant. The explanation justifies the classification based on the presence of the phone number.\n</think>",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.7, \"explanation\": \"The provided chat log contains a valid U.S. phone number with 10 digits, including a country code and punctuation. It qualifies as sensitive information under the specified category.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-07",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Spanish text still clearly states U.S. passport number"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify the given content into the category \"passport\" and determine if it's sensitive or not.\n\nFirst, I need to check if the provided description matches what's in the content. The original description says that U.S. passport numbers are 9 characters long, alphanumeric, mostly digits. The example given is \"025497813\" which fits those criteria. \n\nNow, looking at the content: it's in Spanish, mentioning \"numero de pasaporte estadounidense: 025497813 emitido en Miami.\" This seems to be a registration form in Spanish for a U.S. passport number. However, there's no mention of any specific details about the country code or other personal data. The key point here is whether this information relates to a U.S. passport. Since the content is a registration note in Spanish, but the actual data (the number) is a standard U.S. passport number, there's no U.S. identity or personal information involved. \n\nThe user might be testing if I recognize that even though the content is in Spanish, the data is still relevant to a passport. But according to the guidelines, I should only flag content that directly relates to the requested category. Since the content is about a passport registration in Spanish, and the main elements are the number and location, but no sensitive info like personal details or country-specific codes, the classification would be appropriate.\n\nTherefore, the answer should indicate that the content is classified as short note because it doesn't contain U.S. sensitive information. The confidence score would be 0.5 since it's a brief note without strong indicators of sensitivity.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.5, \"explanation\": \"Short note containing a valid U.S. passport number in Spanish, unrelated to sensitive personal information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-08",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number is part of product slug, not ID"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify the provided content into the category \"passport\" and determine if it's sensitive. The description mentions U.S. passport numbers being 9 characters long and consisting of letters or digits. However, the given content is about a product slug like \"passport-wallet-tribe-56060137\" with an empty ID field. \n\nWait, the original question says the content is supposed to be classified as \"product slug...\" but then in the response, they mention \"ID fields empty.\" But the actual content here is just the product slug. The key point here is whether the content includes any U.S. sensitive information. The product slug doesn't reference anything about passports or their details. It's just a product name with some numbers. Since there's no mention of U.S. passport numbers or related data, the classification should be based on whether the content contains such info.\n\nThe confidence score would be low because the information isn't relevant to the category. The explanation should state that the content does not contain U.S. sensitive information. So the JSON would have \"is_sensitive\": false, \"confidence_score\": 0.5, and the explanation being a short note.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.5, \"explanation\": \"This content describes a product slug unrelated to U.S. passport details or sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-09",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Routing and bank account included"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify the given content into the 'bank_account' category and provide some details in JSON.\n\nFirst, I need to check if the content contains any U.S. sensitive information. The provided content is an ACH blob with routing number, account number, and memo. The numbers here are 8-17 digits, which are standard for bank accounts. Since it's about U.S. banks and includes specific details like routing and account numbers, there's no explicit or implicit mention of personal data such as names, addresses, or government identifiers. \n\nThe confidence score should be high because the information is straightforward and relevant. The explanation needs to briefly state that the content is about U.S. bank accounts, specifically mentioning the structure of the numbers and their use in financial transactions. \n\nI need to make sure the JSON keys are correctly named and the values match the requirements. Let me double-check the JSON syntax to avoid errors. Everything looks good. So the final response should reflect that the content is classified as sensitive but not directly related to U.S. personal data.\n</think>",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.99, \"explanation\": \"The content describes U.S. bank account details (numeric string, routing, account number) without identifying personal or sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-10",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Matches CA driver license format despite question"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify the given content into the category 'driver_license' and determine if it's sensitive. The description mentions variations in U.S. driver licenses, specifically California using a one-letter plus seven-digit format. However, the actual content provided is a support ticket about verifying a CA DL C2946183, where they mentioned a product return tag but didn't mention anything related to a driver's license.\n\nThe key here is whether the content includes any U.S. sensitive information. Since the support ticket isn't about a driver's license or its details, there's no U.S. sensitive data involved. Even though the example response has a confidence score of 0, which might be low because it's a general note, the main point here is that the content doesn't contain any sensitive information. So, the classification should be false, and the confidence is probably around 0.5 since it's a short note.\n</think>",
+    "answer": "{\n  \"is_sensitive\": false,\n  \"confidence_score\": 0.5,\n  \"explanation\": \"The content does not include U.S. sensitive information such as driver license numbers or specific policy details. It is a brief support request about a product return tag.\"\n}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-11",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email present"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify the given content into the specified category, which is email. The description mentions that email addresses typically have a username, an @ symbol, and a domain. Now looking at the provided content: \"Escalation contact: dev+ops@northwind.io for pager duty.\" \n\nFirst, I need to check if this content qualifies as an email address. The example given in the description uses a standard format like dev+ops@domain.com. The placeholder here is \"dev+ops\" which seems to be the username part, followed by the domain. The @ symbol is present, so it matches the typical structure of an email address.\n\nThe key points from the description are username, @, and domain. The content includes all three elements. However, the response provided in the example has \"for pager duty\" instead of a specific subject or purpose. But since the original instruction was about the content itself (the message), not the email address structure, maybe there's a misunderstanding here.\n\nWait, the user's query says \"classify the content below\" under the email category. The content here is a message with an escalation contact. The description refers to email addresses but the actual content isn't an email address; it's a contact information. So even though the structure matches, the classification should still be based on whether the content is an email. Since the content is a message, not an email address, the answer would be false because the content isn't an email address. The confidence score might be 0.5 or something similar, indicating partial accuracy.\n\nSo putting it all together, the JSON should have \"is_sensitive\" as false, confidence_score between 0 and 1, and an explanation stating that the content is a message rather than an email address.\n</think>",
+    "answer": "{\n  \"is_sensitive\": false,\n  \"confidence_score\": 0.45,\n  \"explanation\": \"This content represents a message with an escalation contact, not an email address. It does not contain any U.S. sensitive information.\"\n}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-12",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "No concrete email value"
+    },
+    "thinking": "<think>\nOkay, let's see. The user provided an email content and wants me to classify it. The category is email, and the description mentions that emails have a username, @, and domain. Now the content says the config field \"email_address\" is empty and no address is stored. \n\nFirst, I need to check if this content includes any U.S. sensitive information. The original message is about configuration fields in an email system. There's no mention of specific U.S. data like personal details or government records here. The only thing mentioned is the absence of an email address. Since there's no reference to US-specific info, the classification should be based on whether the content contains such info.\n\nThe confidence score would be 0 because it's a short note. The explanation simply states that the email address isn't stored. So putting it all together, the JSON should have is_sensitive as false, confidence 0, and the explanation as a short note.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0, \"explanation\": \"Short note indicating an empty email address was stored but no U.S. sensitive information is present.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-13",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Callable U.S. number present"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify the given content into the phone number category. The description says U.S. phone numbers have 10 digits, sometimes with a country code and punctuation. The provided content is a short note: \"Text or call 415.884.0192 x55 if urgent.\"\n\nFirst, I need to check if this note includes any U.S. specific information. The example mentions 415 as a possible number, which is in the US. However, the note doesn't state the exact number but uses 415.884.0192 with an extra 'x' at the end. Wait, does that count? In some cases, numbers might be shortened, like 415-884-0192, but the note here shows it as 415.884.0192 x55. But maybe the user is just adding a placeholder for a real number. \n\nThe key point here is whether the content includes actual U.S. phone number details. Since the note uses a known number (like 415) without specifying a full number, but the context of the description refers to having 10 digits, maybe it's acceptable. However, the note itself doesn't provide the entire number. \n\nIn terms of classification, since the note includes a valid U.S. number format (even though it's not fully specified), the answer should indicate it's a phone number. The confidence score would be based on how much the content matches the criteria. Since it's a short note with a valid format, high confidence. The explanation would mention that it's a short note providing a U.S. phone number format.\n</think>",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 1.0, \"explanation\": \"Short note provides a valid U.S. phone number format (10 digits, including country code +1).\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-14",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "15-digit AMEX card provided"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify this content into the 'credit_card' category. The description mentions major U.S. credit card numbers being 15-16 digits and separated by spaces or dashes. The content provided is a payment form with specific credit card number: AMEX 3782 822463 10005 and a billing ZIP code of 94107.\n\nFirst, I need to check if there's any U.S. sensitive information involved here. The credit card number itself is a standard data point, but the question is whether it's classified as sensitive. Since the user specified the category 'credit_card', even though the actual number might be a personal one, the classification here would depend on the context. The explanation given in the example uses \"short note\" which suggests that the content is brief and not too detailed. \n\nThe confidence score should be low because the content is just a short note mentioning a credit card number. The explanation simply states that it's a short note. So putting it all together, the response should have is_sensitive as true, confidence_score 0.5, and explanation as \"short note\".\n</think>",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.5, \"explanation\": \"short note\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-15",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Only masked card, full PAN absent"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify the given content into the 'credit_card' category. The description mentions major U.S. credit card numbers being 15-16 digits with spaces or dashes. The provided content is a receipt showing masked card number **** **** **** 3145 without retaining a full PAN.\n\nFirst, I need to check if this information includes any U.S. sensitive details. The receipt shows a card number, which is typically part of a credit card transaction. However, the question is whether it's classified as sensitive. Since the card number is part of a payment transaction, it might be considered private or sensitive. But the response in the example says to return true for 'is_sensitive', confidence 0. So based on the explanation that it's a short note, the classification should be correct here.\n</think>",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.9999, \"explanation\": \"The content provides a credit card number (masked) in a receipt format, which is commonly used for transactions. This information falls under U.S. financial data, making it sensitive.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-16",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Routing and account numbers present"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify this content into the \"bank_account\" category. The description mentions that U.S. bank accounts are numeric strings from 8 to 17 digits, sometimes with routing information. The provided content is a US ACH record with routing number 021000021 and account number 9876543210, along with a name \"ACME Payroll\".\n\nFirst, I need to check if this content includes any U.S. sensitive information. The routing number and account number are standard for banking transactions, so they're likely not sensitive. The name given is \"ACME Payroll,\" which seems like a company name, not personal data. There's no mention of any private or confidential information here. \n\nThe confidence score should be high because it's a typical bank transaction record. The explanation would state that it's a valid U.S. bank account entry without any sensitive details. So putting it all together, the JSON should have \"is_sensitive\": false, \"confidence_score\": 1, and the explanation as a short note.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 1, \"explanation\": \"A valid US bank account entry (routing number 021000021, account number 9876543210, name ACME Payroll) in the format specified.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-17",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Placeholder zeros and pending routing"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify the given content into the \"bank_account\" category and provide the required JSON response. The description mentions that U.S. bank accounts are numeric strings from 8 to 17 digits, sometimes with routing information. The content provided is a template string using \"acct=000000000 routing=<pending>\". \n\nFirst, I need to check if this content contains any U.S. sensitive information. The example uses numbers like 000000000 which are valid bank account numbers. However, there's a mention of \"routing info\", which is part of a bank account number. But wait, does this count as sensitive information? In some contexts, especially when dealing with financial data, it might be considered sensitive. However, the exact definition here could vary.\n\nThe confidence score should be between 0 and 1. Since the content includes specific details about bank account structures, but doesn't explicitly state any U.S. personal or private information, maybe a low confidence score. The explanation needs to be short. So the classification would be \"is_sensitive\": true, confidence: 0.5, and explanation noting the numerical structure and routing info.\n</think>",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.5, \"explanation\": \"This content describes the format of U.S. bank account numbers (numeric strings 8-17 digits, including routing info) without identifying any U.S. personal or private information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-18",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Looks like valid U.S. passport ID"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify the given content into the category \"passport\" and determine if it's sensitive US-related info. The description says U.S. passports have 9 characters, alphanumeric, mostly digits. Then the content is about a traveler providing a U.S. passport number C03495718 when checking in.\n\nFirst, I need to check if this information relates to U.S. passport details. The example response uses the same structure as the input, so maybe there's a pattern here. The key elements are the passport number (C03495718) which is an example of a valid US passport number. Since the question is about classification and sensitivity, I should confirm if the provided data includes any U.S. personal or sensitive information. \n\nThe content mentions the traveler's name but doesn't provide any additional details like a birth date or address. The example answer uses the same structure as the input, so perhaps the system expects the same format. The explanation states it's a short note. Therefore, since the information is about a passport number and not personal details, it's not considered sensitive. The confidence score would be low because it's just a reference number. So the final JSON should reflect that.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.2, \"explanation\": \"A brief note detailing a traveler providing a valid U.S. passport number, without mentioning personal or sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-19",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Case slug, not an ID number"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify the given content into the \"passport\" category and determine if it's sensitive. The description mentions U.S. passport numbers being 9 characters long, alphanumeric, mostly digits. The provided example content is a ticket slug with a specific format: \"ticket slug passport-case-PA-2024-09-884, no ID captured.\"\n\nFirst, I need to check if this content relates directly to a passport. The ticket slug seems like an itinerary or booking information, not a passport number. However, there's a mention of \"passport-case,\" which might imply that the ticket has a passport-related element. But the main point here is about the format rather than the actual data itself.\n\nNext, I should assess sensitivity. Since the content doesn't include any personal details or U.S. government information related to passports, the classification should be neutral. The explanation should state that it's a short note about a ticket slug with a passport case number, indicating no sensitive information.\n\nThe confidence score would be low because the content isn't classified as sensitive. So putting it all together, the JSON should have \"is_sensitive\": false, \"confidence_score\": 0.5, and the explanation explaining it's a brief note on a ticket.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.5, \"explanation\": \"A short note describing a ticket slug with a passport case number, indicating no U.S. sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-20",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Numeric NY driver license provided"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify this content into the 'driver_license' category and determine if it's sensitive or not.\n\nFirst, looking at the provided content: \"NY DMV upload lists license 987654321 for applicant.\" The key points here are the state (New York), the Department of Motor Vehicles (DMV), and the license number (987654321). These details are all related to driver licenses, so the classification should be correct as 'driver_license'.\n\nNow, checking for any U.S. sensitive information. The DMV is part of the government, which is usually considered safe. The license number is specific, but since it's a public service, there's no indication of personal or private data. However, I need to make sure there's no hidden or explicit sensitive info. Since the example response includes a confidence score, maybe the system considers it a short note, so the explanation mentions it's a short note.\n\nPutting it all together, the JSON should have is_sensitive set to false because it's about driver licensing, and confidence score 0.5 since it's a brief note.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.5, \"explanation\": \"A short note about a New York DMV listing a driver's license number.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-21",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Placeholder format only"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify the given content into the category 'driver_license' and provide some details. The content provided is: \"Form field driver_license set to DL-XXXXXXX as placeholder.\"\n\nFirst, I need to check if this content contains any U.S. sensitive information. The key here is whether it mentions specific states or nationalities. The example given in the problem statement says California uses a format with a letter and 7 digits. But the content here doesn't mention California or any other state. Instead, it just refers to a form field setting a placeholder. \n\nSo, since there's no reference to a specific state (like California) or any U.S. identity, the information isn't sensitive. The placeholder DL-XXXXXXX is just a standard format, not something that would be considered private data. Therefore, the classification should be that the content does not contain U.S. sensitive information.\n\nNow, about the JSON output. The category is already specified as 'driver_license'. The confidence score needs to be between 0 and 1. Since the content is neutral regarding sensitivity, maybe a low confidence but positive. The explanation should briefly note that it's a standard format without any sensitive info.\n\nPutting it all together, the JSON should have \"is_sensitive\" as false, \"confidence_score\" as 0.5, and an explanation stating that it's a standard format for a driver's license.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.5, \"explanation\": \"This content describes a standard driver license format without mentioning U.S. sensitive information or personal identifiers.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-22",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid-looking ITIN pattern"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify the provided content into the category 'itin' and determine if it's sensitive or not.\n\nFirst, looking at the description: \"U.S. Individual Taxpayer Identification Numbers are 9 digits starting with 9 and include 70-88 in positions 4-5.\" This is clearly about tax IDs, which are typically used by individuals. The content given is \"Tax form shows ITIN 912-70-1234 for contractor.\" So the taxpayer here is an individual, and they're using an ITIN for their contractor.\n\nNow, considering the classification. Since the content is about identifying someone's tax ID (ITIN) and the details provided match the standard format, I can assume this is relevant to the 'itin' category. \n\nThe question is whether this content contains U.S. sensitive information. ITINs are indeed sensitive because they relate to personal tax information. However, the user might be concerned if there's any other aspect. But since the example response includes \"short note,\" I need to check if there's any additional context. The provided content doesn't mention anything beyond stating the ITIN number and its purpose. Therefore, it's safe to say that the content is classified as containing U.S. sensitive information.\n\nConfidence score: The explanation is short, so maybe a confidence of 0.8 or something reasonable. The answer should be structured as per the instructions, so the JSON would have is_sensitive set to true, confidence_score 0.8, and explanation as a brief note.\n</think>",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.8, \"explanation\": \"Short note indicating an ITIN number is provided for a U.S. taxpayer, which falls under the 'itin' category due to sensitivity related to personal identification information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-23",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Explicitly an example placeholder"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify this content under the 'itin' category. The description says U.S. Individual Taxpayer IDs (ITINs) have 9 digits starting with 9 and include numbers 70-88 in positions 4-5. The example given is an ITIN format like 900-00-0000 but mentions it's just a note without actual data.\n\nFirst, I need to check if any of the provided information relates to U.S. tax-related data. The example shows a format but doesn't mention anything about the actual numbers or their validity. The key points here are the structure (9 digits, starts with 9) and the range (70-88). However, the main thing is that the example is just a format note and not actual data. Since there's no evidence of real ITIN numbers being mentioned, the classification should be neutral. The confidence score would be low because there's little to no actual data present. The explanation should state that it's a short note indicating the format but not containing sensitive info.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.3, \"explanation\": \"A short note describing ITIN format requirements but does not contain U.S. sensitive information or actual taxpayer data.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-24",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email in non-English text"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify this content into the email category and determine if it's sensitive or not.\n\nFirst, I need to check if the provided content is an actual email address. The example given is \"客服邮箱：support.zh@acme.cn\" which looks like a valid email format. It has a username (support.zh), an @ symbol, and a domain (acme.cn). \n\nNow, the category is specified as email. So the content here is definitely in the email category. Next, checking for U.S. sensitive information. The name \"zh\" might be a Chinese person, but there's no mention of any U.S. specific details like zip codes, birth dates, etc. Also, the email address itself doesn't seem to include any U.S. identifiers. \n\nThe confidence score would be 1 since it's a clear and accurate classification. The explanation should state that the content is a valid email address without any U.S. sensitive information. \n\nWait, just to make sure, maybe there's a chance that \"zh\" could refer to a specific U.S. person, but unless there's more context, we can assume it's a standard Chinese name. So the answer should be true for is_sensitive, confidence 1, and the explanation noting it's a valid email.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 1, \"explanation\": \"This content represents a valid email address containing a username, @ symbol, and domain. No U.S. sensitive information is present.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-0.6B",
+    "sample_id": "sample-25",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid U.S. phone number present"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify the given content into the 'phone_number' category. The description mentions US phone numbers having 10 digits, including a country code like +1. The example provided is a toll-free number: 800-555-1212.\n\nFirst, I need to check if this content includes any U.S. sensitive information. The number itself is straightforward—just a standard phone number. There's no mention of personal data or other sensitive info here. The response is a simple call to action without any hidden details.\n\nSo, the classification should be clear. Since there's no U.S. sensitive information present, the 'is_sensitive' field should be false. The confidence score is probably 0 because it's a short note. The explanation just states it's a short note. \n\nI need to make sure I'm not missing anything. Let me double-check. The content doesn't contain any parts that would trigger a sensitivity review. Yep, everything seems okay. So the final answer should reflect that.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.4, \"explanation\": \"Short note providing basic details about US phone numbers.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-01",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Exact SSN format appears"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify whether the given content contains U.S. sensitive information, specifically Social Security Numbers (SSNs), under the category of SSN.\n\nThe content provided is from an onboarding form where Amanda Frost has listed her SSN as 512-67-9087. The description mentions that SSNs follow the pattern AAA-GG-SSSS and are unique identifiers. \n\nFirst, I need to determine if this SSN is considered sensitive. Since SSNs are indeed sensitive personal information in the United States, any mention of them in a context like an onboarding form would likely be classified as such. \n\nThe format here is 512-67-9087. The pattern AAA-GG-SSSS is typically three letters followed by two digits, then four digits. Here, 512 is three digits, then 67 is two digits, and 9087 is four digits. So it fits the pattern AAA-GG-SSSS if we consider the first part as three digits, but usually, the first part is three letters. However, the actual format can vary, but the key point is that it's a social security number.\n\nThe confidence score should reflect how certain I am about this classification. Since the SSN is clearly presented in a context that requires handling sensitive data, the confidence score would be high. The explanation would state that the SSN is a U.S. sensitive identifier and is being used in an onboarding process, which is a common scenario where such information is required.\n\nI don't see any other elements in the content that might suggest it's not sensitive. The presence of the SSN in a form related to payroll setup further supports the classification. Therefore, the answer should be true with a high confidence score.\n</think>",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.99, \"explanation\": \"The provided Social Security Number (SSN) 512-67-9087 is explicitly mentioned in a context (onboarding form) that requires handling sensitive personal information. SSNs are legally protected in the U.S., and their inclusion in employment or payroll processes qualifies them as U.S. sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-02",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "String resembles SSN but context shows product code"
+    },
+    "thinking": "",
+    "answer": "<think>\nOkay, let's see. The user wants me to classify whether the given content contains U.S. sensitive information, specifically Social Security Numbers (SSNs), under the category provided.\n\nThe content in question is: \"Inventory SKU SSN-5512-679-087 is discontinued; no personal identifiers logged.\"\n\nFirst, I need to check if there's any mention of a Social Security Number. The SKU here is written as SSN-5512-679-087. The description mentions that SSNs follow the pattern AAA-GG-SSSS, which is the standard format for U.S. SSNs. However, the actual number in the SKU is SSN-5512-679-087. Wait, but the format is usually AAA-GG-SSSS, so maybe the SKU is just an example? But the key part here is that the SKU includes \"SSN\" as part of its identifier.\n\nNow, the category is SSN, and the task is to determine if this content contains U.S. sensitive information. The definition says that SSNs use the pattern AAA-GG-SSSS and uniquely identify taxpayers. So, the presence of \"SSN\" in the SKU might indicate a social security number. However, the problem is that the SKU is just a product code, and the actual SSN would be a 9-digit number. The SKU here is SSN-5512-679-087, which seems like a mix of letters and numbers. But the first three characters are 'SSN', which is the abbreviation for Social Security Number. \n\nBut wait, does the presence of \"SSN\" in the SKU make it a sensitive piece of information? Or is the actual number hidden within the SKU? For example, if the SKU was actually a real SSN, then yes. But in this case, the SKU is just a label. The user might be using \"SSN\" as part of the SKU to indicate that it's a social security number, but the actual number isn't present. \n\nHowever, the classification is based on whether the content contains U.S. sensitive information. If the SKU includes \"SSN\", even if it's not the full number, it could still be considered sensitive. But the description says that SSNs use the pattern AAA-GG-SSSS. The SKU here has \"SSN-5512-679"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-03",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email present"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants to classify whether the given content is sensitive information under the email category. The category here is email, and the description says email addresses typically have a username, @, and a domain.\n\nThe content provided is: \"Customer left feedback: reach me at celine.ortega@orbis.org if questions.\" So the email address is celine.ortega@orbis.org. \n\nFirst, I need to check if this email address contains any U.S. sensitive information. The question mentions \"U.S. sensitive information,\" but the category is specifically email. The description of the email category includes the structure of an email address, which is username, @, domain. But does that make it sensitive?\n\nWait, the user might be asking if the email address itself is considered sensitive. However, the original instruction says to classify based on the category. The category here is email, so the classification would depend on whether the email address contains any sensitive info. But the problem is that the example response in the prompt shows that the answer is false, but maybe there's more to it.\n\nBut according to the instructions, the assistant should decide if the text contains U.S. sensitive information for the requested category. The category here is email, and the description says email addresses have username, @, domain. But the actual content here is just an email address. Is that considered sensitive? Maybe not unless there's specific data like social security numbers or other protected info. \n\nHowever, the user might be testing if the assistant knows that even though the email format is standard, the presence of the email address itself isn't inherently sensitive. Unless the email is part of a larger context where it's used for something else, like a business contact, but the content here is just the email address. \n\nSo, the answer would likely be false because the email address is just a standard format and doesn't contain any sensitive information. The confidence score would be 0.5 since it's a straightforward case, but maybe 0.7 if there's some ambiguity. Wait, the example response has a confidence score between 0-1. The user probably expects a simple yes or no. Since the email is standard, the answer is false. So the JSON would be {\"is_sensitive\": false, \"confidence_score\": 0.5, \"explanation\": \"Standard email address without sensitive data\"}.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.5, \"explanation"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-04",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "16-digit Visa style number in card field"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify whether the provided content contains U.S. sensitive information under the credit_card category.\n\nThe content given is a checkout payload with a credit card number: \"4111 0254 8890 3145\" and a zip code \"10012\". The credit card number here is 16 digits long, which is typical for major U.S. cards. The format uses spaces and dashes, which aligns with common practices in the U.S.\n\nNow, the category is credit_card, and the description mentions that major U.S. numbers are 15-16 digits and often separated by spaces or dashes. So, the presence of a credit card number in the payload seems to fit. However, I need to check if this is considered sensitive information. \n\nIn the context of payment processing, credit card details are indeed sensitive. But the question is whether the specific information here qualifies as U.S. sensitive data. The zip code is also provided, but the main focus here is the credit card number. The zip code might be part of the transaction, but the core issue is the credit card number.\n\nThe confidence score would depend on how certain we are that this is a real credit card number. Since it's a sample payload, maybe it's not actual real data, but the presence of the number itself makes it sensitive. The explanation should mention that the credit card number is in the payload, fits the U.S. format, and is therefore classified as sensitive.\n</think>",
+    "answer": "{\n  \"is_sensitive\": true,\n  \"confidence_score\": 0.9,\n  \"explanation\": \"The credit card number '4111 0254 8890 3145' matches the typical 16-digit format for U.S. credit cards and includes a ZIP code (10012) which is often associated with U.S. financial transactions. This combination indicates sensitive financial information.\"\n}"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-05",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number referenced explicitly as promo code"
+    },
+    "thinking": "",
+    "answer": "<think>\nOkay, let's see. The user wants me to classify whether the given content contains U.S. sensitive information under the credit card category. The content is a notification about a promo code with a credit card number: \"CC-4111-0254-8890\".\n\nFirst, I need to recall the criteria for what constitutes sensitive information. Major U.S. credit card numbers are typically 15-16 digits and have separators like spaces or dashes. But here, the number provided is \"CC-4111-0254-8890\". Wait, the first two characters are 'CC', which might be the brand (like Visa, Mastercard), but the actual card number starts after that. However, the problem is that the user is asking if the content contains the actual credit card number. \n\nThe content mentions a promo code with the number CC-4111-0254-8890. The key point here is whether this is a real credit card number. The format is 15 digits? Let me count: 4-11-4-4 = 13 digits. So it's 13 digits, which is within the typical range of 15-16. But the presence of 'CC' at the beginning might be a placeholder or part of the promo code. However, the question is whether the content includes a U.S. credit card number. If the actual card number is in the promo code, then it's sensitive. But the way it's presented here is as part of a promo code, not as a standalone card number. \n\nThe description says major U.S. credit card numbers are 15-16 digits and often separated by spaces or dashes. The example given here has a 13-digit number without separators. But even so, the presence of the number in the promo code could be considered sensitive. However, the user is asking if the content contains U.S. sensitive information. The content includes the number as part of a promo code, which is a promotional offer. Even though the number is part of the promo code, the actual credit card number isn't being disclosed. The user might be concerned if the number is exposed in such a context. \n\nBut wait, the prompt says \"U.S. sensitive information\" for the category. The credit card number itself is sensitive. If the content includes the actual number, then it's sensitive. However"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-06",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Clearly a callable U.S. number"
+    },
+    "thinking": "",
+    "answer": "<think>\nOkay, let's see. The user wants to classify whether the given content contains U.S. sensitive information, specifically a phone number, under the phone_number category.\n\nThe content provided is a chat log message: \"text me at +1 (415) 884.0192 after the meeting\". The phone number here is +1 (415) 884.0192. \n\nFirst, I need to check if this is a U.S. phone number. According to the description, U.S. phone numbers typically have 10 digits, often with a +1 country code and punctuation. Let's break down the number: +1 (415) 884.0192. The +1 is the country code, then the area code 415, followed by the local number 884.0192. Wait, but 884.0192 has a dot, which might be part of the local number. However, in standard U.S. phone numbers, the format usually includes the area code and the last four digits, but sometimes they use a hyphen or space. For example, 415-884-0192. But in this case, it's written as 884.0192. That seems like a possible issue because the area code is 415, but the rest is 884.0192. Wait, 415 is three digits, so the next part should be the last four digits. So maybe the correct format would be 415-884-0192. However, the given number here is written without the hyphen or parentheses, just as +1 (415) 884.0192. \n\nBut the key point is whether this is a valid U.S. phone number. The presence of the +1 country code and the structure with parentheses and dots might not be strictly correct, but the question is about classification, not validation. The user's instruction says to check if the content contains U.S. sensitive information based on the given category description. \n\nThe category description mentions that U.S. phone numbers have 10 digits, sometimes with +1 and punctuation. The number here is +1 (415) 884.0192. Let's count the digits."
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-07",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Spanish text still clearly states U.S. passport number"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify whether the given content is sensitive under the passport category. The description says U.S. passport numbers are 9 characters, alphanumeric, often all digits. The content provided is in Spanish: \"numero de pasaporte estadounidense: 025497813 emitido en Miami\".\n\nFirst, I need to check if this contains any U.S. passport numbers. The number here is 025497813. Wait, but the description mentions that U.S. passports are 9 characters, alphanumeric, and often all digits. Let me count the digits in the given number. 025497813 has 9 digits. So that fits the description. However, the problem is that the number is in Spanish, but the actual passport number would be in English. But the question is about whether the content contains U.S. sensitive info.\n\nBut wait, the user might be concerned about the presence of a passport number in a non-English context. However, the category is passport, so even if it's in Spanish, the fact that it's a passport number would still be considered sensitive. The key point is whether the number is a valid U.S. passport number. But the example given has 025497813, which is 9 digits. However, U.S. passport numbers typically start with a letter, like A to Z, followed by digits. For example, the first digit is always a letter (A-Z), then 8 more digits. But the example here is all digits, which doesn't fit the standard format. Wait, maybe the example is just an example, not a real one. The user's instruction says \"U.S. passport numbers are 9 characters, alphanumeric, often all digits.\" So according to the description, the number is 9 characters, alphanumeric, and often all digits. So the example number is 025497813, which is 9 digits, all numeric. That fits the description. \n\nSo the content includes a U.S. passport number, which is part of the sensitive information. Therefore, the answer should be true. The confidence score would be high since the number matches the description. The explanation would mention that the passport number is 9 digits, alphanumeric, and likely a U.S. number, making it sensitive.\n</think>",
+    "answer": "{\"is_sensitive\": true, \"confidence_score"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-08",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number is part of product slug, not ID"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify whether the given content contains U.S. sensitive information related to the passport category. The category here is passport, and the description mentions that U.S. passport numbers are 9 characters, alphanumeric, often all digits.\n\nThe content provided is: \"Product slug passport-wallet-tribe-56060137 ships tomorrow; ID fields empty.\" So I need to check if this includes any U.S. passport numbers. \n\nFirst, looking at the product slug. The slug is \"passport-wallet-tribe-56060137\". The part after \"passport-\" might be the product name, but the number \"56060137\" is 8 digits. The description said U.S. passports are 9 characters, alphanumeric, often all digits. Wait, 56060137 is 8 digits. But maybe it's part of a longer number? However, the product slug doesn't have a \"passport-\" followed by a 9-digit number. The number is 8 digits. Also, the rest of the slug is \"wallet-tribe-\", which seems like a product identifier, not a passport number.\n\nSo the key point here is whether the number \"56060137\" is a U.S. passport number. Since passport numbers are usually 9 digits, and this is 8 digits, it's possible that this is not a valid U.S. passport number. However, the question is about whether the content contains U.S. sensitive information. Even if it's not a valid passport number, if the system is checking for the presence of a passport number (like in a database), then the number might be considered sensitive. But in this case, the content is just a product slug. The mention of \"ID fields empty\" might refer to something else, like a product ID or a customer ID, but not a passport number.\n\nTherefore, the answer would likely be false because there's no actual U.S. passport number present in the content. The confidence score would be low since the number isn't matching the expected format. The explanation would state that the content does not contain a U.S. passport number as per the given description.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.0, \"explanation\": \"The content refers to a product slug 'passport-wallet-tribe-5606"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-09",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Routing and bank account included"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify whether the given content contains U.S. sensitive information under the bank account category.\n\nThe content provided is an ACH blob with routing numbers and account numbers. The routing number is \"122105278\" and the account number is \"008764531987\". The description mentions that U.S. bank accounts are numeric strings 8-17 digits, sometimes with routing info. \n\nFirst, I need to check if these numbers fall into the specified range. The routing number is 9 digits, which is within 8-17. The account number is 14 digits, also within the range. Both are numeric strings, so they fit the description.\n\nNow, considering the category is bank_account, the question is whether this information is considered sensitive. Routing numbers and account numbers are typically part of financial data and can be sensitive. However, the exact classification might depend on the context. Since the user hasn't specified any particular restrictions beyond the category, and the numbers are clearly in the range, it's safe to assume they are sensitive.\n\nConfidence score would be high here because the numbers are directly related to banking and meet the criteria. So, the answer should be true with a high confidence score.\n</think>",
+    "answer": "{\n    \"is_sensitive\": true,\n    \"confidence_score\": 0.95,\n    \"explanation\": \"The provided ACH blob includes a 9-digit routing number (122105278) and a 14-digit account number (008764531987), both of which fall within the 8-17 digit range for U.S. bank accounts. These identifiers are explicitly classified as sensitive financial data under the bank_account category.\"\n}"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-10",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Matches CA driver license format despite question"
+    },
+    "thinking": "<think>\nOkay, let's tackle this. The user wants to classify whether the provided content contains U.S. sensitive information under the driver_license category. The content is a support ticket asking about verifying a CA DL number, specifically C2946183. \n\nFirst, I need to recall what constitutes sensitive information under the driver_license category. Typically, this would include personal identifiers related to a driver's license, like the license number itself. The description mentions that California uses a one-letter plus seven digits format, which is specific to California licenses.\n\nThe ticket asks if the CA DL C2946183 is valid, and they mention that the product return tag isn't matching. So the license number here is C2946183. Now, the question is whether this number is considered sensitive. Since it's a California license number, and the category is driver_license, it's likely part of the sensitive information.\n\nI should check if there are any exceptions or if the system has specific rules. But generally, license numbers are considered sensitive because they can be used to identify individuals. The confidence score would be high since the number is directly relevant to the license category and is a known format in California. The explanation would state that the license number is part of the sensitive information under driver_license.\n</think>",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"The California driver's license number C2946183 is explicitly mentioned in the context of a support ticket, which is a common scenario for handling sensitive personal identification information related to driver licenses.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-11",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email present"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify whether the given content is sensitive information under the email category. The category here is email, and the description says email addresses typically have a username, an @ symbol, and a domain.\n\nThe content provided is \"Escalation contact: dev+ops@northwind.io for pager duty.\" So, looking at this, there's an email address: dev+ops@northwind.io. The parts of the email are username (dev+ops), the @ symbol, and the domain (northwind.io). \n\nNow, the question is whether this contains U.S. sensitive information. The key here is determining if this email address is considered sensitive. Typically, sensitive information might include personal identifiers, financial data, or other confidential details. However, in the context of an email address, unless it's part of a specific list like government agencies or private companies with strict confidentiality policies, it's not inherently sensitive.\n\nBut wait, the user mentioned \"U.S. sensitive information.\" Maybe they're referring to information that's protected by laws like HIPAA, Patriot Act, etc. But in general, an email address itself isn't considered sensitive unless it's part of a specific list. For example, if the company has a list of employees' emails, but in this case, the email is just a standard one. \n\nHowever, sometimes in security contexts, having an email address in a public or semi-public context could be a concern. But according to the guidelines provided, I need to check if it's part of a known list. Since the example doesn't mention any specific regulations, maybe it's not considered sensitive. \n\nSo, the confidence score would be low because the email is a standard format and not specifically marked as sensitive. Therefore, the answer would be false with a low confidence score. The explanation would state that the email address is a typical format and not classified as sensitive.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.3, \"explanation\": \"The email address 'dev+ops@northwind.io' is a standard format and does not contain U.S. sensitive information. It is a common placeholder for escalation contacts and does not meet the criteria for classification under U.S. sensitive categories like personal identifiers or confidential business data.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-12",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "No concrete email value"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify whether the given content is sensitive information under the email category. The category here is email, and the description mentions that email addresses typically have a username, @ symbol, and domain.\n\nThe content provided is: \"Config field 'email_address' is empty; no actual address stored.\" So, the key point here is that the email address is empty. But the question is whether this constitutes U.S. sensitive information. \n\nFirst, I need to recall what defines sensitive information. In the context of the U.S., sensitive information might include things like personal identifiers, financial data, or other confidential details. However, the email address itself isn't inherently sensitive unless it's part of a larger set of information that's considered protected.\n\nThe description says the email address has a username, @, and domain. But in this case, the config field is empty. So, the user is pointing out that there's no actual email address stored. The problem here is whether this emptiness is considered sensitive. For example, if the system is supposed to store an email but it's not, maybe that's a configuration issue, but not necessarily sensitive data.\n\nBut wait, sometimes even if the field is empty, the fact that it's not filled could be seen as a security risk. However, the classification here is about whether the content contains U.S. sensitive information. If the email address is empty, does that mean any personal information? Maybe not directly. Unless the empty field is part of a larger dataset that includes personal info, but the content alone doesn't indicate that.\n\nSo, based on the given information, the email address being empty isn't a sensitive piece of information. It's just a configuration state. Therefore, the answer would be false. The confidence score would be low since the information is not actually sensitive, but the explanation needs to clarify that the content doesn't contain sensitive data.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.2, \"explanation\": \"The content describes a configuration state where an email address is empty, which does not constitute U.S. sensitive information. Sensitive data would require explicit personal or confidential details (e.g., social security numbers, passwords), but the provided text only indicates a missing field without revealing specific private information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-13",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Callable U.S. number present"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify whether the given text contains U.S. sensitive information based on the phone number category. The description says that U.S. phone numbers have 10 digits, sometimes with a +1 country code and punctuation.\n\nThe content provided is \"Text or call 415.884.0192 x55 if urgent.\" So I need to check if this number is a valid U.S. phone number. Let's break it down. The number starts with 415, which is the area code for San Francisco. Then there's 884.0192. Wait, the format here is 415.884.0192 x55. Typically, in the US, phone numbers are structured as XXX-XXX-XXXX or XXX.XXX.XXXX. Here, it's 415.884.0192, which would be 10 digits after the area code. But the format has dots and an 'x' before the last digit. \n\nBut the key point is the length. The number 415.884.0192 is 10 digits total (4158840192). The plus sign isn't present here, so it doesn't include the +1 country code. However, the user's instruction mentions that U.S. phone numbers can have the +1 country code. But in this case, the number is just 415.884.0192. \n\nWait, but the example given in the description says that U.S. phone numbers have 10 digits, sometimes with +1 and punctuation. So the actual number here is 4158840192, which is 10 digits. So even though it's formatted with dots and an 'x', the core digits are 10. \n\nSo the classification would be that it's a U.S. phone number. Therefore, the answer should be true. The confidence score would be high since the number fits the pattern of a U.S. phone number. The explanation would state that the number is a 10-digit U.S. phone number without the country code, but following the standard format.\n</think>",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"The number 415."
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-14",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "15-digit AMEX card provided"
+    },
+    "thinking": "",
+    "answer": "<think>\nOkay, let's see. The user wants me to classify whether the given content is sensitive information under the credit_card category. The content provided is a payment form with an AMEX number and a billing zip code.\n\nFirst, I need to recall the criteria for determining if a credit card number is considered sensitive. Typically, credit card numbers are considered sensitive because they can be used for fraud or identity theft. However, the question here is about whether the content contains major U.S. credit card numbers. \n\nThe description mentions that major U.S. credit card numbers are 15-16 digits and often separated by spaces or dashes. The example given here is AMEX 3782 822463 10005. Let me check the length of this number. Breaking it down: 3782 822463 10005. That's 10 digits in total? Wait, no. Let me count again. The first part is 3782 (4 digits), then 822463 (6 digits), then 10005 (5 digits). So adding those up: 4 + 6 + 5 = 15 digits. Oh, right, so that's 15 digits. But the description says major ones are 15-16 digits. So this seems like a valid credit card number.\n\nNow, the problem is whether this specific number is considered sensitive. Even though it's not a full credit card number (since the full number would have the issuer code, expiration date, etc.), the presence of a credit card number in the text could still be sensitive. However, the user might be asking if the entire number is present. In the content, there's the AMEX number followed by the zip code. The zip code is 94107, which is a billing address, but the main issue is the credit card number.\n\nBut wait, the user's instruction says \"Major U.S. credit card numbers are...\" so maybe the focus is on the actual credit card number. The example here has a 15-digit number, which is a valid credit card number. However, the problem is that the content includes both the credit card number and the zip code. The zip code isn't a credit card number, but the presence of the credit card number itself is what matters.\n\nIn terms of classification, since the content contains a credit card"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-15",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Only masked card, full PAN absent"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify whether the given content is sensitive information under the credit card category. The content is a receipt showing a masked card number with some digits revealed as 3145. The description mentions that major U.S. credit card numbers are 15-16 digits and often have separators like spaces or dashes.\n\nFirst, I need to check if the content contains any actual credit card numbers. The receipt shows \"**** **** **** 3145;\" which means the first part is masked with asterisks, then the last four digits are 3145. But wait, the problem here is that even though the last four digits are 3145, the rest are masked. However, the question is about whether the content contains U.S. sensitive information. \n\nThe key point here is whether the masked part could be considered sensitive. Even if only part of the number is visible, if it's a credit card number, it's still sensitive. But the description says that major U.S. credit card numbers are 15-16 digits. The example here has 8 digits (the last four being 3145) but the rest are masked. So maybe the entire number isn't fully present. However, in receipts, sometimes they might retain parts of the number, especially if they're trying to protect the full number. But the user is asking if the content contains U.S. sensitive info. \n\nSince the content includes a partial credit card number (3145), even if it's masked, it's still a credit card number. Therefore, the classification should be true. The confidence score would be high because the presence of a credit card number, even partially, makes it sensitive. The explanation would state that the receipt includes a masked credit card number, which is considered sensitive under the credit card category.\n</think>",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"The receipt includes a masked credit card number (**** **** **** 3145), which is a partial U.S. credit card number. While the full 16-digit number is not provided, the presence of a credit card number in the context of a receipt qualifies it as sensitive under the credit card category.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-16",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Routing and account numbers present"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify whether the given content contains U.S. sensitive information under the bank_account category. The category description mentions that U.S. bank accounts are numeric strings 8-17 digits, sometimes with routing info.\n\nThe content provided is a US ACH record with routing number 021000021, account number 9876543210, and the name ACME Payroll. So, looking at this, the routing number is 9 digits, which is within the 8-17 digit range mentioned. The account number is 10 digits, also within the range. Both the routing and account numbers are numeric and seem to be part of a financial transaction.\n\nNow, I need to determine if this is considered sensitive. Typically, financial details like routing numbers and account numbers are sensitive because they can be used to identify specific accounts or institutions. However, the question specifies the category as \"bank_account,\" so maybe the focus is on the account number itself. \n\nBut wait, the description says \"U.S. bank accounts are numeric strings 8-17 digits...\" So the account number here is 10 digits, which fits. The routing number is 9 digits, also within the range. Since both are numeric and part of a financial record, it's likely considered sensitive. \n\nHowever, I should check if there's any context where this might not be considered sensitive. For example, if it's part of a public record or a non-sensitive transaction. But the default assumption in such cases is that financial identifiers are sensitive. Also, the presence of the routing number and account number in a transaction would imply that they're relevant to banking activities, making them sensitive data.\n\nSo, the answer would be true, confidence score high. The explanation would state that the routing and account numbers are numeric and fall within the specified range, indicating sensitive information under the bank_account category.\n</think>",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"The content includes a U.S. bank account number (9876543210) and routing number (021000021), which are numeric strings within the 8-17 digit range described for U.S. bank accounts. These identifiers are typically sensitive financial information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-17",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Placeholder zeros and pending routing"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify whether the given content contains U.S. sensitive information under the bank account category. The category is about bank accounts, specifically numeric strings 8-17 digits with possible routing info.\n\nThe content provided is a template string: \"acct=000000000 routing=<pending>\". So the account number here is 000000000, which is 8 digits. Routing info is mentioned as <pending>. \n\nNow, according to the description, U.S. bank accounts are numeric strings 8-17 digits, sometimes with routing info. The example here has an 8-digit account number, which fits the 8-17 digit range. The routing info is part of the bank account details, so including it in the template makes sense. \n\nBut wait, the question is about whether this content contains sensitive information. The key here is whether the account number itself is sensitive. In the context of a template, the actual account number might be placeholder data. However, the presence of a numeric string (even if it's all zeros) could still be considered sensitive if it's meant to represent a real account. But the problem is whether the system should flag it as sensitive based on the structure rather than the actual value.\n\nHowever, the user's instruction says to classify based on the content. Since the template includes a numeric string (the account number) and routing info, even if it's placeholders, the structure matches the criteria for U.S. bank accounts. Therefore, the answer would likely be true because the structure aligns with the category definition. The confidence score would be high since it's a direct match. The explanation would state that the template includes a valid U.S. bank account format with routing info, making it sensitive.\n</think>",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"The template contains a 8-digit numeric string ('000000000') which matches the U.S. bank account length requirement (8-17 digits), and includes routing info (<pending>). This structure aligns with the defined pattern for U.S. bank accounts, indicating sensitive financial data.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-18",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Looks like valid U.S. passport ID"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify whether the given content is sensitive under the passport category. The category here is passport, and the description mentions that U.S. passport numbers are 9 characters, alphanumeric, often all digits.\n\nThe content provided is \"Traveler provided U.S. passport C03495718 at check-in.\" So the passport number here is C03495718. Let me check the length. Counting the characters: C,0,3,4,9,5,7,1,8. That's 9 characters. The description says U.S. passports are 9 characters, alphanumeric, often all digits. Wait, but this one has both letters and numbers. The first character is a letter (C), followed by digits. So it's alphanumeric, which fits the description. \n\nNow, the question is whether this information is considered sensitive. In the context of the U.S., passport numbers are typically protected under privacy laws like HIPAA or other regulations. However, the specific classification might depend on the policy. But since the user hasn't specified any particular law, I need to assume standard practices. \n\nThe example response from the user shows that when the content includes a passport number, it's classified as sensitive. The confidence score would be high because the number matches the expected format. Even though it's alphanumeric, the presence of a passport number in the context of travel makes it sensitive. \n\nSo, the answer should be true with a confidence score of 0.9, explaining that the passport number is 9 characters long, alphanumeric, and commonly used in the U.S., making it sensitive information.\n</think>",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.9, \"explanation\": \"The U.S. passport number 'C03495718' is 9 characters long, alphanumeric, and matches the described format. It is considered sensitive personal identification information under privacy regulations.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-19",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Case slug, not an ID number"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify whether the given content is sensitive under the passport category. The content is \"Ticket slug passport-case-PA-2024-09-884, no ID captured.\" \n\nFirst, I need to understand what the passport category entails. The description says U.S. passports have 9 alphanumeric characters, often all digits. So, the key points here are the structure of the passport number and the fact that it's a ticket slug.\n\nThe content mentions a ticket slug named \"passport-case-PA-2024-09-884\". The format here seems like a ticket identifier, possibly a combination of letters and numbers. The presence of \"PA\" might indicate a specific region or state, but the main thing is the structure. However, the user is asking about U.S. passport numbers. \n\nNow, the question is whether this ticket slug contains a U.S. passport number. The ticket slug has \"passport-case-PA-2024-09-884\". The \"PA\" could be an abbreviation for a state code, like PA for Pennsylvania. But the rest of the string isn't a standard passport number. Typically, a U.S. passport number is 9 digits, like 123456789. Here, the ticket slug has \"passport-case-PA-2024-09-884\", which includes letters and numbers, but not a 9-digit sequence. Also, there's no mention of a date or other elements typical of a passport number.\n\nThe user mentioned that the content doesn't capture an ID, so maybe the ticket slug is just a reference to a ticket without the actual passport number. Since the ticket slug doesn't contain a valid U.S. passport number, it wouldn't be considered sensitive under the passport category. \n\nBut wait, sometimes ticket slugs might include internal references. However, based on the given info, the ticket slug isn't a real passport number. The example provided in the description mentions that U.S. passports are 9 characters, alphanumeric, often all digits. The ticket slug here doesn't fit that pattern. Therefore, the answer would be false, indicating that there's no sensitive information related to a U.S. passport number in the content.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"The content refers to a 'ticket slug"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-20",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Numeric NY driver license provided"
+    },
+    "thinking": "",
+    "answer": "<think>\nOkay, let's see. The user wants me to classify whether the given content is sensitive under the driver_license category. The content mentions a New York DMV upload listing a license number 987654321. \n\nFirst, I need to recall the rules for determining sensitivity in the driver_license category. The description says that U.S. licenses vary, and California uses a one-letter plus seven digits. So, the format here is seven digits, which is common in some states like California. However, the example given is a license number starting with 'NY', which might be a state abbreviation. But the actual license number is just 987654321, which is ten digits. Wait, that doesn't fit the typical formats. Usually, driver's licenses have 8 or 9 digits. Maybe the example is a placeholder or a specific case?\n\nBut the key point here is whether this information is considered sensitive. Since the DMV (Department of Motor Vehicles) handles driver's licenses, and the presence of a license number in a public record could be considered sensitive. However, the exact format isn't specified as being confidential. The question is whether the number itself is sensitive. In many cases, driver's license numbers are personal identifiers, so they might be considered sensitive. But the classification depends on whether the information is protected by laws like HIPAA or other regulations. \n\nThe user provided a category called driver_license, and the example includes a license number. If the license number is part of a public record, it might not be considered sensitive unless it's a specific identifier. However, in some contexts, even numbers can be sensitive if they're used for identification. But since the example doesn't mention any personal details beyond the number, maybe it's not considered sensitive. However, the presence of a DMV upload suggests that it's a public record, so the number might be considered sensitive. \n\nWait, but the answer needs to be based on the given category and the content. The user's instruction says to decide if the content contains U.S. sensitive information for the requested category. The driver's license format is part of the category, but the actual number is a piece of data. Depending on the context, the number could be sensitive. For instance, if it's used for identity verification, then yes. But without more context, the default would be that the number is sensitive because it's a personal identifier. However, the DMV might have policies about what's considered"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-21",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Placeholder format only"
+    },
+    "thinking": "<think>\nOkay, let's tackle this. The user wants me to classify whether the given content is sensitive under the driver_license category. The content mentions a form field named 'driver_license' set to 'DL-XXXXXXX' as a placeholder. \n\nFirst, I need to recall the guidelines for determining sensitivity. The key here is whether the information relates to U.S. driver licenses and if it's considered sensitive. The description says California uses one letter plus seven digits, which is a specific format. But the content here is about a placeholder in a form field using 'DL-XXXXXXX'. \n\nNow, the question is, does this contain U.S. sensitive information? Driver's license information is generally protected under privacy laws like HIPAA or FERPA, but the question specifically mentions the driver_license category. However, the example provided doesn't actually include any real data. It's just a placeholder value. \n\nThe user might be concerned about whether the placeholder value itself is sensitive. But placeholders are usually not considered sensitive unless they contain actual personal information. Since the example here is just a format like DL-XXXXXXX, which is a common format for driver's licenses, it's not a specific individual's data. \n\nSo, even though the format varies by state (like California), the content here isn't revealing any specific details about a person's license. Therefore, it's not sensitive. The confidence score would be low because there's no actual personal information present. The explanation would state that the placeholder is a generic format and doesn't contain sensitive data.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.2, \"explanation\": \"The placeholder 'DL-XXXXXXX' refers to a general driver's license format without specific personal information. While the format varies by state, the content does not contain actual sensitive data or identifiers.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-22",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid-looking ITIN pattern"
+    },
+    "thinking": "<think>\nOkay, let's tackle this. The user wants me to classify whether the given content is sensitive under the \"itin\" category. The description says that U.S. Individual Taxpayer Identification Numbers (ITINs) are 9 digits starting with 9 and have 70-88 in positions 4-5. The example provided is \"Tax form shows ITIN 912-70-1234 for contractor.\"\n\nFirst, I need to check if the content includes any U.S. sensitive information related to ITINs. The ITIN number here is 912-70-1234. Let me verify the structure. The first digit is 9, which matches the description. Then positions 4-5 are 70, which falls within 70-88 as specified. So the number fits the criteria.\n\nNow, the question is whether this information is considered sensitive. ITINs are used by individuals who cannot get a Social Security Number (SSN), so they're part of the tax identification system. In the U.S., sharing an ITIN could be a sensitive matter because it's tied to tax compliance and identity verification. However, the classification depends on the context. If the content is just showing an ITIN number without any other sensitive details, maybe it's not considered sensitive. But since the user mentioned the category is \"itin,\" and the description includes specific structural requirements, the presence of the ITIN number itself might be flagged as sensitive.\n\nThe confidence score would depend on how certain we are that the number meets the criteria. Since the example provided exactly matches the description, the confidence is high. Therefore, the answer should be true with a high confidence score. The explanation would state that the ITIN number meets the specified format and is therefore considered sensitive under the given category.\n</think>",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"The ITIN number '912-70-1234' matches the described format (9-digit, starts with 9, positions 4-5 = 70-88). It contains U.S. taxpayer identification information, which is classified under the 'itin' category as per the provided description.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-23",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Explicitly an example placeholder"
+    },
+    "thinking": "",
+    "answer": "<think>\nOkay, let's tackle this query. The user wants me to classify whether the provided content contains U.S. sensitive information under the \"itin\" category. The description mentions that ITINs are 9-digit numbers starting with 9 and have specific digits in positions 4-5. The example given is \"900-00-0000\".\n\nFirst, I need to recall what constitutes sensitive information. Typically, tax identification numbers like ITINs are considered sensitive because they're used for official purposes and can be linked to personal information. However, the user specified the category as \"itin\", so I should focus on that.\n\nThe content provides an example of an ITIN format. The example includes the structure 900-00-0000, which starts with 9, followed by 00 in positions 4-5. The description states that ITINs start with 9 and have 70-88 in positions 4-5. Wait, the example here is 900-00-0000, which would mean positions 4-5 are 00, but the description says 70-88. That seems conflicting. Maybe there's a typo in the example? Or perhaps the example is just illustrative?\n\nBut regardless, the key point is that the example shows an ITIN format. Even if the example isn't accurate (since ITINs actually start with 9 and have 70-88 in positions 4-5), the fact that it's providing an example of the format might still be considered sensitive. However, the user's instruction says to check if the content contains U.S. sensitive info for the given category.\n\nSince the example is about the structure of an ITIN, which is a sensitive identifier, even if it's just the format, it could be considered sensitive. But maybe the user is concerned about actual data? The content says \"Example ITIN format 900-00-0000 noted in instructions; not actual data.\" So the example is not real data, but the format itself.\n\nIn terms of classification, the presence of the ITIN format example might be considered sensitive. However, some systems might consider it non-sensitive if it's just an example. But according to the category description, the ITINs are 9 digits starting with 9 and including 70-88 in positions 4-5. The example"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-24",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email in non-English text"
+    },
+    "thinking": "<think>\nOkay, let's see. The user wants me to classify whether the given content is sensitive information under the 'email' category. The content provided is \"客服邮箱：support.zh@acme.cn 提供中文支持。\" which translates to \"Customer support email: support.zh@acme.cn provides Chinese support.\"\n\nFirst, I need to check if this contains any U.S. sensitive information. The category here is 'email', so I should focus on email addresses. The email address given is support.zh@acme.cn. \n\nThe description mentions that email addresses typically have a username, an '@' symbol, and a domain. In this case, the username is 'support.zh', the '@' symbol separates it from the domain 'acme.cn'. So, this seems like a standard email format.\n\nNow, considering the category 'email', the question is whether this email address contains any U.S.-specific information. However, the email address here is in Chinese, with the domain 'acme.cn' which is a common international domain. The username 'support.zh' might be a placeholder, but there's no indication of specific U.S. data or sensitive information. \n\nSince the email address is not containing any U.S. sensitive information such as personal identifiers, financial details, or other restricted data, the classification would be non-sensitive. The confidence score would be low because the information is straightforward and doesn't meet the criteria for sensitivity. \n\nTherefore, the answer should indicate that the content is not sensitive, with a low confidence score explaining why.\n</think>",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.0, \"explanation\": \"The email address 'support.zh@acme.cn' is a standard format without U.S.-specific sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-1.7B",
+    "sample_id": "sample-25",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid U.S. phone number present"
+    },
+    "thinking": "",
+    "answer": "<think>\nOkay, let's see. The user wants me to classify whether the given content contains U.S. sensitive information based on the phone number category. The content is \"Call our toll-free line 800-555-1212 for service.\" \n\nFirst, I need to check if there's a phone number here. The number provided is 800-555-1212. Let me count the digits. It's 10 digits: 8, 0, 0, -, 5, 5, 5, -, 1, 2, 1, 2. Wait, actually, 800-555-1212 has 10 digits total. The format includes area code, exchange, and subscriber number. But the question mentions that U.S. phone numbers have 10 digits sometimes with country code +1 and punctuation. However, in this case, the number is 800-555-1212. The first three digits (800) are the area code, but the country code +1 would be added before it. So, the full number with country code would be +1 800-555-1212. But the content here doesn't include the +1 or the hyphens? Wait, no, the number as written is 800-555-1212. So, does that count as a valid U.S. phone number?\n\nThe description says U.S. phone numbers have 10 digits, sometimes with country code +1 and punctuation. So, the number here is 10 digits without the country code. But the country code is +1, which is part of the international dialing. However, the user might consider the number itself as a U.S. phone number. But the problem is whether this is considered sensitive. Since the user is asking about U.S. sensitive info, maybe they want to know if the number is a known sensitive one. But the example given is a standard toll-free number. Toll-free numbers like 800-555-1212 are common and not typically considered sensitive unless it's a specific one. But the question is whether the presence of the number in the text makes it sensitive.\n\nWait, the category is phone_number, and the task is to determine if the content contains U.S. sensitive information"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-01",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Exact SSN format appears"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 1, \"explanation\": \"The content includes a Social Security number in the format AAA-GG-SSSS, which matches the pattern of a U.S. Social Security number and is directly associated with an individual applicant.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-02",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "String resembles SSN but context shows product code"
+    },
+    "thinking": "",
+    "answer": "```json\n{\n  \"is_sensitive\": false,\n  \"confidence_score\": 0.99,\n  \"explanation\": \"The content mentions 'SSN-5512-679-087' but uses it as an inventory SKU, not as a U.S. Social Security number. The format resembles SSA numbers, but context indicates it is a product code, not a personal identifier. No actual individual data or personal identifiers are present.\"\n}\n```"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-03",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email present"
+    },
+    "thinking": "",
+    "answer": "```json\n{\n  \"is_sensitive\": false,\n  \"confidence_score\": 0.95,\n  \"explanation\": \"The content includes an email address (celine.ortega@orbis.org), which matches the expected format for an email address. However, no personally identifiable information or sensitive data is disclosed beyond standard contact details. The context is a customer feedback response, and there is no indication of national security, financial, health, or other U.S. sensitive categories.\"\n}\n```"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-04",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "16-digit Visa style number in card field"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.99, \"explanation\": \"The content includes a credit card number (4111 0254 8890 3145) formatted as 16 digits with spaces, which matches the pattern of major U.S. credit cards. The presence of a full card number in a checkout payload indicates high sensitivity.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-05",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number referenced explicitly as promo code"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"The content includes a credit card number format (CC-4111-0254-8890) which matches the pattern of major U.S. credit card numbers (15-16 digits, separated by hyphens). Although it is part of a promotional code, the structure and format indicate a potential credit card number, making it sensitive.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-06",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Clearly a callable U.S. number"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.99, \"explanation\": \"The content contains a U.S. phone number in the format +1 (415) 884.0192, which matches the specified category criteria including the country code +1 and 10-digit local number with punctuation.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-07",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Spanish text still clearly states U.S. passport number"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.98, \"explanation\": \"The content mentions a 9-character numeric sequence '025497813' which matches the format of a U.S. passport number and is explicitly stated as a U.S. passport issued in Miami. This constitutes sensitive personal information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-08",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Number is part of product slug, not ID"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"The content mentions 'passport-wallet-tribe-56060137' which includes a sequence of digits, but it is part of a product slug and not a valid or identifiable U.S. passport number. U.S. passport numbers are typically 9 characters, alphanumeric, and not used in such product identifiers. No actual passport data is present.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-09",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Routing and bank account included"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.99, \"explanation\": \"The content includes a routing number and an account number in the format typical of U.S. bank accounts. The routing number '122105278' is 9 digits, and the account number '008764531987' is 12 digits, both falling within the expected range for U.S. banking identifiers. This constitutes sensitive financial information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-10",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Matches CA driver license format despite question"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"The content references a California driver's license number (C2946183), which could be considered personally identifiable information. However, in this context, it is part of a support ticket inquiry about a product return tag and does not explicitly reveal a full license format or personal details being accessed or used. The presence of a license-like identifier is noted, but the use case is peripheral and not clearly indicating sensitive data exposure. Therefore, classified as low sensitivity due to context.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-11",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email present"
+    },
+    "thinking": "",
+    "answer": "```json\n{\n  \"is_sensitive\": false,\n  \"confidence_score\": 0.98,\n  \"explanation\": \"The content includes an email address (dev+ops@northwind.io) which follows the standard format of a username, @ symbol, and domain. However, no personally identifiable information or U.S. sensitive data is present. The context relates to escalation contacts in a technical support scenario, not classified or sensitive information.\"\n}\n```"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-12",
+    "difficulty": "easy",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "No concrete email value"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.9, \"explanation\": \"The content indicates that the email address field is empty and no address is stored, so there is no actual email address present. Therefore, it does not contain sensitive email information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-13",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Callable U.S. number present"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.99, \"explanation\": \"The content includes a U.S. phone number '415.884.0192 x55' which follows the standard format with area code, exchange, and line number, and is presented in a context suggesting contact urgency.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-14",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "15-digit AMEX card provided"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.99, \"explanation\": \"The content includes an American Express (AMEX) card number (3782 822463 10005), which is a 15-digit number matching the format of major U.S. credit cards. The presence of a full card number in a payment context indicates sensitive financial data.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-15",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Only masked card, full PAN absent"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"The receipt shows a masked card number ending in 3145, which is part of a typical format for a U.S. credit card. However, the first few digits are obscured (masked), and only the last four digits are visible. Since the full Primary Account Number (PAN) is not retained, it does not constitute sensitive exposure.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-16",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Routing and account numbers present"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.99, \"explanation\": \"Contains a U.S. bank account number (10 digits) and routing number, both of which are part of a standard U.S. ACH record and match the defined pattern for sensitive bank account information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-17",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Placeholder zeros and pending routing"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"The content references a template string with placeholder routing info ('<pending>') and does not contain actual 8-17 digit account numbers. Since no real bank account details are present, it is not considered sensitive.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-18",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Looks like valid U.S. passport ID"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.99, \"explanation\": \"The content includes a U.S. passport number 'C03495718', which is 9 characters and alphanumeric, matching the pattern of a valid U.S. passport number. This constitutes sensitive personal identification information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-19",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Case slug, not an ID number"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"The content includes 'passport-case-PA-2024-09-884', but this is a ticket slug and not a valid U.S. passport number. U.S. passport numbers are 9 characters, alphanumeric, typically all digits, and this string does not match that format or structure. No actual passport number is present.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-20",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Numeric NY driver license provided"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.95, \"explanation\": \"The content includes a license number (987654321) associated with an applicant in New York, which matches the format of a U.S. driver license and could be personally identifiable. Even though the state is not explicitly specified as California, the presence of a numeric license identifier suggests potential sensitivity under driver license data.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-21",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Placeholder format only"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"The placeholder 'DL-XXXXXXX' follows a format similar to California's driver license format (one letter followed by seven digits), but it is explicitly labeled as a placeholder and does not contain actual personal or sensitive data.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-22",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid-looking ITIN pattern"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 1.0, \"explanation\": \"The content includes an ITIN (Individual Taxpayer Identification Number) formatted as 912-70-1234, which starts with 9 and has '70' in positions 4-5, matching the described pattern for U.S. ITINs. This is sensitive personal taxpayer information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-23",
+    "difficulty": "hard",
+    "expected": {
+      "is_sensitive": false,
+      "reason": "Explicitly an example placeholder"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.98, \"explanation\": \"The content references an example of an ITIN format (900-00-0000), which follows the specified pattern of U.S. Individual Taxpayer Identification Numbers starting with 9 and having digits 70-88 in positions 4-5. Although it is labeled as an example from instructions and not actual data, the structure matches the definition of a sensitive ITIN, thus classified as sensitive.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-24",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid email in non-English text"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": false, \"confidence_score\": 0.95, \"explanation\": \"The content provides a customer support email address in the format username@domain, which is typical for email addresses. It does not contain any U.S. sensitive information.\"}"
+  },
+  {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "sample_id": "sample-25",
+    "difficulty": "medium",
+    "expected": {
+      "is_sensitive": true,
+      "reason": "Valid U.S. phone number present"
+    },
+    "thinking": "",
+    "answer": "{\"is_sensitive\": true, \"confidence_score\": 0.99, \"explanation\": \"The content contains a U.S. toll-free phone number (800-555-1212) in the format with area code and punctuation, which matches the description of a U.S. phone number.\"}"
+  }
+]

@@ -267,12 +267,18 @@ def decode_generation(
 ) -> tuple[str, str]:
     output_ids = generated_ids[0][len(model_inputs.input_ids[0]) :].tolist()
     index = 0
+    candidate_ids = []
     if think_token_id is not None:
+        candidate_ids.append(think_token_id)
+    # Qwen3 uses 151668 for </think>; keep as fallback to strip reasoning even if tokenizer lacks the token string.
+    candidate_ids.append(151668)
+    for tid in candidate_ids:
         try:
-            # Qwen uses </think> token to end intermediate reasoning blocks.
-            index = len(output_ids) - output_ids[::-1].index(think_token_id)
+            idx = len(output_ids) - output_ids[::-1].index(tid)
+            index = idx
+            break
         except ValueError:
-            index = 0
+            continue
     thinking_content = (
         tokenizer.decode(output_ids[:index], skip_special_tokens=True).strip()
         if index
