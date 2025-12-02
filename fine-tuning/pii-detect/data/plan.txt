@@ -1,0 +1,73 @@
+PII Detection Fine-Tuning Dataset Plan (for LLaMA-Factory, single H100, <=5h run)
+===============================================================================
+
+Goal
+- Push Qwen2.5-0.5B and Qwen2.5-1.5B to near Qwen2.5-3B performance on PII detection with minimal latency.
+- Target high recall without tanking precision; emphasize cases that small models currently miss (obfuscations, context, multilingual).
+- Keep dataset format directly compatible with LLaMA-Factory (supervised fine-tuning JSONL).
+
+Target schema (JSONL)
+- Each line: {"instruction": "...", "input": "...", "output": "..."} (no nested lists).
+- instruction: short task statement, e.g., "Classify whether the content contains the requested sensitive category and return JSON."
+- input: includes category name/description and content. Keep concise to reduce tokens.
+- output: strict JSON string like {"is_sensitive": true/false, "confidence_score": <0-1>, "explanation": "<short reason>"}.
+- Example:
+  {"instruction": "Classify PII and answer with JSON.", "input": "Category: ssn (pattern AAA-GG-SSSS). Content: 2024-09-12T08:17:01Z pixel form_submit url=https://apply.meridiancredit.com/step2?step=verify body=firstName=Amanda&lastName=Frost&ssn=512-67-9087&city=San+Mateo", "output": "{\"is_sensitive\": true, \"confidence_score\": 0.99, \"explanation\": \"Exact SSN present in form body\"}"}
+
+Coverage matrix (categories and tricky patterns)
+- SSN/ITIN: with/without dashes; spelled-out numbers; URL/query params; JSON fields; Spanish/Chinese context; fake SKUs that look similar (hard negatives).
+- Credit card: digit/space/dash; word-number hybrids; partial masks; promo-code lookalikes (negatives); BIN-like but clearly product codes (negatives).
+- Bank routing/account: paired vs. alone; ACH payloads; routing-only (negatives); account-only (negatives); number-like SKUs (negatives).
+- Phone: E.164, punctuated, word-digit mixes, extensions; toll-free; international noise; calendar times as negatives; order IDs that look like phones (negatives).
+- Email: plain, URL-encoded, query params, obfuscated (at/dot, parentheses), multilingual context; support@corp.com vs. fake placeholders or missing @ (negatives).
+- Passport/Driver license: US passport numbers; state DL formats (CA, NY, TX); product slugs with “passport” (negatives); placeholder DL patterns (negatives).
+- Other IDs: generic member IDs that look numeric but are internal (negatives to teach context).
+- Multilingual: Spanish, Chinese, French wrapping the sensitive value; also non-Latin numerals minimal.
+
+Data sources
+- Public seeds (positives and negatives):
+  - Synthesize from pattern specs: SSN/ITIN rules, PAN length/BIN rules, phone formats, routing/account lengths, DL formats by state.
+  - Open-source PII regex test sets (e.g., Presidio samples) for bootstrapping patterns, then rephrase into web/pixel contexts.
+  - Open datasets with emails/phones (commoncrawl-derived) – use only as pattern seeds; regenerate to avoid real PII.
+- OpenAI/GPT generation (you have API budget):
+  - Prompt GPT-4/3.5 to generate realistic pixel-like logs (form_submit/xhr/page_view/chat_message) per category with balanced positives/negatives.
+  - Ask for multiple obfuscation styles and multilingual wraps.
+  - Generate “confuser” negatives: product slugs with passport/visa, promo codes mimicking PAN, SKUs that look like ITIN/SSN.
+
+Dataset size/ratio (per model run)
+- Aim ~5k-10k training examples to stay within a 2-5h fine-tune on an H100 with LoRA.
+- Class balance: ~50% positive / 50% negative overall; within each category ensure 30-40% hard negatives that look PII-like.
+- Per category: target ~500-800 examples (split evenly across pattern variants and languages for phones/emails/IDs).
+- Validation: 5-10% held-out, mirroring hard cases.
+
+Construction steps
+1) Define prompt templates for GPT generation:
+   - Positive template: “Produce N lines of pixel-like logs (form_submit/page_view/xhr/chat_message) that contain a valid <category> value. Include obfuscations: wordified numbers, URL encoding, mixed punctuation, multilingual context. Return JSONL with fields: instruction, input, output (JSON).”
+   - Negative template: same surface forms but ensure no real PII, only lookalikes; clearly annotate why non-sensitive in output explanation.
+2) Enumerate pattern variants per category (e.g., SSN dashed/undashed/wordified; PAN spaced/dashed/wordified; phone with words; email encoded/obfuscated; passports in Spanish; DL with state-specific formats; ITIN hyphenless vs spelled).
+3) Generate in batches of 200-500 per category via OpenAI; review a sample to ensure JSON validity and label correctness.
+4) Augment with rule-generated seeds:
+   - Programmatically create positives from regex/pattern specs, then wrap them into web/pixel strings (URLs, payloads).
+   - Create matched hard negatives (promo codes, SKUs, placeholders) for each positive pattern family.
+5) Normalize to LLaMA-Factory format:
+   - instruction consistent across all rows.
+   - input: “Category: <name> (<short desc>). Content: <log line>”.
+   - output: strict JSON string; ensure booleans are true/false (not quoted).
+6) Deduplicate and shuffle; remove any accidental real PII (keep everything synthetic).
+7) Split train/valid; keep category balance in valid; include hard negatives/obfuscations in valid.
+
+Quality checks
+- Schema check: all lines valid JSON; output parses to JSON with is_sensitive/confidence_score/explanation.
+- Label sanity: spot-check 50-100 mixed cases; ensure hard negatives are truly non-sensitive.
+- Length check: keep inputs short (single log line) to reduce training/inference cost.
+- Category balance: verify per-category counts and pos/neg ratio.
+
+Training notes for LLaMA-Factory
+- Use SFT with LoRA; keep max_seq_length modest (e.g., 512-1024) given short inputs.
+- Temperature=0 in generation of training outputs (for consistency).
+- If time allows, run a brief second epoch focusing on misclassified validation cases (error-focused augmentation).
+
+Next actions
+- Approve this plan.
+- Implement data generation scripts (OpenAI + pattern-based) to produce train.jsonl / val.jsonl in LLaMA-Factory format.
+- Re-evaluate small models post-fine-tune; iterate on failure modes (especially obfuscations and multilingual). 
